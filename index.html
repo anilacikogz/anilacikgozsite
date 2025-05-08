@@ -9,29 +9,37 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            background-image: url('https://cdnuploads.aa.com.tr/uploads/Contents/2024/05/28/thumbs_b_c_d34ab21b00fd3e5dea7d4e1825137873.jpg?v=122342');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: black;
         }
 
-        .gif-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
         }
 
-        .gif-container img {
-            width: 400px;
+        .left, .right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left img, .right img {
             max-width: 90%;
-            height: auto;
+            max-height: 90%;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
-    <div class="gif-container">
-        <img src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Anıl Açıkgöz GIF">
+    <div class="container">
+        <div class="left">
+            <img src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="GIF">
+        </div>
+        <div class="right">
+            <img src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
+        </div>
     </div>
 </body>
 </html>
