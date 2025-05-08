@@ -9,20 +9,29 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: black;
+            background-image: url('https://cdnuploads.aa.com.tr/uploads/Contents/2024/05/28/thumbs_b_c_d34ab21b00fd3e5dea7d4e1825137873.jpg?v=122342');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        img {
-            display: block;
-            max-width: 100%;
-            max-height: 100%;
-            margin: auto;
+        .gif-container {
             position: absolute;
-            top: 0; bottom: 0; left: 0; right: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .gif-container img {
+            width: 400px;
+            max-width: 90%;
+            height: auto;
         }
     </style>
 </head>
 <body>
-    <img src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Anıl Açıkgöz GIF">
+    <div class="gif-container">
+        <img src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Anıl Açıkgöz GIF">
+    </div>
 </body>
 </html>
