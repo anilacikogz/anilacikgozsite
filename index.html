@@ -4,20 +4,33 @@
     <meta charset="UTF-8">
     <title>Anıl Açıkgöz</title>
     <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
+        .header-text {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px;
+            color: white;
+            z-index: 3;
+        }
+
         .center-gif {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             max-width: 60%;
             max-height: 60%;
             object-fit: contain;
@@ -26,31 +39,59 @@
 
         .corner {
             position: absolute;
-            width: 150px;
-            height: auto;
             object-fit: contain;
             z-index: 2;
         }
 
         .bottom-left {
-            bottom: 10px;
-            left: 10px;
+            bottom: 20px;
+            left: 20px;
+            width: 120px;
         }
 
         .bottom-right {
-            bottom: 10px;
-            right: 10px;
+            bottom: 20px;
+            right: 20px;
+            width: 220px;
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 4;
+        }
+
+        .top-right img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .top-right img:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-   
-    <img class="center-gif" src="https://media1.tenor.com/m/cXBy9Dxt1-UAAAAC/cody-rhodes-wrestlemania.gif" alt="Cody Rhodes GIF">
+    <!-- Üstte yazı -->
+    <div class="header-text">s10W</div>
 
-   
-    <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Alt Sol GIF">
+    <!-- Sağ üstte Instagram logosu -->
+    <div class="top-right">
+        <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+        </a>
+    </div>
 
-   
+    <!-- Ortadaki GIF -->
+    <img class="center-gif" src="https://media.gifdb.com/cody-rhodes-wwe-showoff-q2fwks9wytx3tfve.gif" alt="Cody Rhodes GIF">
+
+    <!-- Sol alttaki küçük GIF -->
+    <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
+
+    <!-- Sağ alttaki büyük görsel -->
     <img class="corner bottom-right" src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
 </body>
 </html>
