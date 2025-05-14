@@ -26,14 +26,12 @@
             z-index: 3;
         }
 
-        .center-gif {
+        .center-embed {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 65%;
-            max-height: 65%;
-            object-fit: contain;
+            width: 80%;
             z-index: 1;
         }
 
@@ -46,13 +44,13 @@
         .bottom-left {
             bottom: 20px;
             left: 20px;
-            width: 160px; /* büyütüldü */
+            width: 160px;
         }
 
         .bottom-right {
             bottom: 20px;
             right: 20px;
-            width: 260px; /* büyütüldü */
+            width: 260px;
         }
 
         .top-right {
@@ -62,23 +60,21 @@
             z-index: 4;
         }
 
-        .top-right a img {
+        .top-right img {
             width: 50px;
             height: 50px;
             cursor: pointer;
-            animation: pulseRotate 2.5s infinite ease-in-out;
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
-        @keyframes pulseRotate {
-            0% {
-                transform: scale(1) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.2) rotate(10deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-            }
+        .top-right img.clicked {
+            animation: pop 0.5s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4) rotate(15deg); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -86,20 +82,37 @@
     <!-- Üstte yazı -->
     <div class="header-text">s10W</div>
 
-    <!-- Sağ üstte Instagram logosu -->
+    <!-- Sağ üstte Instagram logosu (yeni görsel) -->
     <div class="top-right">
         <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            <img id="instaBtn" src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram">
         </a>
     </div>
 
-    <!-- Ortadaki GIF (alternatif kaynak kullanıldı) -->
-    <img class="center-gif" src="https://media.tenor.com/y3D_8UpO6jMAAAAC/cody-rhodes-wrestling.gif" alt="Cody Rhodes GIF">
+    <!-- Ortadaki Tenor embed -->
+    <div class="center-embed">
+        <div class="tenor-gif-embed" data-postid="1504222312174383525" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+            <a href="https://tenor.com/view/cody-rhodes-undisputed-wwe-champion-wrestlemania-40-wrestlemania-xl-wwe-champion-gif-1504222312174383525">Cody Rhodes Undisputed Wwe Champion GIF</a>
+            from <a href="https://tenor.com/search/cody+rhodes-gifs">Cody Rhodes GIFs</a>
+        </div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    </div>
 
-    <!-- Sol alttaki büyütülmüş GIF -->
+    <!-- Sol alttaki GIF -->
     <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
 
-    <!-- Sağ alttaki büyütülmüş görsel -->
+    <!-- Sağ alttaki görsel -->
     <img class="corner bottom-right" src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
+
+    <script>
+        // Instagram butonuna tıklanınca animasyon sınıfı ekle
+        const instaBtn = document.getElementById('instaBtn');
+        instaBtn.addEventListener('click', function () {
+            instaBtn.classList.add('clicked');
+            setTimeout(() => {
+                instaBtn.classList.remove('clicked');
+            }, 500);
+        });
+    </script>
 </body>
 </html>
