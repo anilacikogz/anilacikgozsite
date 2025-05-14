@@ -26,12 +26,13 @@
             z-index: 3;
         }
 
-        .center-embed {
+        .center-gif {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
+            max-width: 75%;
+            max-height: 75%;
             z-index: 1;
         }
 
@@ -61,10 +62,10 @@
         }
 
         .top-right img {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .top-right img.clicked {
@@ -82,21 +83,15 @@
     <!-- Üstte yazı -->
     <div class="header-text">s10W</div>
 
-    <!-- Sağ üstte Instagram logosu (yeni görsel) -->
+    <!-- Sağ üstte Instagram logosu (şeffaf, renksiz, modern) -->
     <div class="top-right">
         <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-            <img id="instaBtn" src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram">
+            <img id="instaBtn" src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
         </a>
     </div>
 
-    <!-- Ortadaki Tenor embed -->
-    <div class="center-embed">
-        <div class="tenor-gif-embed" data-postid="1504222312174383525" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-            <a href="https://tenor.com/view/cody-rhodes-undisputed-wwe-champion-wrestlemania-40-wrestlemania-xl-wwe-champion-gif-1504222312174383525">Cody Rhodes Undisputed Wwe Champion GIF</a>
-            from <a href="https://tenor.com/search/cody+rhodes-gifs">Cody Rhodes GIFs</a>
-        </div>
-        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-    </div>
+    <!-- Ortadaki doğrudan GIF -->
+    <img class="center-gif" src="https://media.tenor.com/TGcW-qpLUe8AAAAC/cody-rhodes-undisputed-wwe-champion.gif" alt="Cody Rhodes GIF">
 
     <!-- Sol alttaki GIF -->
     <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
@@ -105,7 +100,7 @@
     <img class="corner bottom-right" src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
 
     <script>
-        // Instagram butonuna tıklanınca animasyon sınıfı ekle
+        // Instagram butonuna tıklanınca animasyon
         const instaBtn = document.getElementById('instaBtn');
         instaBtn.addEventListener('click', function () {
             instaBtn.classList.add('clicked');
