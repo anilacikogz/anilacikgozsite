@@ -10,36 +10,47 @@
             padding: 0;
             height: 100%;
             background-color: black;
-        }
-
-        .container {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-        }
-
-        .left, .right {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .left img, .right img {
-            max-width: 90%;
-            max-height: 90%;
+        .center-gif {
+            max-width: 60%;
+            max-height: 60%;
             object-fit: contain;
+            z-index: 1;
+        }
+
+        .corner {
+            position: absolute;
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        .bottom-left {
+            bottom: 10px;
+            left: 10px;
+        }
+
+        .bottom-right {
+            bottom: 10px;
+            right: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="left">
-            <img src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="GIF">
-        </div>
-        <div class="right">
-            <img src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
-        </div>
-    </div>
+   
+    <img class="center-gif" src="https://media1.tenor.com/m/cXBy9Dxt1-UAAAAC/cody-rhodes-wrestlemania.gif" alt="Cody Rhodes GIF">
+
+   
+    <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Alt Sol GIF">
+
+   
+    <img class="corner bottom-right" src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
 </body>
 </html>
