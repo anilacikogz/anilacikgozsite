@@ -10,10 +10,31 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            background: linear-gradient(135deg, #2d2d2d, #4a4a4a);
+            background: linear-gradient(135deg, #1a1a1a, #333333);
             font-family: 'Poppins', sans-serif;
             position: relative;
             overflow: hidden;
+            color: #f1f1f1;
+        }
+
+        /* Parallax scrolling */
+        .parallax {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://wallpaperaccess.com/full/4890769.jpg');
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+            animation: parallaxEffect 15s infinite linear;
+        }
+
+        @keyframes parallaxEffect {
+            0% { background-position: center; }
+            100% { background-position: top left; }
         }
 
         .header-text {
@@ -22,16 +43,16 @@
             width: 100%;
             text-align: center;
             font-family: 'Great Vibes', cursive;
-            font-size: 70px;
+            font-size: 80px;
             color: #FFD700;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
             z-index: 3;
-            animation: fadeIn 2s ease-out;
+            animation: fadeInUp 1.5s ease-out;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .center-gif {
@@ -39,18 +60,24 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 70%;
+            max-height: 70%;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
             z-index: 1;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .center-gif:hover {
+            transform: scale(1.1);
         }
 
         .corner {
             position: absolute;
             object-fit: contain;
             z-index: 2;
-            border-radius: 10px;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .bottom-left {
@@ -78,11 +105,13 @@
             height: 50px;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .top-right:hover img {
-            transform: scale(1.1);
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         }
 
         .top-left {
@@ -95,12 +124,21 @@
         .top-left img {
             width: 120px;
             height: auto;
-            border-radius: 10px;
+            border-radius: 12px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .top-left:hover img {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
 <body>
+    <!-- Parallax Arka Plan -->
+    <div class="parallax"></div>
+
     <!-- Üstte yazı -->
     <div class="header-text">s10W</div>
 
