@@ -65,49 +65,27 @@
             width: 45px;
             height: 45px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .top-right img.clicked {
-            animation: pop 0.5s ease;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.4) rotate(15deg); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-    
+    <!-- Üstte yazı -->
     <div class="header-text">s10W</div>
 
-    
+    <!-- Sağ üstte sade Instagram ikonu -->
     <div class="top-right">
         <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-            <img id="instaBtn" src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
         </a>
     </div>
 
-   
+    <!-- Ortadaki Cody Rhodes GIF -->
     <img class="center-gif" src="https://media.tenor.com/TGcW-qpLUe8AAAAC/cody-rhodes-undisputed-wwe-champion.gif" alt="Cody Rhodes GIF">
 
-    
+    <!-- Sol alttaki GIF -->
     <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
 
-   
+    <!-- Sağ alttaki görsel -->
     <img class="corner bottom-right" src="https://liderhabercomtr.teimg.com/liderhaber-com-tr/uploads/2024/05/icardi-sampiyonluk-kutlamalarinda-ali-koc-formasi-giydi.webp" alt="İcardi Görseli">
-
-    <script>
-        
-        const instaBtn = document.getElementById('instaBtn');
-        instaBtn.addEventListener('click', function () {
-            instaBtn.classList.add('clicked');
-            setTimeout(() => {
-                instaBtn.classList.remove('clicked');
-            }, 500);
-        });
-    </script>
 </body>
 </html>
