@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Anıl Açıkgöz</title>
     <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/jpeg">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: black;
+            background: linear-gradient(135deg, #2d2d2d, #4a4a4a);
+            font-family: 'Poppins', sans-serif;
             position: relative;
             overflow: hidden;
         }
@@ -21,9 +22,16 @@
             width: 100%;
             text-align: center;
             font-family: 'Great Vibes', cursive;
-            font-size: 60px;
-            color: white;
+            font-size: 70px;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
             z-index: 3;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         .center-gif {
@@ -31,8 +39,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 75%;
-            max-height: 75%;
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
             z-index: 1;
         }
 
@@ -40,6 +50,7 @@
             position: absolute;
             object-fit: contain;
             z-index: 2;
+            border-radius: 10px;
         }
 
         .bottom-left {
@@ -59,25 +70,33 @@
             top: 20px;
             right: 20px;
             z-index: 4;
+            transition: transform 0.3s ease;
         }
 
         .top-right img {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* New class for the image at the top left */
+        .top-right:hover img {
+            transform: scale(1.1);
+        }
+
         .top-left {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 20px;
+            left: 20px;
             z-index: 2;
         }
 
         .top-left img {
-            width: 100px; /* Adjust size as needed */
+            width: 120px;
             height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
