@@ -66,6 +66,19 @@
             height: 45px;
             cursor: pointer;
         }
+
+        /* New class for the image at the top left */
+        .top-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .top-left img {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +90,11 @@
         <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
             <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
         </a>
+    </div>
+
+    <!-- Sol üstte Peter Griffin görseli -->
+    <div class="top-left">
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin">
     </div>
 
     <!-- Ortadaki Cody Rhodes GIF -->
