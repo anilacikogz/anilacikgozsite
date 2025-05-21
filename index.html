@@ -15,7 +15,7 @@
             padding: 0;
             height: 100%;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #2e3a47, #455a6c, #5f7a8d);
             color: #f0f0f0;
             overflow-x: hidden;
             animation: fadeInPage 1.2s ease forwards;
@@ -36,7 +36,7 @@
             background-position: center;
             background-attachment: fixed;
             background-size: cover;
-            filter: brightness(0.6) saturate(1.2);
+            filter: brightness(0.85) saturate(1.05) blur(1.3px);
             animation: parallaxEffect 30s infinite alternate ease-in-out;
         }
         @keyframes parallaxEffect {
@@ -142,21 +142,6 @@
             box-shadow: 0 0 40px rgba(255,255,255,0.7);
         }
 
-        /* Info box under center gif */
-        .center-info {
-            position: absolute;
-            top: 75%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ccc;
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            z-index: 8;
-            user-select: none;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-        }
-
         /* Corner GIFs */
         .corner {
             position: fixed;
@@ -218,10 +203,6 @@
                 bottom: 15px;
                 right: 15px;
             }
-            .center-info {
-                top: 70%;
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
@@ -241,8 +222,6 @@
     </div>
 
     <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" title="Cody Rhodes Entrance" />
-
-    <div class="center-info">Cody Rhodes'un Girişi</div>
 
     <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" title="Sol Alt Görseli" />
 
