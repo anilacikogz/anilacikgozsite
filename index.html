@@ -43,16 +43,21 @@
 
     .header-text {
       font-family: 'Great Vibes', cursive;
-      font-size: 6vw;
+      font-size: 4vw;
       text-align: center;
-      margin-top: 120px;
+      margin-top: 80px;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
       color: rgba(255, 255, 255, 0.9);
     }
 
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
     .center-gif {
-      display: block;
-      margin: 40px auto;
       max-width: 80%;
       max-height: 60vh;
       border-radius: 20px;
@@ -68,8 +73,6 @@
       position: fixed;
       object-fit: contain;
       z-index: 5;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
       transition: transform 0.3s ease;
     }
 
@@ -80,13 +83,15 @@
     .bottom-left {
       bottom: 20px;
       left: 20px;
-      width: 160px;
+      width: 200px;
     }
 
     .bottom-right {
       bottom: 20px;
       right: 20px;
       width: 240px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
     }
 
     .top-icons {
@@ -100,14 +105,21 @@
     }
 
     .top-icons a img {
-      width: 40px;
-      height: 40px;
-      filter: invert(1);
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 10px #fff);
+      animation: pulse 2s infinite;
       transition: transform 0.3s ease;
     }
 
     .top-icons a img:hover {
       transform: scale(1.2);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     .top-left {
@@ -120,35 +132,28 @@
 
     .top-left img {
       width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      border-radius: 0;
+      box-shadow: none;
     }
 
     @media (max-width: 768px) {
       .header-text {
-        font-size: 10vw;
-        margin-top: 100px;
-      }
-
-      .top-icons {
-        top: 15px;
-        right: 10px;
+        font-size: 8vw;
+        margin-top: 60px;
       }
 
       .top-icons a img {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
       }
 
       .top-left {
-        top: 15px;
-        left: 10px;
         width: 60px;
       }
 
       .corner.bottom-left,
       .corner.bottom-right {
-        width: 120px;
+        width: 140px;
       }
     }
   </style>
@@ -159,7 +164,9 @@
 
   <div class="header-text">s10W</div>
 
-  <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes" />
+  <div class="center-container">
+    <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes" />
+  </div>
 
   <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
@@ -167,7 +174,7 @@
 
   <div class="top-icons">
     <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
     </a>
   </div>
 
