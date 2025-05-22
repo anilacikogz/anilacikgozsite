@@ -10,13 +10,6 @@
     :root {
       --primary-bg: linear-gradient(135deg, #2f3e4f, #4a6274);
       --text-color: #f0f0f0;
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 255, 255, 0.15);
-    }
-
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
     }
 
     html, body {
@@ -51,37 +44,6 @@
       z-index: -1;
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      backdrop-filter: blur(8px);
-      background: rgba(0, 0, 0, 0.5);
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-    }
-
-    nav .logo {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2em;
-      color: white;
-    }
-
-    nav .nav-links a {
-      margin-left: 20px;
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    nav .nav-links a:hover {
-      color: #ffcc70;
-    }
-
     .header-text {
       font-family: 'Great Vibes', cursive;
       font-size: 6vw;
@@ -89,30 +51,6 @@
       margin-top: 120px;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
       color: rgba(255, 255, 255, 0.9);
-    }
-
-    .about-box {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px 30px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-
-    .about-box h2 {
-      margin-bottom: 10px;
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    .about-box p {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #ccc;
     }
 
     .center-gif {
@@ -156,7 +94,7 @@
 
     .top-icons {
       position: fixed;
-      top: 80px;
+      top: 20px;
       right: 20px;
       z-index: 10;
       display: flex;
@@ -177,7 +115,7 @@
 
     .top-left {
       position: fixed;
-      top: 80px;
+      top: 20px;
       left: 20px;
       width: 80px;
       z-index: 10;
@@ -195,13 +133,8 @@
         margin-top: 100px;
       }
 
-      .about-box {
-        margin: 20px 10px;
-        padding: 15px 20px;
-      }
-
       .top-icons {
-        top: 70px;
+        top: 15px;
         right: 10px;
       }
 
@@ -211,7 +144,7 @@
       }
 
       .top-left {
-        top: 70px;
+        top: 15px;
         left: 10px;
         width: 60px;
       }
@@ -221,26 +154,21 @@
         width: 120px;
       }
     }
+
+    /* YouTube iframe gizle */
+    .youtube-audio {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      left: -9999px;
+    }
   </style>
 </head>
 <body>
   <div class="parallax"></div>
   <div class="overlay"></div>
 
-  <nav>
-    <div class="logo">Anıl Açıkgöz</div>
-    <div class="nav-links">
-      <a href="#about">Hakkımda</a>
-      <a href="https://www.instagram.com/gala4s10/" target="_blank">Instagram</a>
-    </div>
-  </nav>
-
   <div class="header-text">s10W</div>
-
-  <div id="about" class="about-box">
-    <h2>Hakkımda</h2>
-    <p>Ben Anıl Açıkgöz. Yazılım geliştirici olarak çalışıyor, aynı zamanda edebiyat ve teknolojiyle ilgileniyorum. Bu sayfa benim dijital kartvizitim gibi – hoş geldin!</p>
-  </div>
 
   <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes" />
 
@@ -256,6 +184,15 @@
 
   <div class="top-left">
     <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
+  </div>
+
+  <!-- YouTube Müzik Otomatik Çalar -->
+  <div class="youtube-audio">
+    <iframe
+      src="https://www.youtube.com/embed/tzIjQtoGWwQ?autoplay=1&loop=1&playlist=tzIjQtoGWwQ"
+      allow="autoplay"
+      allowfullscreen
+    ></iframe>
   </div>
 </body>
 </html>
