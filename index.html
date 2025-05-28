@@ -89,7 +89,7 @@
     .bottom-right {
       bottom: 20px;
       right: 20px;
-      width: 240px;
+      width: 300px;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(255,255,255,0.2);
     }
@@ -120,7 +120,7 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 120px;
+      width: 160px;
       z-index: 10;
     }
 
@@ -142,7 +142,7 @@
       }
 
       .top-left {
-        width: 90px;
+        width: 120px;
       }
 
       .corner.bottom-left,
@@ -173,7 +173,24 @@
   </div>
 
   <div class="top-left">
-    <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
+    <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" id="peter" />
   </div>
+
+  <audio id="peterAudio">
+    <source src="https://www.youtube.com/watch?v=VgLtRJPElQk" type="audio/mp3">
+    Tarayıcınız ses etiketini desteklemiyor.
+  </audio>
+
+  <script>
+    const peter = document.getElementById('peter');
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // YT link doğrudan çalışmaz
+    peter.addEventListener('mouseenter', () => {
+      audio.play();
+    });
+    peter.addEventListener('mouseleave', () => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+  </script>
 </body>
 </html>
