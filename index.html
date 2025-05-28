@@ -14,11 +14,12 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: linear-gradient(rgba(15, 15, 30, 0.95), rgba(10, 10, 20, 0.95)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background: url('https://rare-gallery.com/uploads/posts/5808740-Iron-Man-Vector-Art.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
       color: #f1f1f1;
+      filter: brightness(1.2); /* Parlaklığı artırdık */
     }
 
     .header-text {
@@ -27,21 +28,21 @@
       width: 100%;
       text-align: center;
       font-family: 'Great Vibes', cursive;
-      font-size: 36px;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 48px;
+      color: rgba(255, 255, 255, 0.7);
       text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
       z-index: 3;
     }
 
     .center-gif {
       position: absolute;
-      top: 55%;
+      top: 45%; /* Yukarı kaydırdık */
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 50%;
+      max-width: 60%;
       max-height: 60%;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
       z-index: 1;
     }
 
@@ -55,13 +56,13 @@
     .bottom-left {
       bottom: 20px;
       left: 20px;
-      width: 240px;
+      width: 200px;
     }
 
     .bottom-right {
       bottom: 20px;
       right: 20px;
-      width: 360px;
+      width: 320px;
     }
 
     .top-left {
@@ -72,7 +73,7 @@
     }
 
     .top-left img {
-      width: 220px;
+      width: 150px; /* Küçülttük */
       height: auto;
     }
 
@@ -84,15 +85,13 @@
     }
 
     .top-right img {
-      width: 36px;
-      height: 36px;
-      opacity: 0.7;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      width: 40px;
+      height: 40px;
+      transition: transform 0.3s ease;
     }
 
     .top-right img:hover {
-      transform: scale(1.15);
-      opacity: 1;
+      transform: scale(1.2);
     }
   </style>
 </head>
@@ -102,7 +101,7 @@
 
   <div class="top-right">
     <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram">
     </a>
   </div>
 
@@ -115,42 +114,6 @@
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
 
   <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli">
-
-  <!-- Sesler -->
-  <audio id="icardiAudio">
-    <source src="https://docs.google.com/uc?export=download&id=1FNnb05XRZ7cXbHGbjG_wee0DMCo345lG" type="audio/mp3">
-  </audio>
-
-  <audio id="griffinAudio" src="https://docs.google.com/uc?export=download&id=1RVLuMJAAAaClf9gzTulikoXQ-3sTipyo" type="audio/mp3"></audio>
-
-
-  <script>
-    const icardiImage = document.getElementById("icardiImage");
-    const icardiAudio = document.getElementById("icardiAudio");
-
-    icardiImage.addEventListener("mouseenter", () => {
-      icardiAudio.play();
-    });
-
-    icardiImage.addEventListener("mouseleave", () => {
-      icardiAudio.pause();
-      icardiAudio.currentTime = 0;
-    });
-
-    const griffinImage = document.getElementById("griffinImage");
-const griffinAudio = document.getElementById("griffinAudio");
-
-griffinImage.addEventListener("mouseenter", () => {
-  griffinAudio.play().catch(e => console.log(e));
-});
-
-griffinImage.addEventListener("mouseleave", () => {
-  griffinAudio.pause();
-  griffinAudio.currentTime = 0;
-});
-
-
-  </script>
 
 </body>
 </html>
