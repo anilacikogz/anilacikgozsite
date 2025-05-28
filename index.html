@@ -121,9 +121,8 @@
     <source src="https://docs.google.com/uc?export=download&id=1FNnb05XRZ7cXbHGbjG_wee0DMCo345lG" type="audio/mp3">
   </audio>
 
-  <audio id="griffinAudio">
-    <source src="https://docs.google.com/uc?export=download&id=1RVLuMJAAAaClf9gzTulikoXQ-3sTipyo" type="audio/mp3">
-  </audio>
+  <audio id="griffinAudio" src="https://docs.google.com/uc?export=download&id=1RVLuMJAAAaClf9gzTulikoXQ-3sTipyo" type="audio/mp3"></audio>
+
 
   <script>
     const icardiImage = document.getElementById("icardiImage");
@@ -139,16 +138,18 @@
     });
 
     const griffinImage = document.getElementById("griffinImage");
-    const griffinAudio = document.getElementById("griffinAudio");
+const griffinAudio = document.getElementById("griffinAudio");
 
-    griffinImage.addEventListener("mouseenter", () => {
-      griffinAudio.play();
-    });
+griffinImage.addEventListener("mouseenter", () => {
+  griffinAudio.play().catch(e => console.log(e));
+});
 
-    griffinImage.addEventListener("mouseleave", () => {
-      griffinAudio.pause();
-      griffinAudio.currentTime = 0;
-    });
+griffinImage.addEventListener("mouseleave", () => {
+  griffinAudio.pause();
+  griffinAudio.currentTime = 0;
+});
+
+
   </script>
 
 </body>
