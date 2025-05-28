@@ -1,83 +1,55 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Anıl Açıkgöz</title>
-  <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/jpeg" />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --text-color: #f0f0f0;
+    html {
+      scroll-behavior: smooth;
     }
 
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      color: var(--text-color);
       height: 100%;
-      overflow-x: hidden;
-    }
-
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80');
+      background: url('https://rare-gallery.com/uploads/posts/5808740-Iron-Man-Vector-Art.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      z-index: -2;
-      filter: brightness(0.7);
-    }
-
-    .overlay {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.4);
-      z-index: -1;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      color: #f1f1f1;
     }
 
     .header-text {
-      font-family: 'Great Vibes', cursive;
-      font-size: 4vw;
+      position: absolute;
+      top: 20px;
+      width: 100%;
       text-align: center;
-      margin-top: 80px;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .center-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+      z-index: 3;
     }
 
     .center-gif {
-      max-width: 80%;
-      max-height: 60vh;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .center-gif:hover {
-      transform: scale(1.05);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 60%;
+      max-height: 60%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      z-index: 1;
     }
 
     .corner {
-      position: fixed;
+      position: absolute;
       object-fit: contain;
-      z-index: 5;
-      transition: transform 0.3s ease;
-    }
-
-    .corner:hover {
-      transform: scale(1.05);
+      z-index: 2;
+      border-radius: 12px;
     }
 
     .bottom-left {
@@ -89,108 +61,93 @@
     .bottom-right {
       bottom: 20px;
       right: 20px;
-      width: 300px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-
-    .top-icons {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .top-icons a img {
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      opacity: 0.9;
-    }
-
-    .top-icons a img:hover {
-      transform: scale(1.1);
-      opacity: 1;
+      width: 320px;
     }
 
     .top-left {
-      position: fixed;
+      position: absolute;
       top: 20px;
       left: 20px;
-      width: 160px;
-      z-index: 10;
+      z-index: 2;
     }
 
     .top-left img {
-      width: 100%;
-      border-radius: 0;
-      box-shadow: none;
+      width: 180px;
+      height: auto;
     }
 
-    @media (max-width: 768px) {
-      .header-text {
-        font-size: 8vw;
-        margin-top: 60px;
-      }
+    .top-right {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 4;
+    }
 
-      .top-icons a img {
-        width: 40px;
-        height: 40px;
-      }
+    .top-right img {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
 
-      .top-left {
-        width: 120px;
-      }
-
-      .corner.bottom-left,
-      .corner.bottom-right {
-        width: 140px;
-      }
+    .top-right img:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  <div class="overlay"></div>
 
   <div class="header-text">s10W</div>
 
-  <div class="center-container">
-    <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes" />
-  </div>
-
-  <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
-
-  <img class="corner bottom-right" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="Yeni Görsel" />
-
-  <div class="top-icons">
+  <div class="top-right">
     <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+      <img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram">
     </a>
   </div>
 
   <div class="top-left">
-    <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" id="peter" />
+    <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin">
   </div>
 
-  <audio id="peterAudio">
-    <source src="https://www.youtube.com/watch?v=VgLtRJPElQk" type="audio/mp3">
-    Tarayıcınız ses etiketini desteklemiyor.
+  <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF">
+
+  <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
+
+  <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli">
+
+  <!-- Sesler -->
+  <audio id="icardiAudio">
+    <source src="https://docs.google.com/uc?export=download&id=1FNnb05XRZ7cXbHGbjG_wee0DMCo345lG" type="audio/mp3">
+  </audio>
+
+  <audio id="griffinAudio">
+    <source src="https://docs.google.com/uc?export=download&id=1RVLuMJAAAaClf9gzTulikoXQ-3sTipyo" type="audio/mp3">
   </audio>
 
   <script>
-    const peter = document.getElementById('peter');
-    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // YT link doğrudan çalışmaz
-    peter.addEventListener('mouseenter', () => {
-      audio.play();
+    const icardiImage = document.getElementById("icardiImage");
+    const icardiAudio = document.getElementById("icardiAudio");
+
+    icardiImage.addEventListener("mouseenter", () => {
+      icardiAudio.play();
     });
-    peter.addEventListener('mouseleave', () => {
-      audio.pause();
-      audio.currentTime = 0;
+
+    icardiImage.addEventListener("mouseleave", () => {
+      icardiAudio.pause();
+      icardiAudio.currentTime = 0;
+    });
+
+    const griffinImage = document.getElementById("griffinImage");
+    const griffinAudio = document.getElementById("griffinAudio");
+
+    griffinImage.addEventListener("mouseenter", () => {
+      griffinAudio.play();
+    });
+
+    griffinImage.addEventListener("mouseleave", () => {
+      griffinAudio.pause();
+      griffinAudio.currentTime = 0;
     });
   </script>
+
 </body>
 </html>
