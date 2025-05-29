@@ -92,18 +92,17 @@
       box-shadow: none;
     }
     .center-gif {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 60%;
-  max-height: 60vh;
-  animation: fadeIn 2.5s ease forwards;
-  border-radius: 0;
-  box-shadow: none;
-  z-index: 10;
-}
-
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 60%;
+      max-height: 60vh;
+      animation: fadeIn 2.5s ease forwards;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: 10;
+    }
     .corner {
       position: fixed;
       object-fit: contain;
@@ -114,16 +113,34 @@
       cursor: pointer;
     }
     .bottom-left {
+      position: fixed;
       bottom: 20px;
-      left: 20px;
+      left: 0;
       width: 180px;
       max-height: 150px;
+      padding-left: 10px;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .bottom-left img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .bottom-right {
+      position: fixed;
       bottom: 20px;
-      right: 20px;
-      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
-      max-height: 172px; /* 150 * 1.15 = 172 */
+      right: 0;
+      width: 483px; /* %15 büyütme */
+      max-height: 172px;
+      padding-right: 10px;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .bottom-right img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -134,13 +151,15 @@
         max-width: 90%;
         max-height: 40vh;
       }
-      .corner.bottom-left {
+      .bottom-left {
         width: 120px;
         max-height: 100px;
+        padding-left: 8px;
       }
-      .corner.bottom-right {
+      .bottom-right {
         width: 322px; /* 280 * 1.15 */
-        max-height: 115px; /* 100 * 1.15 */
+        max-height: 115px;
+        padding-right: 8px;
       }
       .top-left {
         width: 100px;
