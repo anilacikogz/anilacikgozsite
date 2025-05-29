@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anıl Açıkgöz</title>
   <style>
-    /* Temel stil burada önceki gibi... */
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -25,8 +24,9 @@
     }
     .top-left {
       position: fixed;
-      top: 60px;
-      left: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 30;
       width: 140px;
       cursor: pointer;
@@ -35,7 +35,7 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 420px;
+      width: 480px;
       cursor: pointer;
       z-index: 15;
     }
@@ -50,7 +50,6 @@
 
   <img class="corner bottom-right" id="icardiDiv" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli" />
 
-  <!-- Ses dosyaları -->
   <audio id="griffinAudio" src="https://raw.githubusercontent.com/anilacikogz/anilacikgozsite/main/griffin.mp3" preload="auto"></audio>
   <audio id="icardiAudio" src="https://raw.githubusercontent.com/anilacikogz/anilacikgozsite/main/icardi.mp3" preload="auto"></audio>
 
@@ -61,7 +60,6 @@
     const griffinAudio = document.getElementById('griffinAudio');
     const icardiAudio = document.getElementById('icardiAudio');
 
-    // Peter Griffin üstüne gelince
     griffinDiv.addEventListener('mouseenter', () => {
       griffinAudio.currentTime = 0;
       griffinAudio.play();
@@ -71,7 +69,6 @@
       griffinAudio.currentTime = 0;
     });
 
-    // İcardi görseli üstüne gelince
     icardiDiv.addEventListener('mouseenter', () => {
       icardiAudio.currentTime = 0;
       icardiAudio.play();
