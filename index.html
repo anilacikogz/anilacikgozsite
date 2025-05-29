@@ -77,10 +77,9 @@
       height: 100%;
       display: block;
     }
-    /* Sol üst görsel navbarın hemen altında */
     .top-left {
       position: fixed;
-      top: 60px;  /* navbar yüksekliği kadar aşağıda */
+      top: 60px;
       left: 20px;
       z-index: 30;
       width: 140px;
@@ -95,20 +94,19 @@
       box-shadow: none;
     }
     .center-gif {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  height: auto;
-  max-width: 60vw;    /* viewport genişliğinin %60'ı */
-  max-height: 60vh;   /* viewport yüksekliğinin %60'ı */
-  z-index: 1000;      /* üstte durması için yüksek z-index */
-  border-radius: 0;
-  box-shadow: none;
-  animation: fadeIn 2.5s ease forwards;
-}
-
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: auto;
+      height: auto;
+      max-width: 60vw;
+      max-height: 60vh;
+      z-index: 1000;
+      border-radius: 0;
+      box-shadow: none;
+      animation: fadeIn 2.5s ease forwards;
+    }
     .corner {
       position: fixed;
       object-fit: contain;
@@ -118,19 +116,17 @@
       box-shadow: none;
       cursor: pointer;
     }
-    /* Sol alt görsel: biraz büyütüp ve içerden eşit mesafede */
     .bottom-left {
       bottom: 20px;
-      left: 40px; /* Sola 40px boşluk */
-      width: 200px; /* Öncekinden biraz daha büyük */
+      left: 40px;
+      width: 200px;
       max-height: 165px;
     }
-    /* Sağ alt görsel: biraz büyütülüp eşit boşluk */
     .bottom-right {
       bottom: 20px;
-      right: 40px; /* Sağa 40px boşluk */
-      width: 530px; /* Biraz daha büyüttüm (483'den 530'a) */
-      max-height: 189px;
+      right: 20px;      /* Sağdan biraz daha içeri aldım */
+      width: 520px;      /* Boyutu biraz küçülttüm ama hala büyütülmüş */
+      max-height: 185px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -144,12 +140,12 @@
       .corner.bottom-left {
         width: 140px;
         max-height: 115px;
-        left: 20px; /* Mobilde içerden biraz boşluk */
+        left: 20px;
       }
       .corner.bottom-right {
-        width: 375px; /* Küçültüldü */
+        width: 375px;
         max-height: 135px;
-        right: 20px; /* İçerden boşluk */
+        right: 20px;
       }
       .top-left {
         width: 100px;
@@ -188,7 +184,6 @@
     const icardiImage = document.getElementById('icardiImage');
     const icardiAudio = document.getElementById('icardiAudio');
 
-    // Fonksiyon: Bir sesi başlatırken diğerini durdur
     function playAudio(audioToPlay, audioToPause) {
       if (audioToPause && !audioToPause.paused) {
         audioToPause.pause();
@@ -199,7 +194,6 @@
       }
     }
 
-    // Peter Griffin üzerine gelince sesi çal
     griffinDiv.addEventListener('mouseenter', () => {
       playAudio(griffinAudio, icardiAudio);
     });
@@ -208,7 +202,6 @@
       griffinAudio.currentTime = 0;
     });
 
-    // İcardi görseline gelince sesi çal
     icardiImage.addEventListener('mouseenter', () => {
       playAudio(icardiAudio, griffinAudio);
     });
