@@ -14,21 +14,22 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: url('https://rare-gallery.com/uploads/posts/5808740-Iron-Man-Vector-Art.jpg') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
       color: #f1f1f1;
     }
 
-    .background-overlay {
+    body::before {
+      content: "";
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.4); /* Parlaklığı kısar */
-      z-index: 0;
+      background-color: rgba(0, 0, 0, 0.35); /* Parlaklığı biraz kısar */
+      z-index: -1;
     }
 
     .header-text {
@@ -45,14 +46,14 @@
 
     .center-gif {
       position: absolute;
-      top: 42%;
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 60%;
       max-height: 60%;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      z-index: 2;
+      z-index: 1;
     }
 
     .corner {
@@ -84,7 +85,6 @@
     .top-left img {
       width: 140px;
       height: auto;
-      cursor: pointer;
     }
 
     .top-right {
@@ -107,8 +107,6 @@
 </head>
 <body>
 
-  <div class="background-overlay"></div>
-
   <div class="header-text">s10W</div>
 
   <div class="top-right">
@@ -123,44 +121,9 @@
 
   <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF">
 
-  <img class="corner bottom-left" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
+  <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
 
   <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli">
-
-  <!-- Ses dosyaları -->
-  <audio id="griffinAudio">
-    <source src="/mnt/data/griffin.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="icardiAudio">
-    <source src="/mnt/data/icardi.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    const griffinImage = document.getElementById("griffinImage");
-    const griffinAudio = document.getElementById("griffinAudio");
-
-    griffinImage.addEventListener("mouseenter", () => {
-      griffinAudio.play();
-    });
-
-    griffinImage.addEventListener("mouseleave", () => {
-      griffinAudio.pause();
-      griffinAudio.currentTime = 0;
-    });
-
-    const icardiImage = document.getElementById("icardiImage");
-    const icardiAudio = document.getElementById("icardiAudio");
-
-    icardiImage.addEventListener("mouseenter", () => {
-      icardiAudio.play();
-    });
-
-    icardiImage.addEventListener("mouseleave", () => {
-      icardiAudio.pause();
-      icardiAudio.currentTime = 0;
-    });
-  </script>
 
 </body>
 </html>
