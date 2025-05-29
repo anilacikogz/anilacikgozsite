@@ -116,17 +116,18 @@
       max-height: 170px;
     }
     #icardiImage {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 320px;
-      max-height: 172px;
-      object-fit: contain;
-      z-index: 9999;
-      cursor: pointer;
-      margin: 0;
-      animation: fadeIn 3s ease forwards;
-    }
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 172px;
+  object-fit: contain;
+  z-index: 9999;
+  cursor: pointer;
+  margin: 0;
+  animation: fadeIn 3s ease forwards;
+}
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -170,6 +171,7 @@
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
   <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
+
 
   <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
   <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
