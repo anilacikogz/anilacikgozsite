@@ -117,12 +117,20 @@
       max-height: 170px;
     }
     .bottom-right {
+  position: fixed;
   bottom: 20px;
-  right: 20px; 
-  width: 500px;
+  right: 20px;
+  width: 483px;
   max-height: 172px;
-  
- }
+  object-fit: contain;
+  z-index: 15;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  animation: fadeIn 3s ease forwards;
+  margin: 0; 
+}
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
