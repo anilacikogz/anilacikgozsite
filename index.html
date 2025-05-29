@@ -3,93 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Anıl Açıkgöz - Kişisel Web Sitesi" />
   <title>Anıl Açıkgöz</title>
-  <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/jpeg" />
+  <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    html {
-      scroll-behavior: smooth;
+    /* Genellikle reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
     }
 
-    html, body {
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100vh;
       background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Poppins', sans-serif;
-      overflow-y: auto;
       color: #f1f1f1;
+      overflow-y: auto;
+      position: relative;
     }
 
+    /* Koyu overlay daha koyu yaptım */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.35);
+      background-color: rgba(0, 0, 0, 0.5);
       z-index: -1;
     }
 
-    /* Üstteki s10W yazısı kaldırıldı */
-    /* Daha önceki üstteki s10W yazısı (header-text) silindi */
-
-    .top-right {
+    /* Navbar üstte, transparan */
+    nav {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 0; left: 0;
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
       z-index: 10;
+      font-family: 'Great Vibes', cursive;
+      font-size: 32px;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      user-select: none;
+      animation: fadeIn 1s ease forwards;
     }
 
-    .top-right img {
-      width: 40px;
-      height: 40px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.6));
-    }
+    /* Ana header-text (sayfa başlığı) - Kaldırıldı */
 
-    .top-right img:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(2px 2px 3px rgba(255,255,255,0.8));
-    }
+    /* Alt footer - Kaldırıldı */
 
-    .top-left {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-    }
-
-    .top-left img {
-      width: 140px;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.7);
-    }
-
+    /* Ana merkezdeki gif */
     .center-gif {
       display: block;
-      margin: 100px auto 60px auto;
+      margin: 40px auto 0;
       max-width: 60%;
       max-height: 60vh;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.25);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeInUp 1.2s forwards ease-out;
-      animation-delay: 0.5s;
-      z-index: 5;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      animation: fadeIn 2.5s ease forwards;
     }
 
+    /* Köşelerdeki görseller */
     .corner {
       position: fixed;
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.7);
-      z-index: 7;
-      opacity: 0;
-      animation: fadeIn 1.5s forwards ease-out;
+      animation: fadeIn 3s ease forwards;
+      z-index: 6;
     }
 
     .bottom-left {
@@ -97,7 +90,6 @@
       left: 20px;
       width: 180px;
       max-height: 150px;
-      animation-delay: 1s;
     }
 
     .bottom-right {
@@ -105,89 +97,111 @@
       right: 20px;
       width: 320px;
       max-height: 150px;
-      animation-delay: 1.2s;
     }
 
-    /* Scroll animasyonu için fadeIn ve fadeInUp tanımları */
+    .top-left {
+      top: 80px; /* navbar altına */
+      left: 20px;
+      z-index: 7;
+      width: 140px;
+    }
+
+    .top-left img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    /* Sosyal ikon */
+    .top-right {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 15;
+    }
+
+    .top-right a {
+      display: inline-block;
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.7));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .top-right a:hover {
+      transform: scale(1.3);
+      filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.8));
+    }
+
+    .top-right img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Animasyon keyframe */
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Scroll animasyon JS ile eklenecek */
-
-    /* Responsive */
+    /* Responsive font küçültme */
     @media (max-width: 600px) {
-      .top-left img {
-        width: 100px;
+      /*
+      .header-text {
+        font-size: 36px;
+        margin-top: 70px;
       }
 
+      footer {
+        font-size: 22px;
+        padding: 10px 0;
+      }
+      */
       .center-gif {
         max-width: 90%;
         max-height: 40vh;
-        margin-top: 80px;
       }
 
-      .bottom-left {
+      .corner.bottom-left {
         width: 120px;
         max-height: 100px;
       }
 
-      .bottom-right {
+      .corner.bottom-right {
         width: 200px;
         max-height: 100px;
+      }
+
+      .top-left {
+        width: 100px;
       }
     }
   </style>
 </head>
 <body>
 
+  <nav>s10W</nav>
+
+  <!-- .header-text kaldırıldı -->
+
   <div class="top-right">
-    <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram">
+    <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram Icon" />
     </a>
   </div>
 
   <div class="top-left">
-    <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin">
+    <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
-  <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF">
+  <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
 
-  <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF">
+  <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
-  <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli">
+  <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli" />
 
-  <script>
-    // Scroll animasyonu için basit JS: element görünür olunca animasyon tetiklenir
-    document.addEventListener('DOMContentLoaded', () => {
-      const fadeElements = document.querySelectorAll('.corner, .center-gif');
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-
-      fadeElements.forEach(el => {
-        el.style.animationPlayState = 'paused'; // başta animasyon duraklatıldı
-        observer.observe(el);
-      });
-    });
-  </script>
+  <!-- footer kaldırıldı -->
 
 </body>
 </html>
