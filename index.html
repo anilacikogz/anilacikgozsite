@@ -1,4 +1,3 @@
-<!-- Başlangıç kısmı aynı kalıyor -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -11,14 +10,14 @@
     *, *::before, *::after {
       box-sizing: border-box;
     }
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      margin: 0;
+      padding: 0;
       overflow-x: hidden;
+      scroll-behavior: auto; /* scroll animasyonu kaldırıldı */
       height: 100%;
     }
     body {
-      margin: 0;
-      padding: 0;
       min-height: 100vh;
       background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
@@ -26,7 +25,6 @@
       color: #f1f1f1;
       overflow-y: auto;
       position: relative;
-      height: 100%;
     }
     body::before {
       content: "";
@@ -94,7 +92,6 @@
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
-      z-index: 10;
     }
     .corner {
       position: fixed;
@@ -110,10 +107,16 @@
       max-height: 170px;
     }
     .bottom-right {
-      bottom: 20px;
-      right: 20px;
-      width: 483px;
+      bottom: 0;
+      right: 0;
+      width: 320px;
       max-height: 172px;
+      object-fit: contain;
+      z-index: 9999;
+      cursor: pointer;
+      animation: fadeIn 3s ease forwards;
+      margin: 0;
+      display: block;
     }
 
     @keyframes fadeIn {
@@ -130,8 +133,8 @@
         width: 140px;
         max-height: 115px;
       }
-      .corner.bottom-right {
-        width: 322px;
+      .bottom-right {
+        width: 250px;
         max-height: 115px;
       }
       .top-left {
@@ -160,17 +163,22 @@
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
   <!-- Yeni Sağ Alt Görsel -->
-  <img class="corner bottom-right" id="icardiNewImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Yeni Görseli" />
+  <img
+    id="icardiImage"
+    class="bottom-right"
+    src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg"
+    alt="İcardi Görseli"
+/>
 
-  <!-- Sesler -->
   <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
   <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
 
   <script>
     const griffinDiv = document.getElementById('griffinDiv');
     const griffinAudio = document.getElementById('griffinAudio');
+
+    const icardiImage = document.getElementById('icardiImage');
     const icardiAudio = document.getElementById('icardiAudio');
-    const icardiNewImage = document.getElementById('icardiNewImage');
 
     function playAudio(audioToPlay, audioToPause) {
       if (audioToPause && !audioToPause.paused) {
@@ -190,10 +198,10 @@
       griffinAudio.currentTime = 0;
     });
 
-    icardiNewImage.addEventListener('mouseenter', () => {
+    icardiImage.addEventListener('mouseenter', () => {
       playAudio(icardiAudio, griffinAudio);
     });
-    icardiNewImage.addEventListener('mouseleave', () => {
+    icardiImage.addEventListener('mouseleave', () => {
       icardiAudio.pause();
       icardiAudio.currentTime = 0;
     });
