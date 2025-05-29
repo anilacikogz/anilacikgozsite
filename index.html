@@ -95,17 +95,20 @@
       box-shadow: none;
     }
     .center-gif {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 60%;
-      max-height: 60vh;
-      animation: fadeIn 2.5s ease forwards;
-      border-radius: 0;
-      box-shadow: none;
-      z-index: 10;
-    }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  max-width: 60vw;    /* viewport genişliğinin %60'ı */
+  max-height: 60vh;   /* viewport yüksekliğinin %60'ı */
+  z-index: 1000;      /* üstte durması için yüksek z-index */
+  border-radius: 0;
+  box-shadow: none;
+  animation: fadeIn 2.5s ease forwards;
+}
+
     .corner {
       position: fixed;
       object-fit: contain;
