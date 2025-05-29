@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anıl Açıkgöz</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <link rel="icon" href="https://www.oggusto.com/_next/image?url=https%3A%2F%2Fwp.oggusto.com%2Fwp-content%2Fuploads%2F2023%2F10%2Fmauro-icardi-hakkinda-her-sey.webp&w=3840&q=75" type="image/webp" />
-
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -77,9 +74,10 @@
       height: 100%;
       display: block;
     }
+    /* Sol üst görsel navbarın hemen altında */
     .top-left {
       position: fixed;
-      top: 60px;
+      top: 60px;  /* navbar yüksekliği kadar aşağıda */
       left: 20px;
       z-index: 30;
       width: 140px;
@@ -93,20 +91,19 @@
       border-radius: 0;
       box-shadow: none;
     }
+
+    /* Cody GIF: header altına ortalanmış ve biraz boşluk bırakılmış */
     .center-gif {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: auto;
-      height: auto;
-      max-width: 60vw;
+      display: block;
+      margin: 80px auto 0; /* header 60px + 20px boşluk */
+      max-width: 60%;
       max-height: 60vh;
-      z-index: 1000;
+      animation: fadeIn 2.5s ease forwards;
       border-radius: 0;
       box-shadow: none;
-      animation: fadeIn 2.5s ease forwards;
+      z-index: 10;
     }
+
     .corner {
       position: fixed;
       object-fit: contain;
@@ -118,15 +115,15 @@
     }
     .bottom-left {
       bottom: 20px;
-      left: 40px;
-      width: 200px;
-      max-height: 165px;
+      left: 20px;
+      width: 180px;
+      max-height: 150px;
     }
     .bottom-right {
       bottom: 20px;
-      right: 20px;      /* Sağdan biraz daha içeri aldım */
-      width: 520px;      /* Boyutu biraz küçülttüm ama hala büyütülmüş */
-      max-height: 185px;
+      right: 20px;
+      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
+      max-height: 172px; /* 150 * 1.15 = 172 */
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -138,14 +135,12 @@
         max-height: 40vh;
       }
       .corner.bottom-left {
-        width: 140px;
-        max-height: 115px;
-        left: 20px;
+        width: 120px;
+        max-height: 100px;
       }
       .corner.bottom-right {
-        width: 375px;
-        max-height: 135px;
-        right: 20px;
+        width: 322px; /* 280 * 1.15 */
+        max-height: 115px; /* 100 * 1.15 */
       }
       .top-left {
         width: 100px;
@@ -168,6 +163,7 @@
     <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
+  <!-- Cody GIF header altına ve ortalanmış şekilde -->
   <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
 
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
@@ -184,6 +180,7 @@
     const icardiImage = document.getElementById('icardiImage');
     const icardiAudio = document.getElementById('icardiAudio');
 
+    // Fonksiyon: Bir sesi başlatırken diğerini durdur
     function playAudio(audioToPlay, audioToPause) {
       if (audioToPause && !audioToPause.paused) {
         audioToPause.pause();
@@ -194,6 +191,7 @@
       }
     }
 
+    // Peter Griffin üzerine gelince sesi çal
     griffinDiv.addEventListener('mouseenter', () => {
       playAudio(griffinAudio, icardiAudio);
     });
@@ -202,6 +200,7 @@
       griffinAudio.currentTime = 0;
     });
 
+    // İcardi görseline gelince sesi çal
     icardiImage.addEventListener('mouseenter', () => {
       playAudio(icardiAudio, griffinAudio);
     });
