@@ -32,16 +32,17 @@
       z-index: -1;
     }
 
-    /* Üstteki s10W yazısı yerine görsel için stil */
-    .header-image {
+    /* Üstteki s10W yazısı */
+    .header-text {
       position: absolute;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 200px;
-      height: auto;
+      width: 100%;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
       z-index: 3;
-      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.7));
     }
 
     /* Alt orta kısmındaki s10W yazısı */
@@ -55,7 +56,7 @@
       color: rgba(255, 255, 255, 0.7);
       text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
       z-index: 3;
-      pointer-events: none; /* yazının üzerine tıklanmasın */
+      pointer-events: none;
       user-select: none;
     }
 
@@ -122,8 +123,7 @@
 </head>
 <body>
 
-  <!-- Üstteki s10W yazısı kaldırıldı, yerine resim kondu -->
-  <img class="header-image" src="https://pbs.twimg.com/media/GsGpDN-WIAADsvl?format=jpg&name=large" alt="Header Image">
+  <div class="header-text">s10W</div>
 
   <div class="top-right">
     <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram">
@@ -141,7 +141,6 @@
 
   <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli">
 
-  <!-- Alt ortada s10W yazısı -->
   <div class="footer-text">s10W</div>
 
 </body>
