@@ -117,11 +117,19 @@
       max-height: 170px;
     }
     .bottom-right {
-      bottom: 5px;
-      right: 0;
-      width: 483px;
-      max-height: 172px;
-    }
+  bottom: 20px;
+  right: 20px; /* Sağa 20px boşluk */
+  width: 483px;
+  max-height: 172px;
+  position: fixed;
+  object-fit: contain;
+  z-index: 15;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  animation: fadeIn 3s ease forwards;
+}
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
