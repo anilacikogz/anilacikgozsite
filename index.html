@@ -6,7 +6,6 @@
   <title>Anıl Açıkgöz</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <!-- Favicon eklemesi -->
   <link rel="icon" href="https://www.oggusto.com/_next/image?url=https%3A%2F%2Fwp.oggusto.com%2Fwp-content%2Fuploads%2F2023%2F10%2Fmauro-icardi-hakkinda-her-sey.webp&w=3840&q=75" type="image/webp" />
 
   <style>
@@ -116,17 +115,19 @@
       box-shadow: none;
       cursor: pointer;
     }
+    /* Sol alt görsel: biraz büyütüp ve içerden eşit mesafede */
     .bottom-left {
       bottom: 20px;
-      left: 0;  /* Sola tam yapıştırdım */
-      width: 180px;
-      max-height: 150px;
+      left: 40px; /* Sola 40px boşluk */
+      width: 200px; /* Öncekinden biraz daha büyük */
+      max-height: 165px;
     }
+    /* Sağ alt görsel: biraz büyütülüp eşit boşluk */
     .bottom-right {
       bottom: 20px;
-      right: 0;  /* Sağa tam yapıştırdım */
-      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
-      max-height: 172px; /* 150 * 1.15 = 172 */
+      right: 40px; /* Sağa 40px boşluk */
+      width: 530px; /* Biraz daha büyüttüm (483'den 530'a) */
+      max-height: 189px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -138,14 +139,14 @@
         max-height: 40vh;
       }
       .corner.bottom-left {
-        width: 120px;
-        max-height: 100px;
-        left: 0; /* Mobilde de tam sola */
+        width: 140px;
+        max-height: 115px;
+        left: 20px; /* Mobilde içerden biraz boşluk */
       }
       .corner.bottom-right {
-        width: 322px; /* 280 * 1.15 */
-        max-height: 115px; /* 100 * 1.15 */
-        right: 0; /* Mobilde de tam sağa */
+        width: 375px; /* Küçültüldü */
+        max-height: 135px;
+        right: 20px; /* İçerden boşluk */
       }
       .top-left {
         width: 100px;
