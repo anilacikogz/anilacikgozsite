@@ -12,6 +12,7 @@
     html {
       scroll-behavior: smooth;
       overflow-x: hidden;
+      height: 100%;
     }
     body {
       margin: 0;
@@ -23,6 +24,7 @@
       color: #f1f1f1;
       overflow-y: auto;
       position: relative;
+      height: 100%;
     }
     body::before {
       content: "";
@@ -81,6 +83,7 @@
       width: 140px;
       border-radius: 0;
       box-shadow: none;
+      cursor: pointer;
     }
     .top-left img {
       width: 100%;
@@ -89,13 +92,17 @@
       box-shadow: none;
     }
     .center-gif {
-      display: block;
-      margin: 80px auto 0;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
       border-radius: 0;
       box-shadow: none;
+      z-index: 10;
+      pointer-events: none; /* GIF üzerine tıklanmasını engellemek için */
     }
     .corner {
       position: fixed;
@@ -104,6 +111,7 @@
       z-index: 15;
       border-radius: 0;
       box-shadow: none;
+      cursor: pointer;
     }
     .bottom-left {
       bottom: 20px;
@@ -114,8 +122,8 @@
     .bottom-right {
       bottom: 20px;
       right: 20px;
-      width: 420px;
-      max-height: 150px;
+      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
+      max-height: 172px; /* 150 * 1.15 = 172 */
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -131,8 +139,8 @@
         max-height: 100px;
       }
       .corner.bottom-right {
-        width: 280px;
-        max-height: 100px;
+        width: 322px; /* 280 * 1.15 */
+        max-height: 115px; /* 100 * 1.15 */
       }
       .top-left {
         width: 100px;
@@ -151,7 +159,7 @@
     </a>
   </div>
 
-  <div class="top-left">
+  <div class="top-left" id="griffinDiv" tabindex="0" role="button" aria-label="Peter Griffin">
     <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
@@ -160,6 +168,46 @@
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
   <img class="corner bottom-right" id="icardiImage" src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626" alt="İcardi Görseli" />
+
+  <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
+  <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
+
+  <script>
+    const griffinDiv = document.getElementById('griffinDiv');
+    const griffinAudio = document.getElementById('griffinAudio');
+
+    const icardiImage = document.getElementById('icardiImage');
+    const icardiAudio = document.getElementById('icardiAudio');
+
+    // Fonksiyon: Bir sesi başlatırken diğerini durdur
+    function playAudio(audioToPlay, audioToPause) {
+      if (audioToPause && !audioToPause.paused) {
+        audioToPause.pause();
+        audioToPause.currentTime = 0;
+      }
+      if (audioToPlay.paused) {
+        audioToPlay.play();
+      }
+    }
+
+    // Peter Griffin üzerine gelince sesi çal
+    griffinDiv.addEventListener('mouseenter', () => {
+      playAudio(griffinAudio, icardiAudio);
+    });
+    griffinDiv.addEventListener('mouseleave', () => {
+      griffinAudio.pause();
+      griffinAudio.currentTime = 0;
+    });
+
+    // İcardi görseline gelince sesi çal
+    icardiImage.addEventListener('mouseenter', () => {
+      playAudio(icardiAudio, griffinAudio);
+    });
+    icardiImage.addEventListener('mouseleave', () => {
+      icardiAudio.pause();
+      icardiAudio.currentTime = 0;
+    });
+  </script>
 
 </body>
 </html>
