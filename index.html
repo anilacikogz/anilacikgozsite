@@ -10,14 +10,13 @@
     *, *::before, *::after {
       box-sizing: border-box;
     }
-    html, body {
-      margin: 0;
-      padding: 0;
+    html {
       overflow-x: hidden;
-      scroll-behavior: auto; /* scroll animasyonu kaldırıldı */
       height: 100%;
     }
     body {
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
@@ -25,6 +24,7 @@
       color: #f1f1f1;
       overflow-y: auto;
       position: relative;
+      height: 100%;
     }
     body::before {
       content: "";
@@ -80,11 +80,15 @@
       left: 20px;
       z-index: 30;
       width: 140px;
+      border-radius: 0;
+      box-shadow: none;
       cursor: pointer;
     }
     .top-left img {
       width: 100%;
       height: auto;
+      border-radius: 0;
+      box-shadow: none;
     }
     .center-gif {
       display: block;
@@ -92,12 +96,17 @@
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: 10;
     }
     .corner {
       position: fixed;
       object-fit: contain;
       animation: fadeIn 3s ease forwards;
       z-index: 15;
+      border-radius: 0;
+      box-shadow: none;
       cursor: pointer;
     }
     .bottom-left {
@@ -106,7 +115,8 @@
       width: 210px;
       max-height: 170px;
     }
-    .bottom-right {
+    #icardiImage {
+      position: fixed;
       bottom: 0;
       right: 0;
       width: 320px;
@@ -114,16 +124,13 @@
       object-fit: contain;
       z-index: 9999;
       cursor: pointer;
-      animation: fadeIn 3s ease forwards;
       margin: 0;
-      display: block;
+      animation: fadeIn 3s ease forwards;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @media (max-width: 600px) {
       .center-gif {
         max-width: 90%;
@@ -133,8 +140,8 @@
         width: 140px;
         max-height: 115px;
       }
-      .bottom-right {
-        width: 250px;
+      #icardiImage {
+        width: 240px;
         max-height: 115px;
       }
       .top-left {
@@ -162,13 +169,7 @@
 
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
-  <!-- Yeni Sağ Alt Görsel -->
-  <img
-    id="icardiImage"
-    class="bottom-right"
-    src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg"
-    alt="İcardi Görseli"
-/>
+  <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
 
   <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
   <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
