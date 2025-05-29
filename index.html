@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Anıl Açıkgöz - Kişisel Web Sitesi" />
   <title>Anıl Açıkgöz</title>
-  <link rel="icon" href="https://fikirturu.com/storage/2024/03/260520231-scaled-1-696x464.jpg" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
@@ -74,28 +72,10 @@
       height: 100%;
       display: block;
     }
-    .corner {
-      position: fixed;
-      object-fit: contain;
-      animation: fadeIn 3s ease forwards;
-      z-index: 15;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .bottom-left {
-      bottom: 20px;
-      left: 20px;
-      width: 180px;
-      max-height: 150px;
-    }
-    .bottom-right {
-      bottom: 20px;
-      right: 20px;
-      width: 420px;
-      max-height: 150px;
-    }
+    /* Sol üst görsel navbarın hemen altında */
     .top-left {
-      top: 10px;
+      position: fixed;
+      top: 60px;  /* navbar yüksekliği kadar aşağıda */
       left: 20px;
       z-index: 30;
       width: 140px;
@@ -117,6 +97,26 @@
       border-radius: 0;
       box-shadow: none;
     }
+    .corner {
+      position: fixed;
+      object-fit: contain;
+      animation: fadeIn 3s ease forwards;
+      z-index: 15;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .bottom-left {
+      bottom: 20px;
+      left: 20px;
+      width: 180px;
+      max-height: 150px;
+    }
+    .bottom-right {
+      bottom: 20px;
+      right: 20px;
+      width: 420px;
+      max-height: 150px;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -136,6 +136,7 @@
       }
       .top-left {
         width: 100px;
+        top: 60px;
       }
     }
   </style>
