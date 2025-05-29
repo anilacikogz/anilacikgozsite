@@ -91,9 +91,9 @@
       border-radius: 0;
       box-shadow: none;
     }
-     .center-gif {
+    .center-gif {
       display: block;
-      margin: 80px auto 0; /* header 60px + 20px boşluk */
+      margin: 80px auto 0;
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
@@ -116,22 +116,6 @@
       width: 210px;
       max-height: 170px;
     }
-    .bottom-right {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  width: 483px !important;
-  max-height: 172px !important;
-  object-fit: contain !important;
-  z-index: 15 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  cursor: pointer !important;
-  animation: fadeIn 3s ease forwards !important;
-  margin: 0 !important;
-  display: block !important;
-}
-
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -144,10 +128,6 @@
       }
       .corner.bottom-left {
         width: 140px;
-        max-height: 115px;
-      }
-      .corner.bottom-right {
-        width: 322px;
         max-height: 115px;
       }
       .top-left {
@@ -175,23 +155,11 @@
 
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
 
- <img
-  id="icardiImage"
-  src="https://cdn.ntvspor.net/a779954fcf8441658ca44817e4066fef.jpg?mode=crop&w=940&h=626"
-  alt="İcardi Görseli"
-  style="position: fixed; bottom: 20px; right: 20px; width: 480px; max-height: 170px; object-fit: contain; z-index: 9999; cursor: pointer; display: block;"
-/>
-
-
   <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
-  <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
 
   <script>
     const griffinDiv = document.getElementById('griffinDiv');
     const griffinAudio = document.getElementById('griffinAudio');
-
-    const icardiImage = document.getElementById('icardiImage');
-    const icardiAudio = document.getElementById('icardiAudio');
 
     function playAudio(audioToPlay, audioToPause) {
       if (audioToPause && !audioToPause.paused) {
@@ -204,19 +172,11 @@
     }
 
     griffinDiv.addEventListener('mouseenter', () => {
-      playAudio(griffinAudio, icardiAudio);
+      playAudio(griffinAudio);
     });
     griffinDiv.addEventListener('mouseleave', () => {
       griffinAudio.pause();
       griffinAudio.currentTime = 0;
-    });
-
-    icardiImage.addEventListener('mouseenter', () => {
-      playAudio(icardiAudio, griffinAudio);
-    });
-    icardiImage.addEventListener('mouseleave', () => {
-      icardiAudio.pause();
-      icardiAudio.currentTime = 0;
     });
   </script>
 
