@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anıl Açıkgöz</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Favicon eklemesi -->
+  <link rel="icon" href="https://www.oggusto.com/_next/image?url=https%3A%2F%2Fwp.oggusto.com%2Fwp-content%2Fuploads%2F2023%2F10%2Fmauro-icardi-hakkinda-her-sey.webp&w=3840&q=75" type="image/webp" />
+
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -113,34 +117,16 @@
       cursor: pointer;
     }
     .bottom-left {
-      position: fixed;
       bottom: 20px;
-      left: 0;
+      left: 0;  /* Sola tam yapıştırdım */
       width: 180px;
       max-height: 150px;
-      padding-left: 10px;
-      box-sizing: border-box;
-      cursor: pointer;
-    }
-    .bottom-left img {
-      width: 100%;
-      height: auto;
-      display: block;
     }
     .bottom-right {
-      position: fixed;
       bottom: 20px;
-      right: 0;
-      width: 483px; /* %15 büyütme */
-      max-height: 172px;
-      padding-right: 10px;
-      box-sizing: border-box;
-      cursor: pointer;
-    }
-    .bottom-right img {
-      width: 100%;
-      height: auto;
-      display: block;
+      right: 0;  /* Sağa tam yapıştırdım */
+      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
+      max-height: 172px; /* 150 * 1.15 = 172 */
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -151,15 +137,15 @@
         max-width: 90%;
         max-height: 40vh;
       }
-      .bottom-left {
+      .corner.bottom-left {
         width: 120px;
         max-height: 100px;
-        padding-left: 8px;
+        left: 0; /* Mobilde de tam sola */
       }
-      .bottom-right {
+      .corner.bottom-right {
         width: 322px; /* 280 * 1.15 */
-        max-height: 115px;
-        padding-right: 8px;
+        max-height: 115px; /* 100 * 1.15 */
+        right: 0; /* Mobilde de tam sağa */
       }
       .top-left {
         width: 100px;
