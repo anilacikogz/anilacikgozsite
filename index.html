@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anıl Açıkgöz</title>
+  <link rel="icon" href="https://www.oggusto.com/_next/image?url=https%3A%2F%2Fwp.oggusto.com%2Fwp-content%2Fuploads%2F2023%2F10%2Fmauro-icardi-hakkinda-her-sey.webp&w=3840&q=75" type="image/webp" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
@@ -91,11 +92,11 @@
       border-radius: 0;
       box-shadow: none;
     }
-
-    /* Cody GIF: header altına ortalanmış ve biraz boşluk bırakılmış */
     .center-gif {
-      display: block;
-      margin: 80px auto 0; /* header 60px + 20px boşluk */
+      position: fixed;
+      top: 75px; /* Navarın altından biraz aşağı */
+      left: 50%;
+      transform: translateX(-50%);
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
@@ -103,7 +104,6 @@
       box-shadow: none;
       z-index: 10;
     }
-
     .corner {
       position: fixed;
       object-fit: contain;
@@ -116,14 +116,14 @@
     .bottom-left {
       bottom: 20px;
       left: 20px;
-      width: 180px;
-      max-height: 150px;
+      width: 210px; /* biraz büyüttüm */
+      max-height: 170px;
     }
     .bottom-right {
       bottom: 20px;
       right: 20px;
-      width: 483px; /* %15 büyütme: 420 * 1.15 = 483 */
-      max-height: 172px; /* 150 * 1.15 = 172 */
+      width: 483px; /* %15 büyütme */
+      max-height: 172px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -135,12 +135,12 @@
         max-height: 40vh;
       }
       .corner.bottom-left {
-        width: 120px;
-        max-height: 100px;
+        width: 140px;
+        max-height: 115px;
       }
       .corner.bottom-right {
-        width: 322px; /* 280 * 1.15 */
-        max-height: 115px; /* 100 * 1.15 */
+        width: 322px;
+        max-height: 115px;
       }
       .top-left {
         width: 100px;
@@ -163,7 +163,6 @@
     <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
-  <!-- Cody GIF header altına ve ortalanmış şekilde -->
   <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
 
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
@@ -180,7 +179,6 @@
     const icardiImage = document.getElementById('icardiImage');
     const icardiAudio = document.getElementById('icardiAudio');
 
-    // Fonksiyon: Bir sesi başlatırken diğerini durdur
     function playAudio(audioToPlay, audioToPause) {
       if (audioToPause && !audioToPause.paused) {
         audioToPause.pause();
@@ -191,7 +189,6 @@
       }
     }
 
-    // Peter Griffin üzerine gelince sesi çal
     griffinDiv.addEventListener('mouseenter', () => {
       playAudio(griffinAudio, icardiAudio);
     });
@@ -200,7 +197,6 @@
       griffinAudio.currentTime = 0;
     });
 
-    // İcardi görseline gelince sesi çal
     icardiImage.addEventListener('mouseenter', () => {
       playAudio(icardiAudio, griffinAudio);
     });
