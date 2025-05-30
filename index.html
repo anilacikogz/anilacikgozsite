@@ -47,23 +47,29 @@
       z-index: 10;
     }
 
-    .top-right {
-      position: fixed;
-      top: 8px;
+    .nav-instagram {
+      position: absolute;
       right: 20px;
-      z-index: 11;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 36px;
+      width: 36px;
     }
-    .top-right a {
-      display: inline-block;
-      width: 44px;
-      height: 44px;
-      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.7));
+
+    .nav-instagram img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
       transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
     }
-    .top-right a:hover {
-      transform: scale(1.3);
-      filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.8));
+
+    .nav-instagram img:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.6));
     }
+
     .top-left {
       position: fixed;
       top: 60px;
@@ -138,65 +144,26 @@
         width: 100px;
         top: 60px;
       }
-      .top-right {
-        position: fixed;
-        top: 8px;
-        right: 20px;
-        z-index: 25;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .top-right a {
-        display: inline-block;
-        width: 44px;
-        height: 44px;
-        filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.7));
-        transition: transform 0.3s ease, filter 0.3s ease;
-      }
-
-      .top-right a:hover {
-        transform: scale(1.3);
-        filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.8));
-      }
-
-      .top-right img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        border-radius: 8px;
-      }
-
-      .top-right {
-        position: relative;
-        top: 20px;
-        right: auto;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
     }
   </style>
 </head>
 <body>
 
-  <nav>s10W</nav>
-
-  <div class="top-right">
-  <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Icon" />
-  </a>
-</div>
-
+  <nav>
+    s10W
+    <div class="nav-instagram">
+      <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon" />
+      </a>
+    </div>
+  </nav>
 
   <div class="top-left" id="griffinDiv">
     <img src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
   <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes" />
-
   <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
-
   <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
 
   <!-- SESLER -->
