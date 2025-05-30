@@ -24,7 +24,6 @@
       color: #f1f1f1;
       overflow-y: auto;
       position: relative;
-      height: 100%;
     }
     body::before {
       content: "";
@@ -50,7 +49,6 @@
       color: rgba(255,255,255,0.8);
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       user-select: none;
-      animation: fadeIn 1s ease forwards;
     }
     .top-right {
       position: fixed;
@@ -80,154 +78,21 @@
       left: 20px;
       z-index: 30;
       width: 140px;
-      border-radius: 0;
-      box-shadow: none;
       cursor: pointer;
     }
     .top-left img {
       width: 100%;
       height: auto;
-      border-radius: 0;
-      box-shadow: none;
     }
 
     .media-container {
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: flex-start;
-      flex-wrap: wrap;
       margin-top: 80px;
       gap: 20px;
     }
 
-    .media-container img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 0;
-      box-shadow: none;
-      animation: fadeIn 2s ease forwards;
-    }
-
     .center-gif {
-      max-width: 60%;
+      width: 60%;
       max-height: 60vh;
-    }
-
-    .corner {
-      object-fit: contain;
-      z-index: 15;
-      cursor: pointer;
-    }
-
-    .bottom-left {
-      width: 210px;
-      max-height: 170px;
-    }
-
-    #icardiImage {
-      width: 320px;
-      max-height: 172px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      .media-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .center-gif {
-        max-width: 90%;
-        max-height: 40vh;
-      }
-      .bottom-left {
-        width: 140px;
-        max-height: 115px;
-      }
-      #icardiImage {
-        width: 240px;
-        max-height: 115px;
-      }
-      .top-left {
-        width: 100px;
-        top: 60px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <nav>s10W</nav>
-
-  <div class="top-right">
-    <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" alt="Instagram Icon" />
-    </a>
-  </div>
-
-  <div class="top-left" id="griffinDiv" tabindex="0" role="button" aria-label="Peter Griffin">
-    <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
-  </div>
-
-  <div class="media-container">
-    <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
-    <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
-    <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
-  </div>
-
-  <!-- Sesler -->
-  <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
-  <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
-  <audio id="codyAudio" src="cody.mp3" preload="auto"></audio>
-
-  <script>
-    const griffinDiv = document.getElementById('griffinDiv');
-    const griffinAudio = document.getElementById('griffinAudio');
-    const icardiImage = document.getElementById('icardiImage');
-    const icardiAudio = document.getElementById('icardiAudio');
-    const codyGif = document.querySelector('.center-gif');
-    const codyAudio = document.getElementById('codyAudio');
-
-    function playAudio(audioToPlay, ...othersToPause) {
-      othersToPause.forEach(audio => {
-        if (audio && !audio.paused) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-      });
-      if (audioToPlay.paused) {
-        audioToPlay.play();
-      }
-    }
-
-    griffinDiv.addEventListener('mouseenter', () => {
-      playAudio(griffinAudio, icardiAudio, codyAudio);
-    });
-    griffinDiv.addEventListener('mouseleave', () => {
-      griffinAudio.pause();
-      griffinAudio.currentTime = 0;
-    });
-
-    icardiImage.addEventListener('mouseenter', () => {
-      playAudio(icardiAudio, griffinAudio, codyAudio);
-    });
-    icardiImage.addEventListener('mouseleave', () => {
-      icardiAudio.pause();
-      icardiAudio.currentTime = 0;
-    });
-
-    codyGif.addEventListener('mouseenter', () => {
-      playAudio(codyAudio, griffinAudio, icardiAudio);
-    });
-    codyGif.addEventListener('mouseleave', () => {
-      codyAudio.pause();
-      codyAudio.currentTime = 0;
-    });
-  </script>
-
-</body>
-</html>
