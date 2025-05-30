@@ -80,74 +80,75 @@
       left: 20px;
       z-index: 30;
       width: 140px;
-      border-radius: 0;
-      box-shadow: none;
       cursor: pointer;
     }
     .top-left img {
       width: 100%;
       height: auto;
-      border-radius: 0;
-      box-shadow: none;
     }
+
+    .image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding-top: 100px;
+      z-index: 10;
+    }
+
     .center-gif {
-      display: block;
-      margin: 80px auto 0;
       max-width: 60%;
       max-height: 60vh;
       animation: fadeIn 2.5s ease forwards;
-      border-radius: 0;
-      box-shadow: none;
-      z-index: 10;
     }
+
     .corner {
-      position: fixed;
       object-fit: contain;
       animation: fadeIn 3s ease forwards;
       z-index: 15;
-      border-radius: 0;
-      box-shadow: none;
       cursor: pointer;
     }
+
     .bottom-left {
-      bottom: 20px;
-      left: 20px;
       width: 210px;
       max-height: 170px;
     }
+
     #icardiImage {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 320px;
-  max-height: 172px;
-  object-fit: contain;
-  z-index: 9999;
-  cursor: pointer;
-  margin: 0;
-  animation: fadeIn 3s ease forwards;
-}
+      width: 320px;
+      max-height: 172px;
+      object-fit: contain;
+      z-index: 9999;
+      cursor: pointer;
+      margin: 0;
+      animation: fadeIn 3s ease forwards;
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     @media (max-width: 600px) {
-      .center-gif {
-        max-width: 90%;
-        max-height: 40vh;
-      }
-      .corner.bottom-left {
-        width: 140px;
-        max-height: 115px;
-      }
+      .center-gif,
+      .corner.bottom-left,
       #icardiImage {
-        width: 240px;
-        max-height: 115px;
+        position: static !important;
+        width: 90% !important;
+        max-height: none !important;
+        margin: 0 auto;
+        display: block;
       }
+
+      .image-container {
+        padding: 20px;
+      }
+
       .top-left {
+        position: static !important;
+        margin: 20px auto 0;
+        display: block;
         width: 100px;
-        top: 60px;
       }
     }
   </style>
@@ -166,12 +167,11 @@
     <img id="griffinImage" src="https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png" alt="Peter Griffin" />
   </div>
 
-  <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
-
-  <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
-
-  <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
-
+  <div class="image-container">
+    <img class="center-gif" src="https://media1.tenor.com/m/YnMxsQHtWy4AAAAd/cody-rhodes-entrance.gif" alt="Cody Rhodes Entrance GIF" />
+    <img class="corner bottom-left" id="bottomLeftGif" src="https://i.makeagif.com/media/9-13-2020/Yn2Yx7.gif" alt="Sol Alt GIF" />
+    <img id="icardiImage" src="https://www.gazetebirlik.com/cropImages/1280x/uploads/fotogaleriler/2025/05/6-nfgnf-1.jpg" alt="İcardi Görseli" />
+  </div>
 
   <audio id="griffinAudio" src="griffin.mp3" preload="auto"></audio>
   <audio id="icardiAudio" src="icardi.mp3" preload="auto"></audio>
