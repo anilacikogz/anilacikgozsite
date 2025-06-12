@@ -217,62 +217,70 @@
     &copy; 2025 s10W Tüm hakları saklıdır.
   </footer>
 
-  <!-- İletişim Butonu -->
-  <div class="contact-wrapper" aria-live="polite">
-    <button id="contactBtn" class="contact-btn" aria-expanded="false" aria-controls="contactDetails" aria-label="İletişim butonu">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20" aria-hidden="true" focusable="false">
-        <path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/>
-      </svg>
-      <span>İletişim</span>
-    </button>
-    
-    <div id="contactDetails" class="contact-details" hidden>
-      <span id="emailAddress">anlackgz7@gmail.com</span>
-      <button id="openMailBtn" class="small-btn" aria-label="Mail uygulamasını aç">Maili Aç</button>
-      <button id="copyMailBtn" class="small-btn" aria-label="Mail adresini kopyala">Kopyala</button>
-      <span id="copyMsg" class="copy-msg" aria-live="polite" role="alert"></span>
-    </div>
+ <!-- İletişim Butonu -->
+<div class="contact-wrapper" aria-live="polite">
+  <button id="contactBtn" class="contact-btn" aria-expanded="false" aria-controls="contactDetails" aria-label="İletişim butonu">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20" aria-hidden="true" focusable="false">
+      <path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/>
+    </svg>
+    <span>İletişim</span>
+  </button>
+  
+  <div id="contactDetails" class="contact-details" hidden>
+    <span id="emailAddress" hidden>anlackgz7@gmail.com</span>
+    <button id="openMailBtn" class="small-btn" hidden aria-label="Mail uygulamasını aç">Maili Aç</button>
+    <button id="copyMailBtn" class="small-btn" hidden aria-label="Mail adresini kopyala">Kopyala</button>
+    <span id="copyMsg" class="copy-msg" aria-live="polite" role="alert"></span>
   </div>
+</div>
 
-  <script>
-    const contactBtn = document.getElementById('contactBtn');
-    const contactDetails = document.getElementById('contactDetails');
-    const openMailBtn = document.getElementById('openMailBtn');
-    const copyMailBtn = document.getElementById('copyMailBtn');
-    const copyMsg = document.getElementById('copyMsg');
-    const emailAddress = document.getElementById('emailAddress').textContent;
+<script>
+  const contactBtn = document.getElementById('contactBtn');
+  const contactDetails = document.getElementById('contactDetails');
+  const openMailBtn = document.getElementById('openMailBtn');
+  const copyMailBtn = document.getElementById('copyMailBtn');
+  const copyMsg = document.getElementById('copyMsg');
+  const emailAddressSpan = document.getElementById('emailAddress');
 
-    let expanded = false;
+  let expanded = false;
 
-    contactBtn.addEventListener('click', () => {
-      expanded = !expanded;
-      contactBtn.setAttribute('aria-expanded', expanded);
-      if (expanded) {
-        contactDetails.hidden = false;
-        contactBtn.style.transform = 'translateY(-60px)';
-      } else {
-        contactDetails.hidden = true;
-        contactBtn.style.transform = 'translateY(0)';
+  contactBtn.addEventListener('click', () => {
+    expanded = !expanded;
+    contactBtn.setAttribute('aria-expanded', expanded);
+    
+    if (expanded) {
+      contactDetails.hidden = false;
+      emailAddressSpan.hidden = false;
+      openMailBtn.hidden = false;
+      copyMailBtn.hidden = false;
+      contactBtn.style.transform = 'translateY(-60px)';
+    } else {
+      contactDetails.hidden = true;
+      emailAddressSpan.hidden = true;
+      openMailBtn.hidden = true;
+      copyMailBtn.hidden = true;
+      copyMsg.textContent = '';
+      contactBtn.style.transform = 'translateY(0)';
+    }
+  });
+
+  openMailBtn.addEventListener('click', () => {
+    window.location.href = `mailto:${emailAddressSpan.textContent}`;
+  });
+
+  copyMailBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(emailAddressSpan.textContent);
+      copyMsg.textContent = 'Kopyalandı!';
+      setTimeout(() => {
         copyMsg.textContent = '';
-      }
-    });
+      }, 2500);
+    } catch (err) {
+      copyMsg.textContent = 'Kopyalama başarısız!';
+    }
+  });
+</script>
 
-    openMailBtn.addEventListener('click', () => {
-      window.location.href = `mailto:${emailAddress}`;
-    });
-
-    copyMailBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(emailAddress);
-        copyMsg.textContent = 'Kopyalandı!';
-        setTimeout(() => {
-          copyMsg.textContent = '';
-        }, 2500);
-      } catch (err) {
-        copyMsg.textContent = 'Kopyalama başarısız!';
-      }
-    });
-  </script>
 
 </body>
 </html>
