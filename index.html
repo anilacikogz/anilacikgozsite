@@ -18,6 +18,9 @@
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #f0f0f0;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     nav {
       position: fixed;
@@ -73,12 +76,7 @@
       padding: 20px;
       text-align: center;
       user-select: none;
-    }
-    main h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 56px;
-      color: #ffd700;
-      margin-bottom: 10px;
+      flex-grow: 1;
     }
     main p {
       font-weight: 300;
@@ -89,6 +87,15 @@
       margin-left: auto;
       margin-right: auto;
     }
+    footer {
+      text-align: center;
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.4);
+      color: #ffd700;
+      font-size: 14px;
+      user-select: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
 
     @media (max-width: 600px) {
       nav {
@@ -98,9 +105,6 @@
       .nav-left {
         gap: 12px;
         font-size: 16px;
-      }
-      main h1 {
-        font-size: 36px;
       }
       main p {
         font-size: 16px;
@@ -124,13 +128,17 @@
   </nav>
 
   <main>
-    <h1>Anıl Açıkgöz</h1>
     <p>
-      Merhaba! Ben Anıl Açıkgöz, yazılım geliştirici ve uygulama geliştiricisiyim.
-      Teknoloji ve kodlama alanındaki deneyimimle, kaliteli ve etkili çözümler sunmaya odaklanıyorum.
-      Projelerim ve hizmetlerim hakkında daha fazla bilgi almak için üst menüdeki sekmeleri kullanabilirsiniz.
+      s10W olarak oyunlarda kullandığım nickimin kısaltmasıyla, özgün ve yenilikçi uygulamalar geliştiriyorum.
+      Teknolojiye ve kullanıcılara değer veren çözümler sunmak, dijital dünyada fark yaratmak en büyük tutkum.
+      Yaratıcılığımı ve deneyimimi birleştirerek, hayatınızı kolaylaştıracak projeler üzerinde çalışıyorum.
+      İnovasyonun sınırlarını zorlamak ve kullanıcı deneyimini en üst seviyeye taşımak için buradayım.
     </p>
   </main>
+
+  <footer>
+    &copy; 2025 s10W Tüm hakları saklıdır.
+  </footer>
 
 </body>
 </html>
