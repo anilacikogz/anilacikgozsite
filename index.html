@@ -7,25 +7,25 @@
   <link rel="icon" href="sitelogo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* Sayfa genel tasarım */
+    /* Sayfa genel tasarım - Siyah & Gri tonları */
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      background: linear-gradient(135deg, #121212, #2c2c2c);
       color: #ddd;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
     nav {
-      background: #0f3460;
+      background: #1a1a1a;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
       position: fixed;
       top: 0; left: 0; right: 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
       z-index: 1000;
     }
     .nav-left {
@@ -38,9 +38,10 @@
       width: 40px;
       border-radius: 8px;
       user-select: none;
+      filter: brightness(0.9);
     }
     .nav-left a {
-      color: #a1a9cc;
+      color: #bbb;
       text-decoration: none;
       font-weight: 600;
       font-size: 18px;
@@ -50,7 +51,7 @@
       user-select: none;
     }
     .nav-left a:hover, .nav-left a:focus {
-      background-color: #16213e;
+      background-color: #444;
       color: #fff;
       outline: none;
     }
@@ -64,13 +65,14 @@
       transition: filter 0.3s ease;
     }
     .nav-right a:hover {
-      filter: drop-shadow(0 0 6px #ff005c);
+      filter: drop-shadow(0 0 6px #888);
     }
     .nav-right img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       user-select: none;
+      filter: brightness(0.85);
     }
 
     main {
@@ -81,12 +83,12 @@
       font-size: 1.2rem;
       line-height: 1.6;
       text-align: center;
-      color: #cfd4db;
+      color: #ccc;
     }
 
     footer {
-      background: #0f3460;
-      color: #7a8db0;
+      background: #1a1a1a;
+      color: #666;
       text-align: center;
       padding: 15px 10px;
       font-size: 0.9rem;
@@ -106,14 +108,14 @@
     }
 
     .contact-btn {
-      background-color: #238636;
+      background-color: #444;
       color: white;
       font-weight: 600;
       font-size: 1rem;
       padding: 10px 18px;
       border: none;
       border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.7);
+      box-shadow: 0 4px 15px rgba(100, 100, 100, 0.7);
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -121,13 +123,13 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
     .contact-btn:hover, .contact-btn:focus {
-      background-color: #2ea043;
+      background-color: #666;
       outline: none;
     }
 
     .contact-details {
       margin-top: 10px;
-      background: #2c2c2c;
+      background: #222;
       padding: 12px 18px;
       border-radius: 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.7);
@@ -146,7 +148,7 @@
     }
 
     .small-btn {
-      background-color: #444;
+      background-color: #555;
       border: none;
       padding: 6px 10px;
       color: white;
@@ -157,7 +159,7 @@
       user-select: none;
     }
     .small-btn:hover, .small-btn:focus {
-      background-color: #555;
+      background-color: #777;
       outline: none;
     }
 
@@ -192,8 +194,8 @@
   <nav>
     <div class="nav-left">
       <img src="sitelogo.png" alt="Site Logo" aria-hidden="true" />
-      <a href="uygulamalar.html" aria-label="Uygulamalarım">Uygulamalarım</a>
-      <a href="hizmetlerim.html" aria-label="Hizmetlerim">Hizmetlerim</a>
+      <a href="uygulamalarim/index.html" aria-label="Uygulamalarım">Uygulamalarım</a>
+      <a href="hizmetlerim/index.html" aria-label="Hizmetlerim">Hizmetlerim</a>
     </div>
     <div class="nav-right">
       <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
@@ -208,7 +210,7 @@
       Oyunlarda kullandığım "s10winkwa" nickimin kısaltması olan <strong>s10W</strong> adı altında; yaratıcı, kullanıcı dostu ve yenilikçi mobil uygulamalar geliştiriyorum.
     </p>
     <p>
-     Eğlenceli oyunlar ve ihtiyaçlara yönelik pratik çözümler sunan kullanıcı dostu uygulamalarımı görmek için "Uygulamalarım" ve "Hizmetlerim" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçebilirsiniz.
+      Eğlenceli oyunlar ve ihtiyaçlara yönelik pratik çözümler sunan kullanıcı dostu uygulamalarımı görmek için "Uygulamalarım" ve "Hizmetlerim" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçebilirsiniz.
     </p>
   </main>
   <footer>
