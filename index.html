@@ -3,186 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>s10W - Ana Sayfa</title>
+  <title>Ana Sayfa</title>
   <link rel="icon" href="sitelogo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    html, body {
-      margin: 0; padding: 0;
-      height: 100%;
+    /* Sayfa genel tasarım */
+    body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0d1117, #161b22);
-      color: #cfd4db;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #ddd;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
     }
     nav {
+      background: #0f3460;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 30px;
-      height: 70px;
-      background: #21262d;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.7);
+      padding: 15px 30px;
       position: fixed;
-      width: 100%;
-      top: 0;
+      top: 0; left: 0; right: 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       z-index: 1000;
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
     }
     .nav-left img {
-      height: 44px;
-      width: 44px;
-      object-fit: contain;
+      height: 40px;
+      width: 40px;
       border-radius: 8px;
       user-select: none;
-      cursor: default;
-      transition: transform 0.3s ease;
-    }
-    .nav-left img:hover {
-      transform: scale(1.05);
     }
     .nav-left a {
-      color: #8b949e;
+      color: #a1a9cc;
+      text-decoration: none;
       font-weight: 600;
       font-size: 18px;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
       user-select: none;
     }
     .nav-left a:hover, .nav-left a:focus {
-      background-color: #30363d;
-      color: #58a6ff;
+      background-color: #16213e;
+      color: #fff;
       outline: none;
     }
     .nav-right a {
       display: inline-block;
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       overflow: hidden;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
       transition: filter 0.3s ease;
     }
-    .nav-right a:hover, .nav-right a:focus {
-      filter: drop-shadow(0 0 8px #ff2c55);
-      outline: none;
+    .nav-right a:hover {
+      filter: drop-shadow(0 0 6px #ff005c);
     }
     .nav-right img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       user-select: none;
-      display: block;
     }
+
     main {
-      margin-top: 90px;
       flex-grow: 1;
-      padding: 60px 30px 80px 30px;
       max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      line-height: 1.8;
+      margin: 120px auto 60px;
+      padding: 0 20px;
       font-size: 1.2rem;
-      color: #adbac7;
-      user-select: text;
-      background: rgba(33, 38, 45, 0.85);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      transition: background 0.3s ease;
-    }
-    main:hover {
-      background: rgba(33, 38, 45, 0.95);
-    }
-    main h1 {
-      font-size: 2.4rem;
-      color: #58a6ff;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-    main p {
-      margin-bottom: 20px;
-    }
-    footer {
-      background: #161b22;
-      color: #8b949e;
-      font-size: 0.9rem;
+      line-height: 1.6;
       text-align: center;
-      padding: 16px 10px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-      user-select: none;
-      margin-top: auto;
+      color: #cfd4db;
     }
-    .contact-mail {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  user-select: none;
-  z-index: 1100;
-  text-decoration: none;
-}
 
-.contact-btn {
-  background-color: #238636;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0 4px 15px rgba(35, 134, 54, 0.7);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    footer {
+      background: #0f3460;
+      color: #7a8db0;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      user-select: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
 
-.contact-btn:hover, .contact-btn:focus {
-  background-color: #2ea043;
-  outline: none;
-}
+    /* İletişim butonu ve detayları */
+    .contact-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      user-select: none;
+      z-index: 1100;
+      text-align: right;
+      font-family: 'Inter', sans-serif;
+    }
 
-.contact-btn svg {
-  display: block;
-}
+    .contact-btn {
+      background-color: #238636;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .contact-btn:hover, .contact-btn:focus {
+      background-color: #2ea043;
+      outline: none;
+    }
+
+    .contact-details {
+      margin-top: 10px;
+      background: #2c2c2c;
+      padding: 12px 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.7);
+      color: #ddd;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: text;
+      font-size: 0.9rem;
+      max-width: 320px;
+      word-break: break-all;
+    }
+
+    #emailAddress {
+      flex-grow: 1;
+    }
+
+    .small-btn {
+      background-color: #444;
+      border: none;
+      padding: 6px 10px;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .small-btn:hover, .small-btn:focus {
+      background-color: #555;
+      outline: none;
+    }
+
+    .copy-msg {
+      font-size: 0.8rem;
+      color: #4caf50;
+      margin-left: 10px;
+      min-width: 70px;
+    }
 
     @media (max-width: 600px) {
       nav {
-        padding: 0 15px;
-        height: 60px;
+        padding: 10px 15px;
       }
       .nav-left a {
         font-size: 16px;
-        padding: 6px 10px;
       }
       main {
-        padding: 40px 20px 60px 20px;
         font-size: 1rem;
       }
-      main h1 {
-        font-size: 1.8rem;
-      }
-      .contact-mail {
-        bottom: 15px;
-        right: 15px;
-        font-size: 0.85rem;
-        padding: 10px 14px;
+      .contact-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        max-width: 260px;
       }
     }
   </style>
@@ -196,35 +196,81 @@
       <a href="hizmetlerim.html" aria-label="Hizmetlerim">Hizmetlerim</a>
     </div>
     <div class="nav-right">
-      <a href="https://www.instagram.com/gala4s10/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+      <a href="https://www.instagram.com/gala4s10/" target="_blank" title="Instagram" aria-label="Instagram">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon" />
       </a>
     </div>
   </nav>
 
-  <main>
+ <main>
     <h1>Merhaba, ben s10W</h1>
     <p>
       Oyunlarda kullandığım "s10winkwa" nickimin kısaltması olan <strong>s10W</strong> adı altında; yaratıcı, kullanıcı dostu ve yenilikçi mobil uygulamalar geliştiriyorum.
     </p>
     <p>
-      Eğlenceyi hedefleyen oyunlar ve ihtiyaçlara pratik çözümler sunan uygulamalarım için "Hizmetlerim" ve "Uygulamalarım" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçmekten çekinmeyin.
+     Eğlenceli oyunlar ve ihtiyaçlara yönelik pratik çözümler sunan kullanıcı dostu uygulamalarımı görmek için "Uygulamalarım" ve "Hizmetlerim" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçebilirsiniz.
     </p>
   </main>
-
-  <<a href="mailto:anlackgz7@gmail.com" class="contact-mail" aria-label="E-posta ile iletişim">
-  <button type="button" class="contact-btn" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20" aria-hidden="true" focusable="false">
-      <path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/>
-    </svg>
-    <span>İletişim</span>
-  </button>
-</a>
-
-
   <footer>
     &copy; 2025 s10W Tüm hakları saklıdır.
   </footer>
+
+  <!-- İletişim Butonu -->
+  <div class="contact-wrapper" aria-live="polite">
+    <button id="contactBtn" class="contact-btn" aria-expanded="false" aria-controls="contactDetails" aria-label="İletişim butonu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20" aria-hidden="true" focusable="false">
+        <path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/>
+      </svg>
+      <span>İletişim</span>
+    </button>
+    
+    <div id="contactDetails" class="contact-details" hidden>
+      <span id="emailAddress">anlackgz7@gmail.com</span>
+      <button id="openMailBtn" class="small-btn" aria-label="Mail uygulamasını aç">Maili Aç</button>
+      <button id="copyMailBtn" class="small-btn" aria-label="Mail adresini kopyala">Kopyala</button>
+      <span id="copyMsg" class="copy-msg" aria-live="polite" role="alert"></span>
+    </div>
+  </div>
+
+  <script>
+    const contactBtn = document.getElementById('contactBtn');
+    const contactDetails = document.getElementById('contactDetails');
+    const openMailBtn = document.getElementById('openMailBtn');
+    const copyMailBtn = document.getElementById('copyMailBtn');
+    const copyMsg = document.getElementById('copyMsg');
+    const emailAddress = document.getElementById('emailAddress').textContent;
+
+    let expanded = false;
+
+    contactBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      contactBtn.setAttribute('aria-expanded', expanded);
+      if (expanded) {
+        contactDetails.hidden = false;
+        contactBtn.style.transform = 'translateY(-60px)';
+      } else {
+        contactDetails.hidden = true;
+        contactBtn.style.transform = 'translateY(0)';
+        copyMsg.textContent = '';
+      }
+    });
+
+    openMailBtn.addEventListener('click', () => {
+      window.location.href = `mailto:${emailAddress}`;
+    });
+
+    copyMailBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(emailAddress);
+        copyMsg.textContent = 'Kopyalandı!';
+        setTimeout(() => {
+          copyMsg.textContent = '';
+        }, 2500);
+      } catch (err) {
+        copyMsg.textContent = 'Kopyalama başarısız!';
+      }
+    });
+  </script>
 
 </body>
 </html>
