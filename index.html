@@ -129,35 +129,39 @@
       margin-top: auto;
     }
     .contact-mail {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #238636;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 12px 18px;
-      border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.7);
-      user-select: text;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      z-index: 1100;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .contact-mail:hover, .contact-mail:focus {
-      background-color: #2ea043;
-      outline: none;
-      text-decoration: none;
-    }
-    .contact-mail svg {
-      width: 18px;
-      height: 18px;
-      fill: white;
-    }
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  user-select: none;
+  z-index: 1100;
+  text-decoration: none;
+}
+
+.contact-btn {
+  background-color: #238636;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(35, 134, 54, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover, .contact-btn:focus {
+  background-color: #2ea043;
+  outline: none;
+}
+
+.contact-btn svg {
+  display: block;
+}
+
     @media (max-width: 600px) {
       nav {
         padding: 0 15px;
@@ -204,17 +208,19 @@
       Oyunlarda kullandığım "s10winkwa" nickimin kısaltması olan <strong>s10W</strong> adı altında; yaratıcı, kullanıcı dostu ve yenilikçi mobil uygulamalar geliştiriyorum.
     </p>
     <p>
-      Teknolojiyi, oyun tutkusunu ve yazılım bilgisini harmanlayarak, günlük hayatı kolaylaştıran ve eğlenceli deneyimler sunan projeler ortaya koymayı hedefliyorum.
-    </p>
-    <p>
-      İnovasyon ve kaliteyi bir araya getiren uygulamalarımı keşfetmek için yukarıdaki "Uygulamalarım" ve "Hizmetlerim" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçmekten çekinmeyin.
+      Eğlenceyi hedefleyen oyunlar ve ihtiyaçlara pratik çözümler sunan uygulamalarım için "Hizmetlerim" ve "Uygulamalarım" sekmelerini ziyaret edebilirsiniz. Her türlü soru, öneri veya iş birliği teklifleri için iletişime geçmekten çekinmeyin.
     </p>
   </main>
 
-  <a href="mailto:anlackgz7@gmail.com" class="contact-mail" aria-label="Email ile iletişim">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/></svg>
-    anlackgz7@gmail.com
-  </a>
+  <<a href="mailto:anlackgz7@gmail.com" class="contact-mail" aria-label="E-posta ile iletişim">
+  <button type="button" class="contact-btn" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20" aria-hidden="true" focusable="false">
+      <path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2 .5v15l7-5 7 5v-15H4Zm7 7-7-5h14l-7 5Z"/>
+    </svg>
+    <span>İletişim</span>
+  </button>
+</a>
+
 
   <footer>
     &copy; 2025 s10W Tüm hakları saklıdır.
