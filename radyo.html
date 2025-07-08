@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Türkiye Radyo Portalı</title>
 <style>
-  /* Genel stil */
   body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,8 +23,6 @@
     letter-spacing: 1.5px;
     color: #4caf50;
   }
-
-  /* Kategori seçimi */
   #categoryFilter {
     margin: 10px auto 20px auto;
     display: flex;
@@ -48,8 +45,6 @@
     background: #4caf50;
     color: #fff;
   }
-
-  /* Radyo listesi */
   #radioList {
     list-style: none;
     padding: 0;
@@ -77,8 +72,6 @@
     color: white;
     font-weight: 700;
   }
-
-  /* Play ikonu */
   #radioList li::after {
     content: "▶";
     font-size: 1rem;
@@ -90,8 +83,6 @@
     color: #fff;
     opacity: 1;
   }
-
-  /* Ses oynatıcı */
   #audioPlayer {
     width: 100%;
     max-width: 500px;
@@ -99,8 +90,6 @@
     outline: none;
     border-radius: 10px;
   }
-
-  /* Responsive */
   @media (max-width: 600px) {
     body {
       padding: 10px;
@@ -128,63 +117,54 @@
   <button data-category="talk">Konuşma</button>
 </div>
 
-<ul id="radioList">
-  <!-- Radyo listesi JS ile doldurulacak -->
-</ul>
+<ul id="radioList"></ul>
 
 <audio id="audioPlayer" controls>
   Tarayıcınız audio elementini desteklemiyor.
 </audio>
 
 <script>
-// Radyo listesi (isim, kategori, stream URL)
 const radios = [
   // Pop
-  { name: "Kral FM", category: "pop", url: "http://46.20.3.204:80/;stream/1" },
-  { name: "PowerTürk", category: "pop", url: "http://46.20.4.2:80/;stream/1" },
-  { name: "Slow Türk", category: "pop", url: "http://46.20.3.218:80/stream/1" },
-  { name: "Best FM", category: "pop", url: "http://46.20.3.207/stream/1/" },
-
+  { name: "Kral FM", category: "pop", url: "https://kralfm.listenpowerapp.com/kralfm/128/icecast.audio" },
+  { name: "PowerTürk", category: "pop", url: "https://powerturk.listenpowerapp.com/powerturk/128/icecast.audio" },
+  { name: "Slow Türk", category: "pop", url: "https://slowturk.listenpowerapp.com/slowturk/128/icecast.audio" },
+  { name: "Best FM", category: "pop", url: "https://bestfm.listenpowerapp.com/bestfm/128/icecast.audio" },
+  { name: "Joy FM", category: "pop", url: "https://joyfm.listenpowerapp.com/joyfm/128/icecast.audio" },
+  { name: "Metro FM", category: "pop", url: "https://metrofm.listenpowerapp.com/metrofm/128/icecast.audio" },
+  { name: "Süper FM", category: "pop", url: "https://superfm.listenpowerapp.com/superfm/128/icecast.audio" },
+  
   // Rap
-  { name: "Rap FM", category: "rap", url: "http://listen.rapfm.com/stream/1/" },
-  { name: "RapTürk", category: "rap", url: "http://46.20.3.210:80/stream/1" },
-
+  { name: "Rap FM", category: "rap", url: "https://rapfm.listenpowerapp.com/rapfm/128/icecast.audio" },
+  { name: "RapTürk", category: "rap", url: "https://rapturk.listenpowerapp.com/rapturk/128/icecast.audio" },
+  
   // Türkü
-  { name: "Türkü FM", category: "turku", url: "http://46.20.3.215:80/stream/1" },
-  { name: "Radyo Denge Türkü", category: "turku", url: "http://radyo.denge.com.tr:8000/dengeturku" },
+  { name: "Türkü FM", category: "turku", url: "https://turkufm.listenpowerapp.com/turkufm/128/icecast.audio" },
+  { name: "Radyo Denge Türkü", category: "turku", url: "https://dengeturku.listenpowerapp.com/dengeturku/128/icecast.audio" },
+  { name: "Yörem Türkü", category: "turku", url: "https://yoremturku.listenpowerapp.com/yoremturku/128/icecast.audio" },
 
-  // Dinleti (Tasavvuf, Naat vs)
-  { name: "Tasavvuf Radyo", category: "dinleti", url: "http://37.247.100.92:8036/stream" },
-  { name: "Naat Radyo", category: "dinleti", url: "http://naat.com.tr:8000/stream" },
+  // Dinleti
+  { name: "Tasavvuf Radyo", category: "dinleti", url: "https://tasavvufradyo.listenpowerapp.com/tasavvufradyo/128/icecast.audio" },
+  { name: "Naat Radyo", category: "dinleti", url: "https://naatradyo.listenpowerapp.com/naatradyo/128/icecast.audio" },
+  { name: "Kuran Radyo", category: "dinleti", url: "https://kuranradyo.listenpowerapp.com/kuranradyo/128/icecast.audio" },
 
   // Konuşma & Haber & Genel
-  { name: "Radyo Fenomen", category: "talk", url: "http://fenomen.listenfenomen.com/fenomen/128/icecast.audio" },
-  { name: "TRT FM", category: "talk", url: "http://trt-fm-canli-rtmp.trt.net.tr/live/stream/playlist.m3u8" },
-  { name: "Radyo D", category: "talk", url: "http://31.210.105.41/stream" },
-
-  // Diğer popülerler
-  { name: "Metro FM", category: "pop", url: "http://46.20.3.208/stream/1/" },
-  { name: "Süper FM", category: "pop", url: "http://46.20.3.212/stream/1/" },
-  { name: "Joy FM", category: "pop", url: "http://46.20.3.213/stream/1/" },
-  { name: "Radyo Trafik", category: "talk", url: "http://radyo.trafik.com.tr:8000/stream" },
-  { name: "Radyo ODTÜ", category: "talk", url: "http://radioodtu.net:8000/radioodtu" },
-
-  // Daha fazla türkü
-  { name: "Yörem Türkü", category: "turku", url: "http://yoremturku.com:8000/stream" },
-
-  // Dinletiye ek
-  { name: "Kuran Radyo", category: "dinleti", url: "http://koran.radiosite.com:8000/kuran" }
+  { name: "Radyo Fenomen", category: "talk", url: "https://fenomen.listenfenomen.com/fenomen/128/icecast.audio" },
+  { name: "TRT FM", category: "talk", url: "https://trtfm01.akdeniz.edu.tr:8000/stream/1/" },
+  { name: "Radyo D", category: "talk", url: "https://radyod.listenpowerapp.com/radyod/128/icecast.audio" },
+  { name: "Radyo Trafik", category: "talk", url: "https://radyotrafik.listenpowerapp.com/radyotrafik/128/icecast.audio" },
+  { name: "Radyo ODTÜ", category: "talk", url: "https://radioodtu.net:8000/radioodtu" }
 ];
 
-// Elemanlar
 const radioList = document.getElementById("radioList");
 const audioPlayer = document.getElementById("audioPlayer");
 const categoryButtons = document.querySelectorAll("#categoryFilter button");
 
 let currentPlayingIndex = null;
+let currentCategory = "all";
 
-// Radyo listesini renderla (filtre ile)
 function renderRadios(filterCategory = "all") {
+  currentCategory = filterCategory;
   radioList.innerHTML = "";
   let filtered = radios;
   if (filterCategory !== "all") {
@@ -195,35 +175,34 @@ function renderRadios(filterCategory = "all") {
     li.textContent = radio.name;
     li.dataset.index = i;
     if (i === currentPlayingIndex) li.classList.add("playing");
-    li.onclick = () => playRadio(i, filterCategory);
+    li.onclick = () => playRadio(i);
     radioList.appendChild(li);
   });
 }
 
-// Radyo çalma fonksiyonu
-function playRadio(index, filterCategory) {
-  const filteredRadios = filterCategory === "all" ? radios : radios.filter(r => r.category === filterCategory);
-  const radio = filteredRadios[index];
+function playRadio(index) {
+  let filtered = radios;
+  if (currentCategory !== "all") {
+    filtered = radios.filter(r => r.category === currentCategory);
+  }
+  const radio = filtered[index];
   if (!radio) return;
   audioPlayer.src = radio.url;
   audioPlayer.play().catch(() => {
     alert("Yayın başlatılamadı. Lütfen bağlantınızı kontrol edin veya farklı bir radyo seçin.");
   });
-  
-  // playing class güncelle
   currentPlayingIndex = index;
-  updatePlayingHighlight(filterCategory);
+  updatePlayingHighlight();
 }
 
-// Aktif çalan radyoya renk vermek için
-function updatePlayingHighlight(filterCategory) {
+function updatePlayingHighlight() {
   const lis = radioList.querySelectorAll("li");
   lis.forEach(li => li.classList.remove("playing"));
-  if (currentPlayingIndex === null) return;
-  if (lis[currentPlayingIndex]) lis[currentPlayingIndex].classList.add("playing");
+  if (currentPlayingIndex !== null && lis[currentPlayingIndex]) {
+    lis[currentPlayingIndex].classList.add("playing");
+  }
 }
 
-// Kategori butonları
 categoryButtons.forEach(btn => {
   btn.onclick = () => {
     categoryButtons.forEach(b => b.classList.remove("active"));
@@ -233,9 +212,7 @@ categoryButtons.forEach(btn => {
   };
 });
 
-// İlk sayfa yüklenince tüm radyoları göster
 renderRadios();
-
 </script>
 
 </body>
