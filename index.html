@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>xD</title>
+    <title>Gündüz / Gece Görsel Sitesi</title>
 
     <!-- Arama çubuğundaki simge (favicon) -->
     <link
@@ -19,14 +19,13 @@
         --fg-day: #0b0f14;
         --fg-night: #e8eef5;
         --btn-bg: rgba(0,0,0,0.05);
-        --btn-bg-dark: rgba(255,255,255,0.08);
+        --btn-bg-dark: rgba(255,255,255,0.15);
         --btn-br: 16px;
         --shadow: 0 8px 30px rgba(0,0,0,0.08);
       }
       * { box-sizing: border-box; }
-      html, body { height: 100%; }
+      html, body { height: 100%; margin: 0; }
       body {
-        margin: 0;
         background: var(--bg-day);
         color: var(--fg-day);
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -38,7 +37,7 @@
       }
 
       .page {
-        min-height: 100dvh;
+        height: 100dvh;
         display: grid;
         grid-template-rows: auto 1fr;
       }
@@ -62,11 +61,13 @@
         box-shadow: var(--shadow);
         cursor: pointer;
         user-select: none;
-        transition: transform .08s ease, background .3s ease, border-color .3s ease;
+        transition: transform .08s ease, background .3s ease, border-color .3s ease, color .3s ease;
+        color: var(--fg-day);
       }
       body.dark .toggle {
         background: var(--btn-bg-dark);
-        border-color: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.2);
+        color: var(--fg-night);
       }
       .toggle:active { transform: scale(0.98); }
       .toggle .icon { font-size: 18px; line-height: 1; }
@@ -75,31 +76,24 @@
       .content {
         display: grid;
         place-items: center;
-        padding: 16px;
+        padding: 0;
+        overflow: hidden;
       }
 
       .frame {
-        max-width: min(100%, 1100px);
         width: 100%;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.16);
-        background: rgba(255,255,255,0.02);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .frame img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
         display: block;
-        width: 100%;
-        height: auto;
       }
-
-      .hint {
-        text-align: center;
-        opacity: .7;
-        font-size: 14px;
-        margin-top: 12px;
-      }
-      a { color: inherit; }
     </style>
   </head>
   <body>
@@ -112,7 +106,17 @@
         </button>
       </header>
 
-     
+      <main class="content">
+        <figure class="frame">
+          <!-- Varsayılan: Gündüz görüntüsü -->
+          <img
+            id="mainImage"
+            alt="Gündüz/Gece görseli"
+            src="https://pbs.twimg.com/media/FuQg1HRWIAw42Rj?format=jpg&name=medium"
+          />
+        </figure>
+      </main>
+    </div>
 
     <script>
       (function() {
@@ -155,4 +159,3 @@
     </script>
   </body>
 </html>
-
