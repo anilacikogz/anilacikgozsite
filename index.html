@@ -45,7 +45,7 @@
       .topbar {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
         gap: 12px;
         padding: 12px 16px;
       }
@@ -73,6 +73,22 @@
       .toggle .icon { font-size: 18px; line-height: 1; }
       .toggle .label { font-weight: 600; font-size: 14px; }
 
+      .game-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 12px;
+        border-radius: var(--btn-br);
+        background: var(--btn-bg);
+        color: var(--fg-day);
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: var(--shadow);
+        transition: transform .08s ease, background .3s ease, color .3s ease;
+      }
+      .game-link:hover { transform: scale(0.98); }
+      body.dark .game-link { background: var(--btn-bg-dark); color: var(--fg-night); }
+
       .content {
         display: grid;
         place-items: center;
@@ -99,7 +115,10 @@
   <body>
     <div class="page">
       <header class="topbar">
-        <!-- Gündüz / Gece modu butonu -->
+        <!-- Sol üst: 3310 oyuna link -->
+        <a href="neon_serpents.html" class="game-link">3310</a>
+
+        <!-- Sağ üst: Gündüz / Gece modu butonu -->
         <button id="modeToggle" class="toggle" aria-pressed="false" aria-label="Gündüz/Gece modu değiştir">
           <span id="modeIcon" class="icon">☀️</span>
           <span id="modeLabel" class="label">Gündüz Modu</span>
@@ -159,4 +178,3 @@
     </script>
   </body>
 </html>
-
