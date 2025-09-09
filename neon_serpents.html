@@ -4,19 +4,22 @@
   <meta charset="UTF-8">
   <title>Neon Serpents</title>
   <style>
-    body { margin: 0; overflow: hidden; background: #000; }
+    body { margin: 0; overflow: hidden; background: #0c0c0c; }
     canvas { display: block; margin: auto; background: #111; }
+
     #scoreboard {
       position: absolute;
       top: 10px;
       left: 10px;
-      color: #0f0;
+      color: #0ff;
       font-family: monospace;
-      font-size: 16px;
-      background: rgba(0,0,0,0.6);
-      padding: 8px;
-      border-radius: 6px;
+      font-size: 18px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 8px;
+      text-shadow: 0 0 8px #0ff;
     }
+
     #highscores {
       position: absolute;
       top: 10px;
@@ -25,9 +28,11 @@
       font-family: monospace;
       font-size: 14px;
       background: rgba(0,0,0,0.6);
-      padding: 8px;
-      border-radius: 6px;
+      padding: 10px;
+      border-radius: 8px;
+      text-shadow: 0 0 6px #ff0;
     }
+
     #gameover {
       position: absolute;
       top: 50%;
@@ -36,21 +41,27 @@
       color: #fff;
       font-family: monospace;
       font-size: 28px;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       padding: 20px 40px;
       border-radius: 10px;
       display: none;
       text-align: center;
+      text-shadow: 0 0 10px #0ff;
     }
+
     #restart {
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: #0f0;
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: #0ff;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      font-weight: bold;
+      color: #000;
+      text-shadow: none;
     }
+
   </style>
 </head>
 <body>
@@ -84,8 +95,8 @@
       highScores = JSON.parse(localStorage.getItem('neonSerpentsHighScores')) || [];
       updateHighscoresDiv();
 
-      for (let i = 0; i < 200; i++) pellets.push(createPellet());
-      for (let i = 0; i < 5; i++) bots.push(createSnake(false));
+      for (let i = 0; i < 300; i++) pellets.push(createPellet());
+      for (let i = 0; i < 7; i++) bots.push(createSnake(false));
 
       scoreboard.textContent = "Skor: 0";
       gameoverDiv.style.display = "none";
@@ -97,11 +108,13 @@
         y: Math.random() * canvas.height,
         dx: Math.random() * 2 - 1,
         dy: Math.random() * 2 - 1,
-        size: 10,
+        size: 15,
         tail: [],
         score: 0,
-        color: isPlayer ? "#0f0" : "#f0f",
-        isPlayer
+        color: isPlayer ? "#0ff" : `hsl(${Math.random()*360},100%,50%)`,
+        speed: isPlayer ? 2.5 : Math.random()*1.5 + 1,
+        isPlayer,
+        behavior: Math.random() < 0.5 ? 'aggressive' : 'passive'
       };
     }
 
@@ -109,25 +122,22 @@
       return {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: 5,
-        color: "hsl(" + Math.random() * 360 + ",100%,50%)"
+        size: 6,
+        color: `hsl(${Math.random()*360},100%,60%)`
       };
     }
 
     function updateSnake(snake) {
       if (snake.isPlayer) {
         const angle = Math.atan2(mouse.y - snake.y, mouse.x - snake.x);
-        snake.dx = Math.cos(angle);
-        snake.dy = Math.sin(angle);
+        snake.dx = Math.cos(angle) * snake.speed;
+        snake.dy = Math.sin(angle) * snake.speed;
       } else {
-        if (Math.random() < 0.02) {
-          snake.dx = Math.random() * 2 - 1;
-          snake.dy = Math.random() * 2 - 1;
-        }
+        moveBot(snake);
       }
 
-      snake.x += snake.dx * 2;
-      snake.y += snake.dy * 2;
+      snake.x += snake.dx;
+      snake.y += snake.dy;
 
       if (snake.x < 0) snake.x = canvas.width;
       if (snake.x > canvas.width) snake.x = 0;
@@ -139,7 +149,7 @@
 
       for (let i = pellets.length - 1; i >= 0; i--) {
         const p = pellets[i];
-        if (Math.hypot(snake.x - p.x, snake.y - p.y) < 10) {
+        if (Math.hypot(snake.x - p.x, snake.y - p.y) < 12) {
           pellets.splice(i, 1);
           pellets.push(createPellet());
           snake.size++;
@@ -148,40 +158,51 @@
         }
       }
 
-      if (!snake.isPlayer && Math.hypot(snake.x - player.x, snake.y - player.y) < 10) {
-        endGame();
-      }
-      if (snake.isPlayer) {
-        for (let b of bots) {
-          if (Math.hypot(snake.x - b.x, snake.y - b.y) < 10) {
-            endGame();
-          }
-        }
-      }
+      if (!snake.isPlayer && Math.hypot(snake.x - player.x, snake.y - player.y) < 12) endGame();
+      if (snake.isPlayer) for (let b of bots) if (Math.hypot(snake.x - b.x, snake.y - b.y) < 12) endGame();
+    }
+
+    function moveBot(bot) {
+      let target = null;
+      if (bot.behavior === 'aggressive') target = player;
+      else target = pellets[Math.floor(Math.random()*pellets.length)];
+
+      const angle = Math.atan2(target.y - bot.y, target.x - bot.x);
+      bot.dx = Math.cos(angle) * bot.speed;
+      bot.dy = Math.sin(angle) * bot.speed;
     }
 
     function drawSnake(snake) {
       ctx.beginPath();
-      for (let t of snake.tail) ctx.lineTo(t.x, t.y);
+      for (let i=0; i<snake.tail.length; i++) {
+        const t = snake.tail[i];
+        ctx.lineTo(t.x, t.y);
+      }
       ctx.strokeStyle = snake.color;
-      ctx.lineWidth = 8;
+      ctx.lineWidth = 12;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = snake.color;
       ctx.stroke();
+      ctx.shadowBlur = 0;
       ctx.closePath();
     }
 
     function drawPellets() {
       for (let p of pellets) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
         ctx.fillStyle = p.color;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = p.color;
         ctx.fill();
+        ctx.shadowBlur = 0;
         ctx.closePath();
       }
     }
 
     function gameLoop() {
       if (gameOver) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
       updateSnake(player);
       for (let b of bots) updateSnake(b);
       drawPellets();
@@ -200,7 +221,7 @@
 
     function saveHighScore(score) {
       highScores.push(score);
-      highScores.sort((a,b) => b-a);
+      highScores.sort((a,b)=>b-a);
       highScores = highScores.slice(0,5);
       localStorage.setItem('neonSerpentsHighScores', JSON.stringify(highScores));
     }
@@ -210,8 +231,8 @@
     }
 
     const mouse = {x: canvas.width/2, y: canvas.height/2};
-    window.addEventListener("mousemove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    restartBtn.addEventListener("click", () => { init(); requestAnimationFrame(gameLoop); });
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    restartBtn.addEventListener('click', () => { init(); requestAnimationFrame(gameLoop); });
 
     init();
     requestAnimationFrame(gameLoop);
