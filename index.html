@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>xD</title>
 
-    <!-- Arama çubuğundaki simge (favicon) -->
+    <!-- Favicon -->
     <link
       rel="icon"
       type="image/png"
@@ -50,6 +50,35 @@
         padding: 12px 16px;
       }
 
+      /* 3310 Butonu Tasarımı */
+      .game-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 18px;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: #fff;
+        transition: transform 0.1s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .game-link:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      }
+
+      body.dark .game-link {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      }
+
       .toggle {
         display: inline-flex;
         align-items: center;
@@ -72,22 +101,6 @@
       .toggle:active { transform: scale(0.98); }
       .toggle .icon { font-size: 18px; line-height: 1; }
       .toggle .label { font-weight: 600; font-size: 14px; }
-
-      .game-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 8px 12px;
-        border-radius: var(--btn-br);
-        background: var(--btn-bg);
-        color: var(--fg-day);
-        text-decoration: none;
-        font-weight: bold;
-        box-shadow: var(--shadow);
-        transition: transform .08s ease, background .3s ease, color .3s ease;
-      }
-      .game-link:hover { transform: scale(0.98); }
-      body.dark .game-link { background: var(--btn-bg-dark); color: var(--fg-night); }
 
       .content {
         display: grid;
@@ -115,7 +128,7 @@
   <body>
     <div class="page">
       <header class="topbar">
-        <!-- Sol üst: 3310 oyuna link -->
+        <!-- Sol üst: 3310 butonu -->
         <a href="neon_serpents.html" class="game-link">3310</a>
 
         <!-- Sağ üst: Gündüz / Gece modu butonu -->
@@ -127,7 +140,6 @@
 
       <main class="content">
         <figure class="frame">
-          <!-- Varsayılan: Gündüz görüntüsü -->
           <img
             id="mainImage"
             alt="Gündüz/Gece görseli"
@@ -156,7 +168,7 @@
           setMode('light');
         }
 
-        // Gece görselini önceden yükle (daha hızlı geçiş için)
+        // Gece görselini önceden yükle
         const preloadNight = new Image();
         preloadNight.src = NIGHT_IMG;
 
