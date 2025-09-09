@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>3310</title>
+<title>Neon Serpents</title>
 <style>
 body { margin:0; overflow:hidden; background:#0c0c0c; }
 canvas { display:block; margin:auto; background:#111; }
@@ -68,7 +68,7 @@ function init() {
   updateHighscoresDiv();
 
   for (let i = 0; i < 300; i++) pellets.push(createPellet());
-  for (let i = 0; i < 7; i++) bots.push(createSnake(false));
+  for (let i = 0; i < 8; i++) bots.push(createSnake(false));
 
   scoreboard.textContent = "Skor: 0";
   gameoverDiv.style.display = "none";
@@ -80,11 +80,11 @@ function createSnake(isPlayer) {
     y: Math.random()*canvas.height,
     dx: Math.random()*2-1,
     dy: Math.random()*2-1,
-    size: isPlayer?25:Math.random()*18+12, // minimum 12
+    size: isPlayer?25:Math.random()*20+15,
     tail: [],
     score: 0,
     color: isPlayer?"#0ff":`hsl(${Math.random()*360},100%,50%)`,
-    speed: isPlayer?3:Math.random()*1.5+1.2,
+    speed: isPlayer?3:Math.random()*1.8+1,
     isPlayer,
     behavior: Math.random()<0.5?'aggressive':'passive'
   };
@@ -119,6 +119,7 @@ function updateSnake(snake) {
   snake.tail.push({x:snake.x, y:snake.y});
   if(snake.tail.length>snake.size) snake.tail.shift();
 
+  // Pellet yeme
   for(let i=pellets.length-1;i>=0;i--){
     const p=pellets[i];
     if(Math.hypot(snake.x-p.x,snake.y-p.y)<12){
@@ -128,37 +129,59 @@ function updateSnake(snake) {
     }
   }
 
-  // Çarpışma adil
-  if(!snake.isPlayer){
-    const dist = Math.hypot(snake.x-player.x,snake.y-player.y);
-    if(dist<12){
-      if(player.size>snake.size*1.1){ snake.size-=2; return; } // Botu yiyorsun
-      else if(snake.size>player.size*1.1) endGame(); // Bot seni yiyor
-    }
-  }
-
+  // Çarpışmalar
   if(snake.isPlayer){
     for(let b of bots){
-      const dist = Math.hypot(snake.x-b.x,snake.y-b.y);
-      if(dist<12){
-        if(snake.size>b.size*1.1){ b.size-=2; continue; } // Sen botu yiyorsun
-        else if(b.size>snake.size*1.1) endGame(); // Bot seni yiyor
+      if(checkCollision(snake,b)){
+        if(snake.size>b.size*1.1) b.size=0; // botu yedin
+        else if(b.size>snake.size*1.1) endGame();
       }
+    }
+  } else {
+    if(checkCollision(snake,player)){
+      if(player.size>snake.size*1.1) snake.size=0; // sen botu yedin
+      else if(snake.size>player.size*1.1) endGame();
     }
   }
 }
 
+// Bot pellet hedefleme + oyuncuya göre davranış
 function moveBot(bot){
   let target=null;
-  if(bot.behavior==='aggressive'){
-    if(bot.size>player.size*1.1) target=player; // Senden büyükse saldır
-    else target=pellets[Math.floor(Math.random()*pellets.length)]; // Küçükse pellete gider
-  }else{
-    target=pellets[Math.floor(Math.random()*pellets.length)];
+  if(bot.behavior==='aggressive' && bot.size>player.size*1.1){
+    target=player; // büyükse sana gelir
+  } else if(bot.behavior==='aggressive' && bot.size<player.size*0.9){
+    // küçükse senden kaçar
+    const angle=Math.atan2(bot.y-player.y, bot.x-player.x);
+    bot.dx=Math.cos(angle)*bot.speed;
+    bot.dy=Math.sin(angle)*bot.speed;
+    return;
+  } else {
+    // en yakın pellete git
+    target=getNearestPellet(bot);
   }
-  const angle=Math.atan2(target.y-bot.y,target.x-bot.x);
-  bot.dx=Math.cos(angle)*bot.speed;
-  bot.dy=Math.sin(angle)*bot.speed;
+  if(target){
+    const angle=Math.atan2(target.y-bot.y,target.x-bot.x);
+    bot.dx=Math.cos(angle)*bot.speed;
+    bot.dy=Math.sin(angle)*bot.speed;
+  }
+}
+
+function getNearestPellet(bot){
+  let nearest=null, minDist=Infinity;
+  for(let p of pellets){
+    const d=Math.hypot(bot.x-p.x, bot.y-p.y);
+    if(d<minDist){minDist=d; nearest=p;}
+  }
+  return nearest;
+}
+
+// Baş - gövde çarpışma kontrolü
+function checkCollision(s1,s2){
+  for(let t of s2.tail){
+    if(Math.hypot(s1.x-t.x,s1.y-t.y)<12) return true;
+  }
+  return false;
 }
 
 function drawSnake(snake){
@@ -168,19 +191,18 @@ function drawSnake(snake){
     ctx.lineTo(t.x,t.y);
   }
   ctx.strokeStyle=snake.color;
-  ctx.lineWidth=snake.isPlayer?16:Math.max(12,snake.size/2); // bot çizgi görünür
+  ctx.lineWidth=snake.isPlayer?16:Math.max(10,snake.size/2);
   ctx.shadowBlur=12; ctx.shadowColor=snake.color;
   ctx.stroke();
   ctx.shadowBlur=0;
 
+  // Oyuncu gözü
   if(snake.isPlayer){
     ctx.beginPath();
     ctx.arc(snake.x+5,snake.y-5,4,0,Math.PI*2);
     ctx.fillStyle="#fff"; ctx.fill();
     ctx.closePath();
   }
-
-  ctx.closePath();
 }
 
 function drawPellets(){
@@ -198,6 +220,7 @@ function gameLoop(){
   if(gameOver) return;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   updateSnake(player);
+  bots=bots.filter(b=>b.size>0); // ölen botları sil
   for(let b of bots) updateSnake(b);
   drawPellets();
   drawSnake(player);
