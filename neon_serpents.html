@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Neon Serpents</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; margin: auto; background: #111; }
+    #scoreboard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 16px;
+      background: rgba(0,0,0,0.6);
+      padding: 8px;
+      border-radius: 6px;
+    }
+    #highscores {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #ff0;
+      font-family: monospace;
+      font-size: 14px;
+      background: rgba(0,0,0,0.6);
+      padding: 8px;
+      border-radius: 6px;
+    }
+    #gameover {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-family: monospace;
+      font-size: 28px;
+      background: rgba(0,0,0,0.8);
+      padding: 20px 40px;
+      border-radius: 10px;
+      display: none;
+      text-align: center;
+    }
+    #restart {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #0f0;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div id="scoreboard">Skor: 0</div>
+  <div id="highscores">En Yüksek Skorlar:<br></div>
+  <div id="gameover">
+    <div>Oyun Bitti!</div>
+    <div id="finalscore">Skor: 0</div>
+    <button id="restart">Yeniden Oyna</button>
+  </div>
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const scoreboard = document.getElementById("scoreboard");
+    const highscoresDiv = document.getElementById("highscores");
+    const gameoverDiv = document.getElementById("gameover");
+    const finalscoreDiv = document.getElementById("finalscore");
+    const restartBtn = document.getElementById("restart");
+
+    let player, pellets, bots, gameOver, highScores;
+
+    function init() {
+      player = createSnake(true);
+      pellets = [];
+      bots = [];
+      gameOver = false;
+      highScores = JSON.parse(localStorage.getItem('neonSerpentsHighScores')) || [];
+      updateHighscoresDiv();
+
+      for (let i = 0; i < 200; i++) pellets.push(createPellet());
+      for (let i = 0; i < 5; i++) bots.push(createSnake(false));
+
+      scoreboard.textContent = "Skor: 0";
+      gameoverDiv.style.display = "none";
+    }
+
+    function createSnake(isPlayer) {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: Math.random() * 2 - 1,
+        dy: Math.random() * 2 - 1,
+        size: 10,
+        tail: [],
+        score: 0,
+        color: isPlayer ? "#0f0" : "#f0f",
+        isPlayer
+      };
+    }
+
+    function createPellet() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: 5,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)"
+      };
+    }
+
+    function updateSnake(snake) {
+      if (snake.isPlayer) {
+        const angle = Math.atan2(mouse.y - snake.y, mouse.x - snake.x);
+        snake.dx = Math.cos(angle);
+        snake.dy = Math.sin(angle);
+      } else {
+        if (Math.random() < 0.02) {
+          snake.dx = Math.random() * 2 - 1;
+          snake.dy = Math.random() * 2 - 1;
+        }
+      }
+
+      snake.x += snake.dx * 2;
+      snake.y += snake.dy * 2;
+
+      if (snake.x < 0) snake.x = canvas.width;
+      if (snake.x > canvas.width) snake.x = 0;
+      if (snake.y < 0) snake.y = canvas.height;
+      if (snake.y > canvas.height) snake.y = 0;
+
+      snake.tail.push({x: snake.x, y: snake.y});
+      if (snake.tail.length > snake.size) snake.tail.shift();
+
+      for (let i = pellets.length - 1; i >= 0; i--) {
+        const p = pellets[i];
+        if (Math.hypot(snake.x - p.x, snake.y - p.y) < 10) {
+          pellets.splice(i, 1);
+          pellets.push(createPellet());
+          snake.size++;
+          snake.score++;
+          if (snake.isPlayer) scoreboard.textContent = "Skor: " + snake.score;
+        }
+      }
+
+      if (!snake.isPlayer && Math.hypot(snake.x - player.x, snake.y - player.y) < 10) {
+        endGame();
+      }
+      if (snake.isPlayer) {
+        for (let b of bots) {
+          if (Math.hypot(snake.x - b.x, snake.y - b.y) < 10) {
+            endGame();
+          }
+        }
+      }
+    }
+
+    function drawSnake(snake) {
+      ctx.beginPath();
+      for (let t of snake.tail) ctx.lineTo(t.x, t.y);
+      ctx.strokeStyle = snake.color;
+      ctx.lineWidth = 8;
+      ctx.stroke();
+      ctx.closePath();
+    }
+
+    function drawPellets() {
+      for (let p of pellets) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+
+    function gameLoop() {
+      if (gameOver) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      updateSnake(player);
+      for (let b of bots) updateSnake(b);
+      drawPellets();
+      drawSnake(player);
+      for (let b of bots) drawSnake(b);
+      requestAnimationFrame(gameLoop);
+    }
+
+    function endGame() {
+      gameOver = true;
+      finalscoreDiv.textContent = "Skor: " + player.score;
+      gameoverDiv.style.display = "block";
+      saveHighScore(player.score);
+      updateHighscoresDiv();
+    }
+
+    function saveHighScore(score) {
+      highScores.push(score);
+      highScores.sort((a,b) => b-a);
+      highScores = highScores.slice(0,5);
+      localStorage.setItem('neonSerpentsHighScores', JSON.stringify(highScores));
+    }
+
+    function updateHighscoresDiv() {
+      highscoresDiv.innerHTML = 'En Yüksek Skorlar:<br>' + highScores.map(s=>s).join('<br>');
+    }
+
+    const mouse = {x: canvas.width/2, y: canvas.height/2};
+    window.addEventListener("mousemove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    restartBtn.addEventListener("click", () => { init(); requestAnimationFrame(gameLoop); });
+
+    init();
+    requestAnimationFrame(gameLoop);
+  </script>
+</body>
+</html>
