@@ -2,62 +2,38 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Neon Serpents</title>
+<title>Neon Serpents - Adil Botlar</title>
 <style>
-  body { margin: 0; overflow: hidden; background: #0c0c0c; }
-  canvas { display: block; margin: auto; background: #111; }
+body { margin:0; overflow:hidden; background:#0c0c0c; }
+canvas { display:block; margin:auto; background:#111; }
 
-  #scoreboard {
-    position: absolute;
-    top: 10px; left: 10px;
-    color: #0ff;
-    font-family: monospace;
-    font-size: 18px;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 8px;
-    text-shadow: 0 0 8px #0ff;
-  }
+#scoreboard {
+  position:absolute; top:10px; left:10px;
+  color:#0ff; font-family:monospace; font-size:18px;
+  background:rgba(0,0,0,0.7); padding:10px; border-radius:8px;
+  text-shadow:0 0 8px #0ff;
+}
 
-  #highscores {
-    position: absolute;
-    top: 10px; right: 10px;
-    color: #ff0;
-    font-family: monospace;
-    font-size: 14px;
-    background: rgba(0,0,0,0.6);
-    padding: 10px;
-    border-radius: 8px;
-    text-shadow: 0 0 6px #ff0;
-  }
+#highscores {
+  position:absolute; top:10px; right:10px;
+  color:#ff0; font-family:monospace; font-size:14px;
+  background:rgba(0,0,0,0.6); padding:10px; border-radius:8px;
+  text-shadow:0 0 6px #ff0;
+}
 
-  #gameover {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-family: monospace;
-    font-size: 28px;
-    background: rgba(0,0,0,0.85);
-    padding: 20px 40px;
-    border-radius: 10px;
-    display: none;
-    text-align: center;
-    text-shadow: 0 0 10px #0ff;
-  }
+#gameover {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  color:#fff; font-family:monospace; font-size:28px;
+  background:rgba(0,0,0,0.85); padding:20px 40px; border-radius:10px;
+  display:none; text-align:center; text-shadow:0 0 10px #0ff;
+}
 
-  #restart {
-    margin-top: 12px;
-    padding: 10px 20px;
-    background: #0ff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #000;
-    text-shadow: none;
-  }
+#restart {
+  margin-top:12px; padding:10px 20px;
+  background:#0ff; border:none; border-radius:8px;
+  font-size:16px; cursor:pointer; font-weight:bold; color:#000;
+  text-shadow:none;
+}
 </style>
 </head>
 <body>
@@ -100,24 +76,24 @@ function init() {
 
 function createSnake(isPlayer) {
   return {
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    dx: Math.random() * 2 - 1,
-    dy: Math.random() * 2 - 1,
-    size: 20,
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    dx: Math.random()*2-1,
+    dy: Math.random()*2-1,
+    size: isPlayer?25:Math.random()*12+12,
     tail: [],
     score: 0,
-    color: isPlayer ? "#0ff" : `hsl(${Math.random()*360},100%,50%)`,
-    speed: isPlayer ? 3 : Math.random()*1.5 + 1.2,
+    color: isPlayer?"#0ff":`hsl(${Math.random()*360},100%,50%)`,
+    speed: isPlayer?3:Math.random()*1.5+1.2,
     isPlayer,
-    behavior: Math.random() < 0.5 ? 'aggressive' : 'passive'
+    behavior: Math.random()<0.5?'aggressive':'passive'
   };
 }
 
 function createPellet() {
   return {
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
     size: 6,
     color: `hsl(${Math.random()*360},100%,60%)`
   };
@@ -125,9 +101,9 @@ function createPellet() {
 
 function updateSnake(snake) {
   if (snake.isPlayer) {
-    const angle = Math.atan2(mouse.y - snake.y, mouse.x - snake.x);
-    snake.dx = Math.cos(angle) * snake.speed;
-    snake.dy = Math.sin(angle) * snake.speed;
+    const angle = Math.atan2(mouse.y-snake.y, mouse.x-snake.x);
+    snake.dx = Math.cos(angle)*snake.speed;
+    snake.dy = Math.sin(angle)*snake.speed;
   } else {
     moveBot(snake);
   }
@@ -135,100 +111,124 @@ function updateSnake(snake) {
   snake.x += snake.dx;
   snake.y += snake.dy;
 
-  if (snake.x < 0) snake.x = canvas.width;
-  if (snake.x > canvas.width) snake.x = 0;
-  if (snake.y < 0) snake.y = canvas.height;
-  if (snake.y > canvas.height) snake.y = 0;
+  if(snake.x<0) snake.x=canvas.width;
+  if(snake.x>canvas.width) snake.x=0;
+  if(snake.y<0) snake.y=canvas.height;
+  if(snake.y>canvas.height) snake.y=0;
 
-  snake.tail.push({x: snake.x, y: snake.y});
-  if (snake.tail.length > snake.size) snake.tail.shift();
+  snake.tail.push({x:snake.x, y:snake.y});
+  if(snake.tail.length>snake.size) snake.tail.shift();
 
-  for (let i = pellets.length - 1; i >= 0; i--) {
-    const p = pellets[i];
-    if (Math.hypot(snake.x - p.x, snake.y - p.y) < 12) {
-      pellets.splice(i, 1);
-      pellets.push(createPellet());
-      snake.size++;
-      snake.score++;
-      if (snake.isPlayer) scoreboard.textContent = "Skor: " + snake.score;
+  // Pellet çarpışması
+  for(let i=pellets.length-1;i>=0;i--){
+    const p=pellets[i];
+    if(Math.hypot(snake.x-p.x,snake.y-p.y)<12){
+      pellets.splice(i,1); pellets.push(createPellet());
+      snake.size++; snake.score++;
+      if(snake.isPlayer) scoreboard.textContent="Skor: "+snake.score;
     }
   }
 
-  if (!snake.isPlayer && Math.hypot(snake.x - player.x, snake.y - player.y) < 12) endGame();
-  if (snake.isPlayer) for (let b of bots) if (Math.hypot(snake.x - b.x, snake.y - b.y) < 12) endGame();
-}
-
-function moveBot(bot) {
-  let target = null;
-  if (bot.behavior === 'aggressive') target = player;
-  else target = pellets[Math.floor(Math.random()*pellets.length)];
-
-  const angle = Math.atan2(target.y - bot.y, target.x - bot.x);
-  bot.dx = Math.cos(angle) * bot.speed;
-  bot.dy = Math.sin(angle) * bot.speed;
-}
-
-function drawSnake(snake) {
-  ctx.beginPath();
-  for (let i=0; i<snake.tail.length; i++) {
-    const t = snake.tail[i];
-    ctx.lineTo(t.x, t.y);
+  // Bot ve oyuncu çarpışması
+  if(!snake.isPlayer){
+    const dist = Math.hypot(snake.x-player.x,snake.y-player.y);
+    if(dist<12){
+      if(player.size>snake.size*1.1){ snake.size-=2; return; } // Botu yiyorsun
+      else if(snake.size>player.size*1.1) endGame(); // Bot seni yiyor
+    }
   }
-  ctx.strokeStyle = snake.color;
-  ctx.lineWidth = 14;
-  ctx.shadowBlur = 12;
-  ctx.shadowColor = snake.color;
+
+  if(snake.isPlayer){
+    for(let b of bots){
+      const dist = Math.hypot(snake.x-b.x,snake.y-b.y);
+      if(dist<12){
+        if(snake.size>b.size*1.1){ b.size-=2; continue; } // Sen botu yiyorsun
+        else if(b.size>snake.size*1.1) endGame(); // Bot seni yiyor
+      }
+    }
+  }
+}
+
+function moveBot(bot){
+  let target=null;
+  if(bot.behavior==='aggressive'){
+    if(bot.size>player.size*1.1) target=player; // Senden büyükse saldır
+    else target=pellets[Math.floor(Math.random()*pellets.length)]; // Küçükse pellete gider
+  }else{
+    target=pellets[Math.floor(Math.random()*pellets.length)];
+  }
+  const angle=Math.atan2(target.y-bot.y,target.x-bot.x);
+  bot.dx=Math.cos(angle)*bot.speed;
+  bot.dy=Math.sin(angle)*bot.speed;
+}
+
+function drawSnake(snake){
+  ctx.beginPath();
+  for(let i=0;i<snake.tail.length;i++){
+    const t=snake.tail[i];
+    ctx.lineTo(t.x,t.y);
+  }
+  ctx.strokeStyle=snake.color;
+  ctx.lineWidth=snake.isPlayer?16:12;
+  ctx.shadowBlur=12; ctx.shadowColor=snake.color;
   ctx.stroke();
-  ctx.shadowBlur = 0;
+  ctx.shadowBlur=0;
+
+  // Oyuncu başı için göz efekti
+  if(snake.isPlayer){
+    ctx.beginPath();
+    ctx.arc(snake.x+5,snake.y-5,4,0,Math.PI*2);
+    ctx.fillStyle="#fff"; ctx.fill();
+    ctx.closePath();
+  }
+
   ctx.closePath();
 }
 
-function drawPellets() {
-  for (let p of pellets) {
+function drawPellets(){
+  for(let p of pellets){
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-    ctx.fillStyle = p.color;
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = p.color;
-    ctx.fill();
-    ctx.shadowBlur = 0;
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle=p.color;
+    ctx.shadowBlur=6; ctx.shadowColor=p.color;
+    ctx.fill(); ctx.shadowBlur=0;
     ctx.closePath();
   }
 }
 
-function gameLoop() {
-  if (gameOver) return;
+function gameLoop(){
+  if(gameOver) return;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   updateSnake(player);
-  for (let b of bots) updateSnake(b);
+  for(let b of bots) updateSnake(b);
   drawPellets();
   drawSnake(player);
-  for (let b of bots) drawSnake(b);
+  for(let b of bots) drawSnake(b);
   requestAnimationFrame(gameLoop);
 }
 
-function endGame() {
-  gameOver = true;
-  finalscoreDiv.textContent = "Skor: " + player.score;
-  gameoverDiv.style.display = "block";
+function endGame(){
+  gameOver=true;
+  finalscoreDiv.textContent="Skor: "+player.score;
+  gameoverDiv.style.display="block";
   saveHighScore(player.score);
   updateHighscoresDiv();
 }
 
-function saveHighScore(score) {
+function saveHighScore(score){
   highScores.push(score);
   highScores.sort((a,b)=>b-a);
-  highScores = highScores.slice(0,5);
-  localStorage.setItem('neonSerpentsHighScores', JSON.stringify(highScores));
+  highScores=highScores.slice(0,5);
+  localStorage.setItem('neonSerpentsHighScores',JSON.stringify(highScores));
 }
 
-function updateHighscoresDiv() {
-  highscoresDiv.innerHTML = 'En Yüksek Skorlar:<br>' + highScores.map(s=>s).join('<br>');
+function updateHighscoresDiv(){
+  highscoresDiv.innerHTML='En Yüksek Skorlar:<br>'+highScores.map(s=>s).join('<br>');
 }
 
-const mouse = {x: canvas.width/2, y: canvas.height/2};
-window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-restartBtn.addEventListener('click', () => { init(); requestAnimationFrame(gameLoop); });
+const mouse={x:canvas.width/2,y:canvas.height/2};
+window.addEventListener('mousemove',e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+restartBtn.addEventListener('click',()=>{init(); requestAnimationFrame(gameLoop);});
 
 init();
 requestAnimationFrame(gameLoop);
