@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Neon Serpents - Adil Botlar</title>
+<title>3310</title>
 <style>
 body { margin:0; overflow:hidden; background:#0c0c0c; }
 canvas { display:block; margin:auto; background:#111; }
@@ -80,7 +80,7 @@ function createSnake(isPlayer) {
     y: Math.random()*canvas.height,
     dx: Math.random()*2-1,
     dy: Math.random()*2-1,
-    size: isPlayer?25:Math.random()*12+12,
+    size: isPlayer?25:Math.random()*18+12, // minimum 12
     tail: [],
     score: 0,
     color: isPlayer?"#0ff":`hsl(${Math.random()*360},100%,50%)`,
@@ -119,7 +119,6 @@ function updateSnake(snake) {
   snake.tail.push({x:snake.x, y:snake.y});
   if(snake.tail.length>snake.size) snake.tail.shift();
 
-  // Pellet çarpışması
   for(let i=pellets.length-1;i>=0;i--){
     const p=pellets[i];
     if(Math.hypot(snake.x-p.x,snake.y-p.y)<12){
@@ -129,7 +128,7 @@ function updateSnake(snake) {
     }
   }
 
-  // Bot ve oyuncu çarpışması
+  // Çarpışma adil
   if(!snake.isPlayer){
     const dist = Math.hypot(snake.x-player.x,snake.y-player.y);
     if(dist<12){
@@ -169,12 +168,11 @@ function drawSnake(snake){
     ctx.lineTo(t.x,t.y);
   }
   ctx.strokeStyle=snake.color;
-  ctx.lineWidth=snake.isPlayer?16:12;
+  ctx.lineWidth=snake.isPlayer?16:Math.max(12,snake.size/2); // bot çizgi görünür
   ctx.shadowBlur=12; ctx.shadowColor=snake.color;
   ctx.stroke();
   ctx.shadowBlur=0;
 
-  // Oyuncu başı için göz efekti
   if(snake.isPlayer){
     ctx.beginPath();
     ctx.arc(snake.x+5,snake.y-5,4,0,Math.PI*2);
