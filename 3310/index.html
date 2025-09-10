@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3310</title>
+    <title>Gelişmiş .io Oyunu - Kamera ve AI</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/anilacikogz/anilacikgozsite/main/sitologo.png">
     
@@ -30,7 +30,7 @@
         const worldHeight = 5000;
         const foodCount = 500;
         const botCount = 25;
-        const playerSpeed = 0.02; // HIZ YAVAŞLATILDI (0.05 -> 0.02)
+        const playerSpeed = 0.02; // Yavaşlatılmış hız
 
         // --- CANVAS VE CONTEXT ---
         const canvas = document.getElementById('gameCanvas');
@@ -85,7 +85,7 @@
                 x: Math.random() * worldWidth, y: Math.random() * worldHeight,
                 radius: Math.random() * 15 + 10, color: getRandomColor(),
                 speed: Math.random() * 0.015 + 0.005,
-                state: 'seekingFood', // 'seekingFood', 'fleeing', 'hunting'
+                state: 'seekingFood',
                 target: null
             };
         }
@@ -229,7 +229,8 @@
                     const e2 = allEntities[j];
                     if (!e1 || !e2) continue;
 
-                    if (getDistance(e1.x, e.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) {
+                    // HATA BURADAYDI: e.y -> e1.y olarak düzeltildi.
+                    if (getDistance(e1.x, e1.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) {
                         const [bigger, smaller] = e1.radius > e2.radius ? [e1, e2] : [e2, e1];
                         
                         if (bigger.radius > smaller.radius * 1.1) {
