@@ -1,24 +1,344 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Uygulamalarım</title>
-  <link rel="icon" href="../sitelogo.png" type="image/png" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0; padding: 40px;
-      background: #121212;
-      color: #e0e0e0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelişmiş .io Oyunu - Kamera ve AI</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/anilacikogz/anilacikgozsite/main/sitolog.png">
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <h1>Uygulamalarım sayfası - İçerik yakında eklenecek.</h1>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        // --- OYUN AYARLARI ---
+        const worldWidth = 5000;
+        const worldHeight = 5000;
+        const foodCount = 500; // Daha büyük dünya için daha fazla yem
+        const botCount = 25;   // Daha fazla bot
+        const playerSpeed = 0.05;
+
+        // --- CANVAS VE CONTEXT ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // --- OYUN DEĞİŞKENLERİ ---
+        let player, foods = [], bots = [], score = 0, gameState = 'playing';
+        let highScore = localStorage.getItem('ioGameHighScore') || 0;
+        
+        // Fare'nin EKRAN üzerindeki konumu
+        let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+        // Kamera'nın DÜNYA üzerindeki konumu
+        let camera = { x: 0, y: 0 };
+
+        canvas.addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        });
+
+        canvas.addEventListener('click', () => {
+            if (gameState === 'gameOver') {
+                startGame();
+            }
+        });
+        
+        // --- YARDIMCI FONKSİYONLAR ---
+        const getDistance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
+        const getRandomColor = () => `hsl(${Math.random() * 360}, 80%, 60%)`;
+
+        // --- VARLIK OLUŞTURMA ---
+        function createPlayer() {
+            player = {
+                x: worldWidth / 2, y: worldHeight / 2,
+                radius: 25, color: 'hsl(200, 100%, 70%)', isPlayer: true
+            };
+        }
+
+        function createFoods() {
+            foods = Array.from({ length: foodCount }, () => ({
+                x: Math.random() * worldWidth, y: Math.random() * worldHeight,
+                radius: 8, color: getRandomColor()
+            }));
+        }
+        
+        function createBot() {
+             return {
+                x: Math.random() * worldWidth, y: Math.random() * worldHeight,
+                radius: Math.random() * 15 + 10, color: getRandomColor(),
+                speed: Math.random() * 0.015 + 0.005,
+                state: 'seekingFood', // 'seekingFood', 'fleeing', 'hunting'
+                target: null
+            };
+        }
+        
+        function createBots() {
+            bots = Array.from({ length: botCount }, createBot);
+        }
+
+        // --- ÇİZİM FONKSİYONLARI ---
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            const gridSize = 100;
+            // Sadece kameranın gördüğü alandaki çizgileri çizerek performansı artır
+            const startX = Math.floor(camera.x / gridSize) * gridSize;
+            const startY = Math.floor(camera.y / gridSize) * gridSize;
+
+            for (let x = startX; x < camera.x + canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, startY);
+                ctx.lineTo(x, startY + canvas.height + gridSize);
+                ctx.stroke();
+            }
+            for (let y = startY; y < camera.y + canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(startX, y);
+                ctx.lineTo(startX + canvas.width + gridSize, y);
+                ctx.stroke();
+            }
+        }
+
+        function drawWorldBounds() {
+            ctx.strokeStyle = '#ff5555';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(0, 0, worldWidth, worldHeight);
+        }
+
+        function drawEntity(entity) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(entity.x, entity.y, entity.radius, 0, Math.PI * 2);
+            ctx.shadowColor = entity.color;
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = entity.color;
+            ctx.fill();
+            ctx.closePath();
+            ctx.restore();
+        }
+
+        // --- GÜNCELLEME VE MANTIK ---
+        function updatePlayer() {
+            if (!player) return;
+            // Fare'nin ekran koordinatlarını dünya koordinatlarına çevir
+            const targetX = mouse.x + camera.x;
+            const targetY = mouse.y + camera.y;
+
+            player.x += (targetX - player.x) * playerSpeed;
+            player.y += (targetY - player.y) * playerSpeed;
+            
+            // Dünya sınırları içinde kalmasını sağla
+            player.x = Math.max(player.radius, Math.min(worldWidth - player.radius, player.x));
+            player.y = Math.max(player.radius, Math.min(worldHeight - player.radius, player.y));
+        }
+        
+        function updateBots() {
+            const allThreatsAndPrey = [player, ...bots];
+
+            bots.forEach(bot => {
+                let closestThreat = null;
+                let closestPrey = null;
+                let closestFood = null;
+                let minDistThreat = 300; // Algılama mesafesi
+                let minDistPrey = 400;
+                let minDistFood = 500;
+
+                // Etrafı tara
+                allThreatsAndPrey.forEach(entity => {
+                    if (entity === bot) return;
+                    const dist = getDistance(bot.x, bot.y, entity.x, entity.y);
+                    if (entity.radius > bot.radius * 1.1 && dist < minDistThreat) { // Tehdit
+                        minDistThreat = dist;
+                        closestThreat = entity;
+                    } else if (bot.radius > entity.radius * 1.1 && dist < minDistPrey) { // Av
+                        minDistPrey = dist;
+                        closestPrey = entity;
+                    }
+                });
+
+                // Karar verme mekanizması
+                if (closestThreat) {
+                    bot.state = 'fleeing';
+                    bot.target = closestThreat;
+                } else if (closestPrey) {
+                    bot.state = 'hunting';
+                    bot.target = closestPrey;
+                } else {
+                    bot.state = 'seekingFood';
+                    // En yakın yemi bul
+                    foods.forEach(food => {
+                         const dist = getDistance(bot.x, bot.y, food.x, food.y);
+                         if (dist < minDistFood) {
+                             minDistFood = dist;
+                             closestFood = food;
+                         }
+                    });
+                    bot.target = closestFood;
+                }
+                
+                // Harekete geçme
+                if (bot.target) {
+                    let targetX = bot.target.x;
+                    let targetY = bot.target.y;
+                    if (bot.state === 'fleeing') {
+                        // Tehditten uzağa kaç
+                        targetX = bot.x - (bot.target.x - bot.x);
+                        targetY = bot.y - (bot.target.y - bot.y);
+                    }
+                    bot.x += (targetX - bot.x) * bot.speed;
+                    bot.y += (targetY - bot.y) * bot.speed;
+                }
+                
+                // Dünya sınırları
+                bot.x = Math.max(bot.radius, Math.min(worldWidth - bot.radius, bot.x));
+                bot.y = Math.max(bot.radius, Math.min(worldHeight - bot.radius, bot.y));
+            });
+        }
+        
+        function updateCamera() {
+            if (!player) return;
+            // Kamerayı oyuncuya ortala
+            camera.x = player.x - canvas.width / 2;
+            camera.y = player.y - canvas.height / 2;
+            // Kameranın dünya dışına çıkmasını engelle
+            camera.x = Math.max(0, Math.min(worldWidth - canvas.width, camera.x));
+            camera.y = Math.max(0, Math.min(worldHeight - canvas.height, camera.y));
+        }
+
+        function checkCollisions() {
+            const allEntities = [player, ...bots];
+            
+            // Yem yeme
+            allEntities.forEach(entity => {
+                if(!entity) return;
+                foods.forEach((food, index) => {
+                    if (getDistance(entity.x, entity.y, food.x, food.y) < entity.radius) {
+                        entity.radius += 20 / entity.radius;
+                        if(entity.isPlayer) score++;
+                        foods.splice(index, 1);
+                        foods.push({ x: Math.random() * worldWidth, y: Math.random() * worldHeight, radius: 8, color: getRandomColor() });
+                    }
+                });
+            });
+
+            // Varlıkların birbirini yemesi
+            for (let i = 0; i < allEntities.length; i++) {
+                for (let j = i + 1; j < allEntities.length; j++) {
+                    const e1 = allEntities[i];
+                    const e2 = allEntities[j];
+                    if (!e1 || !e2) continue;
+
+                    if (getDistance(e1.x, e1.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) {
+                        const [bigger, smaller] = e1.radius > e2.radius ? [e1, e2] : [e2, e1];
+                        
+                        if (bigger.radius > smaller.radius * 1.1) {
+                            bigger.radius += smaller.radius * 0.2;
+                            
+                            if (smaller.isPlayer) {
+                                gameState = 'gameOver';
+                                player = null; // Oyuncuyu oyundan kaldır
+                            } else {
+                                const botIndex = bots.indexOf(smaller);
+                                if (botIndex !== -1) {
+                                    bots.splice(botIndex, 1);
+                                    bots.push(createBot());
+                                    if(bigger.isPlayer) score += Math.floor(smaller.radius);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // --- ANA OYUN DÖNGÜSÜ ---
+        function gameLoop() {
+            // Mantık güncellemeleri
+            if (gameState === 'playing') {
+                updatePlayer();
+                updateBots();
+                updateCamera();
+                checkCollisions();
+            }
+
+            // Çizim işlemleri
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Ekranı temizle
+            ctx.save(); // Mevcut durumu kaydet
+
+            // Kamerayı uygula (Dünyayı kaydır)
+            ctx.translate(-camera.x, -camera.y);
+
+            // --- DÜNYA İÇİNDEKİ NESNELERİ ÇİZ ---
+            drawGrid();
+            drawWorldBounds();
+            foods.forEach(drawEntity);
+            bots.forEach(drawEntity);
+            if (player) drawEntity(player);
+
+            ctx.restore(); // Kamera ayarlarını sıfırla
+
+            // --- EKRANA SABİT UI NESNELERİNİ ÇİZ ---
+            // Skor tabloları
+            ctx.font = '24px Arial';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Skor: ${score}`, 20, 40);
+            ctx.textAlign = 'right';
+            ctx.fillText(`En İyi: ${highScore}`, canvas.width - 20, 40);
+
+            if (gameState === 'gameOver') {
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('ioGameHighScore', highScore);
+                }
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '60px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('Oyun Bitti!', canvas.width / 2, canvas.height / 2 - 40);
+                ctx.font = '30px Arial';
+                ctx.fillText(`Skorunuz: ${score}`, canvas.width / 2, canvas.height / 2 + 20);
+                ctx.font = '20px Arial';
+                ctx.fillText('Tekrar Oynamak İçin Tıkla', canvas.width / 2, canvas.height / 2 + 70);
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        // --- OYUNU BAŞLATMA ---
+        function startGame() {
+            createPlayer();
+            createFoods();
+            createBots();
+            score = 0;
+            gameState = 'playing';
+            updateCamera(); // Kamerayı başlangıç konumuna ayarla
+        }
+        
+        startGame();
+        gameLoop();
+    </script>
 </body>
 </html>
