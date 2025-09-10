@@ -1,258 +1,163 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Neon Serpents</title>
-<style>
-body { margin:0; overflow:hidden; background:#0c0c0c; }
-canvas { display:block; margin:auto; background:#111; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3310</title>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50; /* Koyu mavi-gri bir arka plan */
+            color: #ecf0f1;
+            font-family: sans-serif;
+            text-align: center;
+            overflow: hidden; /* Sayfada kaydırma çubukları çıkmasın */
+        }
 
-#scoreboard {
-  position:absolute; top:10px; left:10px;
-  color:#0ff; font-family:monospace; font-size:18px;
-  background:rgba(0,0,0,0.7); padding:10px; border-radius:8px;
-  text-shadow:0 0 8px #0ff;
-}
+        h1 {
+            margin-top: 20px;
+        }
 
-#highscores {
-  position:absolute; top:10px; right:10px;
-  color:#ff0; font-family:monospace; font-size:14px;
-  background:rgba(0,0,0,0.6); padding:10px; border-radius:8px;
-  text-shadow:0 0 6px #ff0;
-}
-
-#gameover {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  color:#fff; font-family:monospace; font-size:28px;
-  background:rgba(0,0,0,0.85); padding:20px 40px; border-radius:10px;
-  display:none; text-align:center; text-shadow:0 0 10px #0ff;
-}
-
-#restart {
-  margin-top:12px; padding:10px 20px;
-  background:#0ff; border:none; border-radius:8px;
-  font-size:16px; cursor:pointer; font-weight:bold; color:#000;
-  text-shadow:none;
-}
-</style>
+        canvas {
+            background-color: #34495e; /* Tuval için biraz daha açık bir renk */
+            display: block;
+            margin: 20px auto; /* Tuvali ortalamak için */
+            border: 2px solid #ecf0f1;
+        }
+    </style>
 </head>
 <body>
-<canvas id="game"></canvas>
-<div id="scoreboard">Skor: 0</div>
-<div id="highscores">En Yüksek Skorlar:<br></div>
-<div id="gameover">
-  <div>Oyun Bitti!</div>
-  <div id="finalscore">Skor: 0</div>
-  <button id="restart">Yeniden Oyna</button>
-</div>
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    <h1>Benim .io Oyunum</h1>
+    <canvas id="gameCanvas"></canvas>
 
-const scoreboard = document.getElementById("scoreboard");
-const highscoresDiv = document.getElementById("highscores");
-const gameoverDiv = document.getElementById("gameover");
-const finalscoreDiv = document.getElementById("finalscore");
-const restartBtn = document.getElementById("restart");
+    <script>
+        // 1. Canvas ve Context'i Ayarlama
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-let player, pellets, bots, gameOver, highScores;
+        // Canvas boyutunu ekran boyutuna ayarlama
+        canvas.width = window.innerWidth * 0.9;
+        canvas.height = window.innerHeight * 0.7;
 
-function init() {
-  player = createSnake(true);
-  pellets = [];
-  bots = [];
-  gameOver = false;
-  highScores = JSON.parse(localStorage.getItem('neonSerpentsHighScores')) || [];
-  updateHighscoresDiv();
+        // 2. Oyuncu ve Fare Değişkenleri
+        let player = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 20,
+            color: 'orange',
+            speed: 0.05 // Oyuncunun fareye ne kadar yumuşak gideceğini belirler
+        };
 
-  for (let i = 0; i < 300; i++) pellets.push(createPellet());
-  for (let i = 0; i < 8; i++) bots.push(createSnake(false));
+        let mouse = {
+            x: player.x,
+            y: player.y
+        };
 
-  scoreboard.textContent = "Skor: 0";
-  gameoverDiv.style.display = "none";
-}
+        // Yemleri tutacağımız dizi
+        let foods = [];
+        const foodCount = 50; // Başlangıçtaki yem sayısı
 
-function createSnake(isPlayer) {
-  return {
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    dx: Math.random()*2-1,
-    dy: Math.random()*2-1,
-    size: isPlayer?25:Math.random()*20+15,
-    tail: [],
-    score: 0,
-    color: isPlayer?"#0ff":`hsl(${Math.random()*360},100%,50%)`,
-    speed: isPlayer?3:Math.random()*1.8+1,
-    isPlayer,
-    behavior: Math.random()<0.5?'aggressive':'passive'
-  };
-}
+        // Fare hareketlerini dinleme
+        window.addEventListener('mousemove', (event) => {
+            // Canvas'ın sayfadaki konumunu al
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+        });
 
-function createPellet() {
-  return {
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    size: 6,
-    color: `hsl(${Math.random()*360},100%,60%)`
-  };
-}
+        // 3. Yardımcı Fonksiyonlar
+        // İki nokta arasındaki mesafeyi hesaplayan fonksiyon (Pisagor Teoremi)
+        function getDistance(x1, y1, x2, y2) {
+            let xDistance = x2 - x1;
+            let yDistance = y2 - y1;
+            return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        }
 
-function updateSnake(snake) {
-  if (snake.isPlayer) {
-    const angle = Math.atan2(mouse.y-snake.y, mouse.x-snake.x);
-    snake.dx = Math.cos(angle)*snake.speed;
-    snake.dy = Math.sin(angle)*snake.speed;
-  } else {
-    moveBot(snake);
-  }
+        // Rastgele renk üreten fonksiyon
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
-  snake.x += snake.dx;
-  snake.y += snake.dy;
+        // 4. Yemleri Oluşturma
+        function createFood() {
+            for (let i = 0; i < foodCount; i++) {
+                foods.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: 5,
+                    color: getRandomColor()
+                });
+            }
+        }
 
-  if(snake.x<0) snake.x=canvas.width;
-  if(snake.x>canvas.width) snake.x=0;
-  if(snake.y<0) snake.y=canvas.height;
-  if(snake.y>canvas.height) snake.y=0;
+        // 5. Çizim Fonksiyonları
+        function drawPlayer() {
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = player.color;
+            ctx.fill();
+            ctx.closePath();
+        }
 
-  snake.tail.push({x:snake.x, y:snake.y});
-  if(snake.tail.length>snake.size) snake.tail.shift();
+        function drawFoods() {
+            foods.forEach(food => {
+                ctx.beginPath();
+                ctx.arc(food.x, food.y, food.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = food.color;
+                ctx.fill();
+                ctx.closePath();
+            });
+        }
 
-  // Pellet yeme
-  for(let i=pellets.length-1;i>=0;i--){
-    const p=pellets[i];
-    if(Math.hypot(snake.x-p.x,snake.y-p.y)<12){
-      pellets.splice(i,1); pellets.push(createPellet());
-      snake.size++; snake.score++;
-      if(snake.isPlayer) scoreboard.textContent="Skor: "+snake.score;
-    }
-  }
+        // 6. Oyun Döngüsü (Game Loop)
+        function update() {
+            // Ekranı her karede temizle
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Çarpışmalar
-  if(snake.isPlayer){
-    for(let b of bots){
-      if(checkCollision(snake,b)){
-        if(snake.size>b.size*1.1) b.size=0; // botu yedin
-        else if(b.size>snake.size*1.1) endGame();
-      }
-    }
-  } else {
-    if(checkCollision(snake,player)){
-      if(player.size>snake.size*1.1) snake.size=0; // sen botu yedin
-      else if(snake.size>player.size*1.1) endGame();
-    }
-  }
-}
+            // Yemleri çiz
+            drawFoods();
 
-// Bot pellet hedefleme + oyuncuya göre davranış
-function moveBot(bot){
-  let target=null;
-  if(bot.behavior==='aggressive' && bot.size>player.size*1.1){
-    target=player; // büyükse sana gelir
-  } else if(bot.behavior==='aggressive' && bot.size<player.size*0.9){
-    // küçükse senden kaçar
-    const angle=Math.atan2(bot.y-player.y, bot.x-player.x);
-    bot.dx=Math.cos(angle)*bot.speed;
-    bot.dy=Math.sin(angle)*bot.speed;
-    return;
-  } else {
-    // en yakın pellete git
-    target=getNearestPellet(bot);
-  }
-  if(target){
-    const angle=Math.atan2(target.y-bot.y,target.x-bot.x);
-    bot.dx=Math.cos(angle)*bot.speed;
-    bot.dy=Math.sin(angle)*bot.speed;
-  }
-}
+            // Oyuncu pozisyonunu fareye doğru yavaşça güncelle (yumuşak hareket için)
+            player.x += (mouse.x - player.x) * player.speed;
+            player.y += (mouse.y - player.y) * player.speed;
+            
+            // Oyuncuyu çiz
+            drawPlayer();
 
-function getNearestPellet(bot){
-  let nearest=null, minDist=Infinity;
-  for(let p of pellets){
-    const d=Math.hypot(bot.x-p.x, bot.y-p.y);
-    if(d<minDist){minDist=d; nearest=p;}
-  }
-  return nearest;
-}
+            // Çarpışma Kontrolü
+            foods.forEach((food, index) => {
+                const distance = getDistance(player.x, player.y, food.x, food.y);
+                
+                // Eğer oyuncu yeme dokunuyorsa
+                if (distance < player.radius + food.radius) {
+                    // Oyuncuyu büyüt (alanına göre büyütmek daha gerçekçi)
+                    player.radius += 0.5;
+                    
+                    // Yemi listeden sil ve yerine yenisini ekle
+                    foods.splice(index, 1);
+                    foods.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: 5,
+                        color: getRandomColor()
+                    });
+                }
+            });
 
-// Baş - gövde çarpışma kontrolü
-function checkCollision(s1,s2){
-  for(let t of s2.tail){
-    if(Math.hypot(s1.x-t.x,s1.y-t.y)<12) return true;
-  }
-  return false;
-}
+            // Döngüyü tekrar çağırarak animasyonu devam ettir
+            requestAnimationFrame(update);
+        }
 
-function drawSnake(snake){
-  ctx.beginPath();
-  for(let i=0;i<snake.tail.length;i++){
-    const t=snake.tail[i];
-    ctx.lineTo(t.x,t.y);
-  }
-  ctx.strokeStyle=snake.color;
-  ctx.lineWidth=snake.isPlayer?16:Math.max(10,snake.size/2);
-  ctx.shadowBlur=12; ctx.shadowColor=snake.color;
-  ctx.stroke();
-  ctx.shadowBlur=0;
-
-  // Oyuncu gözü
-  if(snake.isPlayer){
-    ctx.beginPath();
-    ctx.arc(snake.x+5,snake.y-5,4,0,Math.PI*2);
-    ctx.fillStyle="#fff"; ctx.fill();
-    ctx.closePath();
-  }
-}
-
-function drawPellets(){
-  for(let p of pellets){
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fillStyle=p.color;
-    ctx.shadowBlur=6; ctx.shadowColor=p.color;
-    ctx.fill(); ctx.shadowBlur=0;
-    ctx.closePath();
-  }
-}
-
-function gameLoop(){
-  if(gameOver) return;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  updateSnake(player);
-  bots=bots.filter(b=>b.size>0); // ölen botları sil
-  for(let b of bots) updateSnake(b);
-  drawPellets();
-  drawSnake(player);
-  for(let b of bots) drawSnake(b);
-  requestAnimationFrame(gameLoop);
-}
-
-function endGame(){
-  gameOver=true;
-  finalscoreDiv.textContent="Skor: "+player.score;
-  gameoverDiv.style.display="block";
-  saveHighScore(player.score);
-  updateHighscoresDiv();
-}
-
-function saveHighScore(score){
-  highScores.push(score);
-  highScores.sort((a,b)=>b-a);
-  highScores=highScores.slice(0,5);
-  localStorage.setItem('neonSerpentsHighScores',JSON.stringify(highScores));
-}
-
-function updateHighscoresDiv(){
-  highscoresDiv.innerHTML='En Yüksek Skorlar:<br>'+highScores.map(s=>s).join('<br>');
-}
-
-const mouse={x:canvas.width/2,y:canvas.height/2};
-window.addEventListener('mousemove',e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
-restartBtn.addEventListener('click',()=>{init(); requestAnimationFrame(gameLoop);});
-
-init();
-requestAnimationFrame(gameLoop);
-</script>
+        // Oyunu Başlat
+        createFood();
+        update();
+    </script>
 </body>
 </html>
