@@ -30,7 +30,8 @@
         const worldHeight = 5000;
         const foodCount = 500;
         const botCount = 25;
-        const playerSpeed = 0.02; // Yavaşlatılmış hız
+        const playerResponsiveness = 0.04; // Eskiden playerSpeed'di, şimdi tepkiselliği ayarlıyor
+        const maxPlayerSpeed = 7; // YENİ: Oyuncunun ulaşabileceği maksimum hız (piksel/kare)
 
         // --- CANVAS VE CONTEXT ---
         const canvas = document.getElementById('gameCanvas');
@@ -135,14 +136,38 @@
         }
 
         // --- GÜNCELLEME VE MANTIK ---
+        
+        // MAKSİMUM HIZ LİMİTİ İLE YENİLENMİŞ OYUNCU HAREKETİ
         function updatePlayer() {
             if (!player) return;
             const targetX = mouse.x + camera.x;
             const targetY = mouse.y + camera.y;
 
-            player.x += (targetX - player.x) * playerSpeed;
-            player.y += (targetY - player.y) * playerSpeed;
+            const distance = getDistance(player.x, player.y, targetX, targetY);
+
+            // Eğer hedefe çok yakınsak hareketi durdur
+            if (distance < player.radius / 2) {
+                return;
+            }
+
+            // 1. Yumuşak bir başlangıç ve bitiş için interpola et
+            let moveX = (targetX - player.x) * playerResponsiveness;
+            let moveY = (targetY - player.y) * playerResponsiveness;
             
+            // 2. Bu hareketin hızını hesapla
+            const currentSpeed = getDistance(0, 0, moveX, moveY);
+            
+            // 3. Eğer hesaplanan hız, maksimum hızı aşıyorsa, hızı limitle
+            if (currentSpeed > maxPlayerSpeed) {
+                moveX = (moveX / currentSpeed) * maxPlayerSpeed;
+                moveY = (moveY / currentSpeed) * maxPlayerSpeed;
+            }
+            
+            // 4. Limitlenmiş hız ile pozisyonu güncelle
+            player.x += moveX;
+            player.y += moveY;
+            
+            // 5. Dünya sınırları içinde kalmasını sağla
             player.x = Math.max(player.radius, Math.min(worldWidth - player.radius, player.x));
             player.y = Math.max(player.radius, Math.min(worldHeight - player.radius, player.y));
         }
@@ -229,7 +254,6 @@
                     const e2 = allEntities[j];
                     if (!e1 || !e2) continue;
 
-                    // HATA BURADAYDI: e.y -> e1.y olarak düzeltildi.
                     if (getDistance(e1.x, e1.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) {
                         const [bigger, smaller] = e1.radius > e2.radius ? [e1, e2] : [e2, e1];
                         
