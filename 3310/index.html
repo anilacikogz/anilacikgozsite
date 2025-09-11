@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3310</title>
+    <title>Gelişmiş .io Oyunu v2</title>
     
-    <link rel="icon" type="image/png" href="https://github.com/anilacikogz/anilacikgozsite/blob/main/sitelogo.png?raw=true">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/anilacikogz/anilacikgozsite/main/sitologo.png">
     
     <style>
         html, body {
@@ -15,113 +15,142 @@
             width: 100%;
             height: 100%;
             background-color: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         canvas {
             display: block;
         }
+        /* YENİ: Başlangıç Menüsü Stilleri */
+        #startMenu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        #startMenu h1 {
+            margin: 0;
+            font-size: 36px;
+            text-shadow: 0 0 10px #00aaff;
+        }
+        #playerNameInput {
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #555;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+        #startButton {
+            font-size: 20px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(145deg, #007BFF, #0056b3);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #startButton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00aaff;
+        }
     </style>
 </head>
 <body>
+    <div id="startMenu">
+        <h1>Neon Serpents</h1>
+        <input type="text" id="playerNameInput" placeholder="Adınızı Girin" maxlength="15">
+        <button id="startButton">Oyuna Başla</button>
+    </div>
+
     <canvas id="gameCanvas"></canvas>
 
     <script>
         // --- OYUN AYARLARI ---
-        const worldWidth = 5000;
-        const worldHeight = 5000;
-        const foodCount = 500;
-        const botCount = 25;
-        const playerResponsiveness = 0.04; // Eskiden playerSpeed'di, şimdi tepkiselliği ayarlıyor
-        const maxPlayerSpeed = 7; // YENİ: Oyuncunun ulaşabileceği maksimum hız (piksel/kare)
+        const worldWidth = 8000; // DEĞİŞTİ: Dünya büyütüldü
+        const worldHeight = 8000;
+        const foodCount = 800;
+        const botCount = 40;
+        const playerResponsiveness = 0.04;
+        const basePlayerSpeed = 8; // DEĞİŞTİ: Temel hız
+        const initialPlayerRadius = 25; // DEĞİŞTİ: Başlangıç yarıçapı
 
-        // --- CANVAS VE CONTEXT ---
+        // YENİ: Botlar için isim listesi
+        const botNames = ["Gölge", "Fırtına", "Cevher", "Kasırga", "Vortex", "Pusat", "Baron", "Alfa", "Venom", "Raptor", "Spectre", "Kral", "Bora"];
+
+        // --- CANVAS VE ELEMENTLER ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        const startMenu = document.getElementById('startMenu');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const startButton = document.getElementById('startButton');
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
 
         // --- OYUN DEĞİŞKENLERİ ---
-        let player, foods = [], bots = [], score = 0, gameState = 'playing';
+        let player, foods = [], bots = [], score = 0;
+        let gameState = 'menu'; // DEĞİŞTİ: Oyun menüde başlıyor
         let highScore = localStorage.getItem('ioGameHighScore') || 0;
-        
         let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
         let camera = { x: 0, y: 0 };
-
-        canvas.addEventListener('mousemove', (event) => {
-            mouse.x = event.clientX;
-            mouse.y = event.clientY;
-        });
-
-        canvas.addEventListener('click', () => {
-            if (gameState === 'gameOver') {
-                startGame();
-            }
-        });
         
+        // --- OLAY DİNLEYİCİLER ---
+        canvas.addEventListener('mousemove', (event) => { mouse.x = event.clientX; mouse.y = event.clientY; });
+        canvas.addEventListener('click', () => { if (gameState === 'gameOver') { showMenu(); }});
+
+        startButton.addEventListener('click', () => {
+            let playerName = playerNameInput.value.trim();
+            if (playerName === "") { playerName = "Misafir"; }
+            startMenu.style.display = 'none';
+            startGame(playerName);
+        });
+
         // --- YARDIMCI FONKSİYONLAR ---
         const getDistance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
         const getRandomColor = () => `hsl(${Math.random() * 360}, 80%, 60%)`;
 
         // --- VARLIK OLUŞTURMA ---
-        function createPlayer() {
+        function createPlayer(name) {
             player = {
                 x: worldWidth / 2, y: worldHeight / 2,
-                radius: 25, color: 'hsl(200, 100%, 70%)', isPlayer: true
+                radius: initialPlayerRadius, color: 'hsl(200, 100%, 70%)', 
+                isPlayer: true, name: name
             };
         }
 
-        function createFoods() {
-            foods = Array.from({ length: foodCount }, () => ({
-                x: Math.random() * worldWidth, y: Math.random() * worldHeight,
-                radius: 8, color: getRandomColor()
-            }));
-        }
+        function createFoods() { foods = Array.from({ length: foodCount }, () => ({ x: Math.random() * worldWidth, y: Math.random() * worldHeight, radius: 8, color: getRandomColor() })); }
         
         function createBot() {
              return {
                 x: Math.random() * worldWidth, y: Math.random() * worldHeight,
                 radius: Math.random() * 15 + 10, color: getRandomColor(),
-                speed: Math.random() * 0.015 + 0.005,
-                state: 'seekingFood',
-                target: null
+                speed: Math.random() * 0.015 + 0.005, state: 'seekingFood',
+                target: null, name: botNames[Math.floor(Math.random() * botNames.length)] // YENİ: Rastgele isim
             };
         }
         
-        function createBots() {
-            bots = Array.from({ length: botCount }, createBot);
-        }
+        function createBots() { bots = Array.from({ length: botCount }, createBot); }
 
         // --- ÇİZİM FONKSİYONLARI ---
-        function drawGrid() {
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.lineWidth = 1;
-            const gridSize = 100;
-            const startX = Math.floor(camera.x / gridSize) * gridSize;
-            const startY = Math.floor(camera.y / gridSize) * gridSize;
-
-            for (let x = startX; x < camera.x + canvas.width + gridSize; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, startY);
-                ctx.lineTo(x, startY + canvas.height + gridSize);
-                ctx.stroke();
-            }
-            for (let y = startY; y < camera.y + canvas.height + gridSize; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(startX, y);
-                ctx.lineTo(startX + canvas.width + gridSize, y);
-                ctx.stroke();
-            }
-        }
-
-        function drawWorldBounds() {
-            ctx.strokeStyle = '#ff5555';
-            ctx.lineWidth = 10;
-            ctx.strokeRect(0, 0, worldWidth, worldHeight);
-        }
+        function drawGrid() { /* ... kod aynı ... */ }
+        function drawWorldBounds() { /* ... kod aynı ... */ }
 
         function drawEntity(entity) {
             ctx.save();
@@ -135,148 +164,51 @@
             ctx.restore();
         }
 
+        // YENİ: İsimleri çizme fonksiyonu
+        function drawName(entity) {
+            ctx.fillStyle = "white";
+            ctx.font = `${Math.max(12, entity.radius / 3)}px sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "black";
+            ctx.strokeText(entity.name, entity.x, entity.y);
+            ctx.fillText(entity.name, entity.x, entity.y);
+        }
+
         // --- GÜNCELLEME VE MANTIK ---
-        
-        // MAKSİMUM HIZ LİMİTİ İLE YENİLENMİŞ OYUNCU HAREKETİ
         function updatePlayer() {
             if (!player) return;
+            // YENİ: Büyüklüğe göre hız ayarlama
+            const speedFactor = Math.sqrt(initialPlayerRadius / player.radius);
+            const maxPlayerSpeed = basePlayerSpeed * speedFactor;
+
             const targetX = mouse.x + camera.x;
             const targetY = mouse.y + camera.y;
-
             const distance = getDistance(player.x, player.y, targetX, targetY);
 
-            // Eğer hedefe çok yakınsak hareketi durdur
-            if (distance < player.radius / 2) {
-                return;
-            }
-
-            // 1. Yumuşak bir başlangıç ve bitiş için interpola et
+            if (distance < 1) return;
+            
             let moveX = (targetX - player.x) * playerResponsiveness;
             let moveY = (targetY - player.y) * playerResponsiveness;
-            
-            // 2. Bu hareketin hızını hesapla
             const currentSpeed = getDistance(0, 0, moveX, moveY);
             
-            // 3. Eğer hesaplanan hız, maksimum hızı aşıyorsa, hızı limitle
             if (currentSpeed > maxPlayerSpeed) {
                 moveX = (moveX / currentSpeed) * maxPlayerSpeed;
                 moveY = (moveY / currentSpeed) * maxPlayerSpeed;
             }
             
-            // 4. Limitlenmiş hız ile pozisyonu güncelle
             player.x += moveX;
             player.y += moveY;
-            
-            // 5. Dünya sınırları içinde kalmasını sağla
             player.x = Math.max(player.radius, Math.min(worldWidth - player.radius, player.x));
             player.y = Math.max(player.radius, Math.min(worldHeight - player.radius, player.y));
         }
         
-        function updateBots() {
-            const allThreatsAndPrey = [player, ...bots];
-
-            bots.forEach(bot => {
-                let closestThreat = null, closestPrey = null, closestFood = null;
-                let minDistThreat = 300, minDistPrey = 400, minDistFood = 500;
-
-                allThreatsAndPrey.forEach(entity => {
-                    if (entity === bot || !entity) return;
-                    const dist = getDistance(bot.x, bot.y, entity.x, entity.y);
-                    if (entity.radius > bot.radius * 1.1 && dist < minDistThreat) {
-                        minDistThreat = dist;
-                        closestThreat = entity;
-                    } else if (bot.radius > entity.radius * 1.1 && dist < minDistPrey) {
-                        minDistPrey = dist;
-                        closestPrey = entity;
-                    }
-                });
-
-                if (closestThreat) {
-                    bot.state = 'fleeing';
-                    bot.target = closestThreat;
-                } else if (closestPrey) {
-                    bot.state = 'hunting';
-                    bot.target = closestPrey;
-                } else {
-                    bot.state = 'seekingFood';
-                    foods.forEach(food => {
-                         const dist = getDistance(bot.x, bot.y, food.x, food.y);
-                         if (dist < minDistFood) {
-                             minDistFood = dist;
-                             closestFood = food;
-                         }
-                    });
-                    bot.target = closestFood;
-                }
-                
-                if (bot.target) {
-                    let targetX = bot.target.x;
-                    let targetY = bot.target.y;
-                    if (bot.state === 'fleeing') {
-                        targetX = bot.x - (bot.target.x - bot.x);
-                        targetY = bot.y - (bot.target.y - bot.y);
-                    }
-                    bot.x += (targetX - bot.x) * bot.speed;
-                    bot.y += (targetY - bot.y) * bot.speed;
-                }
-                
-                bot.x = Math.max(bot.radius, Math.min(worldWidth - bot.radius, bot.x));
-                bot.y = Math.max(bot.radius, Math.min(worldHeight - bot.radius, bot.y));
-            });
-        }
+        function updateBots() { /* ... kod aynı ... */ }
+        function updateCamera() { /* ... kod aynı ... */ }
+        function checkCollisions() { /* ... kod aynı, bot üretme mantığı burada ... */ }
         
-        function updateCamera() {
-            if (!player) return;
-            camera.x = player.x - canvas.width / 2;
-            camera.y = player.y - canvas.height / 2;
-            camera.x = Math.max(0, Math.min(worldWidth - canvas.width, camera.x));
-            camera.y = Math.max(0, Math.min(worldHeight - canvas.height, camera.y));
-        }
-
-        function checkCollisions() {
-            const allEntities = [player, ...bots].filter(e => e);
-            
-            allEntities.forEach(entity => {
-                for (let i = foods.length - 1; i >= 0; i--) {
-                    const food = foods[i];
-                    if (getDistance(entity.x, entity.y, food.x, food.y) < entity.radius) {
-                        entity.radius += 20 / entity.radius;
-                        if(entity.isPlayer) score++;
-                        foods.splice(i, 1);
-                        foods.push({ x: Math.random() * worldWidth, y: Math.random() * worldHeight, radius: 8, color: getRandomColor() });
-                    }
-                }
-            });
-
-            for (let i = 0; i < allEntities.length; i++) {
-                for (let j = i + 1; j < allEntities.length; j++) {
-                    const e1 = allEntities[i];
-                    const e2 = allEntities[j];
-                    if (!e1 || !e2) continue;
-
-                    if (getDistance(e1.x, e1.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) {
-                        const [bigger, smaller] = e1.radius > e2.radius ? [e1, e2] : [e2, e1];
-                        
-                        if (bigger.radius > smaller.radius * 1.1) {
-                            bigger.radius += smaller.radius * 0.2;
-                            
-                            if (smaller.isPlayer) {
-                                gameState = 'gameOver';
-                                player = null;
-                            } else {
-                                const botIndex = bots.indexOf(smaller);
-                                if (botIndex !== -1) {
-                                    bots.splice(botIndex, 1);
-                                    bots.push(createBot());
-                                    if(bigger.isPlayer) score += Math.floor(smaller.radius);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+        // --- ANA OYUN DÖNGÜSÜ ---
         function gameLoop() {
             if (gameState === 'playing') {
                 updatePlayer();
@@ -292,23 +224,23 @@
             drawGrid();
             drawWorldBounds();
             foods.forEach(drawEntity);
-            bots.forEach(drawEntity);
-            if (player) drawEntity(player);
+            bots.forEach(bot => { drawEntity(bot); drawName(bot); });
+            if (player) { drawEntity(player); drawName(player); }
 
             ctx.restore();
 
-            ctx.font = '24px Arial';
-            ctx.fillStyle = 'white';
-            ctx.textAlign = 'left';
-            ctx.fillText(`Skor: ${score}`, 20, 40);
-            ctx.textAlign = 'right';
-            ctx.fillText(`En İyi: ${highScore}`, canvas.width - 20, 40);
+            // Skor tabloları
+            if (gameState !== 'menu') {
+                ctx.font = '24px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Skor: ${score}`, 20, 40);
+                ctx.textAlign = 'right';
+                ctx.fillText(`En İyi: ${highScore}`, canvas.width - 20, 40);
+            }
 
             if (gameState === 'gameOver') {
-                if (score > highScore) {
-                    highScore = score;
-                    localStorage.setItem('ioGameHighScore', highScore);
-                }
+                if (score > highScore) { highScore = score; localStorage.setItem('ioGameHighScore', highScore); }
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.font = '60px Arial';
@@ -318,14 +250,15 @@
                 ctx.font = '30px Arial';
                 ctx.fillText(`Skorunuz: ${score}`, canvas.width / 2, canvas.height / 2 + 20);
                 ctx.font = '20px Arial';
-                ctx.fillText('Tekrar Oynamak İçin Tıkla', canvas.width / 2, canvas.height / 2 + 70);
+                ctx.fillText('Menüye Dönmek İçin Tıkla', canvas.width / 2, canvas.height / 2 + 70);
             }
             
             requestAnimationFrame(gameLoop);
         }
 
-        function startGame() {
-            createPlayer();
+        // --- OYUN DURUMU FONKSİYONLARI ---
+        function startGame(playerName) {
+            createPlayer(playerName);
             createFoods();
             createBots();
             score = 0;
@@ -333,9 +266,22 @@
             updateCamera();
         }
         
-        startGame();
+        // YENİ: Menüyü gösterme fonksiyonu
+        function showMenu() {
+            gameState = 'menu';
+            startMenu.style.display = 'flex';
+        }
+
+        // NOT: Oyun artık otomatik başlamıyor, döngü menüdeyken de çalışıyor.
         gameLoop();
+
+        // Kopyala-yapıştır kolaylığı için fonksiyonları buraya taşıdım.
+        // Bu fonksiyonların içeriği değişmedi, sadece yerleri değişti.
+        function drawGrid() { ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1; const gridSize = 100; const startX = Math.floor(camera.x / gridSize) * gridSize; const startY = Math.floor(camera.y / gridSize) * gridSize; for (let x = startX; x < camera.x + canvas.width + gridSize; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, startY); ctx.lineTo(x, startY + canvas.height + gridSize); ctx.stroke(); } for (let y = startY; y < camera.y + canvas.height + gridSize; y += gridSize) { ctx.beginPath(); ctx.moveTo(startX, y); ctx.lineTo(startX + canvas.width + gridSize, y); ctx.stroke(); } }
+        function drawWorldBounds() { ctx.strokeStyle = '#ff5555'; ctx.lineWidth = 10; ctx.strokeRect(0, 0, worldWidth, worldHeight); }
+        function updateCamera() { if (!player) return; camera.x = player.x - canvas.width / 2; camera.y = player.y - canvas.height / 2; camera.x = Math.max(0, Math.min(worldWidth - canvas.width, camera.x)); camera.y = Math.max(0, Math.min(worldHeight - canvas.height, camera.y)); }
+        function updateBots() { const allThreatsAndPrey = [player, ...bots]; bots.forEach(bot => { let closestThreat = null, closestPrey = null, closestFood = null; let minDistThreat = 300, minDistPrey = 400, minDistFood = 500; allThreatsAndPrey.forEach(entity => { if (entity === bot || !entity) return; const dist = getDistance(bot.x, bot.y, entity.x, entity.y); if (entity.radius > bot.radius * 1.1 && dist < minDistThreat) { minDistThreat = dist; closestThreat = entity; } else if (bot.radius > entity.radius * 1.1 && dist < minDistPrey) { minDistPrey = dist; closestPrey = entity; } }); if (closestThreat) { bot.state = 'fleeing'; bot.target = closestThreat; } else if (closestPrey) { bot.state = 'hunting'; bot.target = closestPrey; } else { bot.state = 'seekingFood'; foods.forEach(food => { const dist = getDistance(bot.x, bot.y, food.x, food.y); if (dist < minDistFood) { minDistFood = dist; closestFood = food; } }); bot.target = closestFood; } if (bot.target) { let targetX = bot.target.x; let targetY = bot.target.y; if (bot.state === 'fleeing') { targetX = bot.x - (bot.target.x - bot.x); targetY = bot.y - (bot.target.y - bot.y); } bot.x += (targetX - bot.x) * bot.speed; bot.y += (targetY - bot.y) * bot.speed; } bot.x = Math.max(bot.radius, Math.min(worldWidth - bot.radius, bot.x)); bot.y = Math.max(bot.radius, Math.min(worldHeight - bot.radius, bot.y)); }); }
+        function checkCollisions() { const allEntities = [player, ...bots].filter(e => e); allEntities.forEach(entity => { for (let i = foods.length - 1; i >= 0; i--) { const food = foods[i]; if (getDistance(entity.x, entity.y, food.x, food.y) < entity.radius) { entity.radius += 20 / entity.radius; if(entity.isPlayer) score++; foods.splice(i, 1); foods.push({ x: Math.random() * worldWidth, y: Math.random() * worldHeight, radius: 8, color: getRandomColor() }); } } }); for (let i = 0; i < allEntities.length; i++) { for (let j = i + 1; j < allEntities.length; j++) { const e1 = allEntities[i]; const e2 = allEntities[j]; if (!e1 || !e2) continue; if (getDistance(e1.x, e1.y, e2.x, e2.y) < Math.max(e1.radius, e2.radius)) { const [bigger, smaller] = e1.radius > e2.radius ? [e1, e2] : [e2, e1]; if (bigger.radius > smaller.radius * 1.1) { bigger.radius += smaller.radius * 0.2; if (smaller.isPlayer) { gameState = 'gameOver'; player = null; } else { const botIndex = bots.indexOf(smaller); if (botIndex !== -1) { bots.splice(botIndex, 1); bots.push(createBot()); if(bigger.isPlayer) score += Math.floor(smaller.radius); } } } } } } }
     </script>
 </body>
 </html>
-
