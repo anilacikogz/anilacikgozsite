@@ -15,8 +15,10 @@
       :root {
         --bg-day: #ffffff;
         --bg-night: #0b0f14;
+        --bg-poci: #ffebf2;
         --fg-day: #0b0f14;
         --fg-night: #e8eef5;
+        --fg-poci: #7a003c;
         --btn-bg: rgba(0,0,0,0.05);
         --btn-bg-dark: rgba(255,255,255,0.15);
         --btn-br: 16px;
@@ -34,6 +36,10 @@
         background: var(--bg-night);
         color: var(--fg-night);
       }
+      body.poci {
+        background: var(--bg-poci);
+        color: var(--fg-poci);
+      }
       .page {
         height: 100dvh;
         display: grid;
@@ -47,7 +53,7 @@
         padding: 12px 16px;
       }
 
-      /* --- YENİ 3310 BUTONU TASARIMI --- */
+      /* --- 3310 BUTONU TASARIMI --- */
       .game-link {
         display: inline-flex;
         align-items: center;
@@ -86,12 +92,28 @@
         color: #fff;
         text-shadow: 0 0 5px #fff;
       }
-
       body.dark .game-link:hover {
         box-shadow: 
           0 0 10px #8A2BE2,
           0 0 20px #8A2BE2,
           0 0 30px #4B0082;
+      }
+
+      /* Poci Modu Buton Efekti */
+      body.poci .game-link {
+        background: linear-gradient(145deg, #ff69b4, #c71585);
+        box-shadow: 
+          0 0 5px #ff69b4,
+          0 0 10px #ff69b4,
+          0 0 15px #c71585;
+        color: #fff;
+        text-shadow: 0 0 5px #fff;
+      }
+      body.poci .game-link:hover {
+        box-shadow: 
+          0 0 10px #ff69b4,
+          0 0 20px #ff69b4,
+          0 0 30px #c71585;
       }
       
       .toggle {
@@ -112,6 +134,11 @@
         background: var(--btn-bg-dark);
         border-color: rgba(255,255,255,0.2);
         color: var(--fg-night);
+      }
+      body.poci .toggle {
+        background: rgba(255,105,180,0.2);
+        border-color: rgba(255,105,180,0.5);
+        color: var(--fg-poci);
       }
       .toggle:active { transform: scale(0.98); }
       .toggle .icon { font-size: 18px; line-height: 1; }
@@ -143,7 +170,7 @@
       <header class="topbar">
         <a href="3310/" class="game-link">3310</a>
 
-        <button id="modeToggle" class="toggle" aria-pressed="false" aria-label="Gündüz/Gece modu değiştir">
+        <button id="modeToggle" class="toggle" aria-pressed="false" aria-label="Mod değiştir">
           <span id="modeIcon" class="icon">☀️</span>
           <span id="modeLabel" class="label">Gündüz Modu</span>
         </button>
@@ -153,7 +180,7 @@
         <figure class="frame">
           <img
             id="mainImage"
-            alt="Gündüz/Gece görseli"
+            alt="Mod görseli"
             src="https://pbs.twimg.com/media/FuQg1HRWIAw42Rj?format=jpg&name=medium"
           />
         </figure>
@@ -164,6 +191,7 @@
       (function() {
         const DAY_IMG = "https://pbs.twimg.com/media/FuQg1HRWIAw42Rj?format=jpg&name=medium";
         const NIGHT_IMG = "https://i.pinimg.com/736x/14/91/67/149167758f571c1fbbf5bfef79aa70a1.jpg";
+        const POCI_IMG = "https://pbs.twimg.com/media/Gwt_IS9XYAAp9YZ.jpg";
 
         const body = document.body;
         const btn = document.getElementById('modeToggle');
@@ -171,29 +199,29 @@
         const icon = document.getElementById('modeIcon');
         const img = document.getElementById('mainImage');
 
-        const saved = localStorage.getItem('site-mode');
-        if (saved === 'dark') {
-          setMode('dark');
-        } else {
-          setMode('light');
-        }
+        const MODES = ["light", "dark", "poci"];
+        const ICONS = { light: "☀️", dark: "🌙", poci: "🐾" };
+        const LABELS = { light: "Gündüz Modu", dark: "Gece Modu", poci: "Poci Modu" };
+        const IMAGES = { light: DAY_IMG, dark: NIGHT_IMG, poci: POCI_IMG };
 
-        const preloadNight = new Image();
-        preloadNight.src = NIGHT_IMG;
+        let saved = localStorage.getItem('site-mode');
+        if (!MODES.includes(saved)) saved = "light";
+        setMode(saved);
 
         btn.addEventListener('click', () => {
-          const next = body.classList.contains('dark') ? 'light' : 'dark';
+          const current = body.classList.contains('dark') ? "dark" : (body.classList.contains('poci') ? "poci" : "light");
+          const next = MODES[(MODES.indexOf(current) + 1) % MODES.length];
           setMode(next);
         });
 
         function setMode(mode) {
-          const isDark = mode === 'dark';
-          body.classList.toggle('dark', isDark);
-          btn.setAttribute('aria-pressed', String(isDark));
-          label.textContent = isDark ? 'Gece Modu' : 'Gündüz Modu';
-          icon.textContent = isDark ? '🌙' : '☀️';
-          img.src = isDark ? NIGHT_IMG : DAY_IMG;
-          localStorage.setItem('site-mode', isDark ? 'dark' : 'light');
+          body.classList.remove("light", "dark", "poci");
+          body.classList.add(mode);
+          btn.setAttribute('aria-pressed', String(mode !== "light"));
+          label.textContent = LABELS[mode];
+          icon.textContent = ICONS[mode];
+          img.src = IMAGES[mode];
+          localStorage.setItem('site-mode', mode);
         }
       })();
     </script>
