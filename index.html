@@ -1,157 +1,191 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>xD</title>
-
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://img.a.transfermarkt.technology/portrait/big/68863-1671105169.png?lm=1"
-    />
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anıl Açıkgöz</title>
+    <link rel="icon" type="image/png" href="sitelogo.png">
+    
     <style>
-      :root {
-        --bg-day: #ffffff;
-        --bg-night: #0b0f14;
-        --fg-day: #0b0f14;
-        --fg-night: #e8eef5;
-        --btn-bg: rgba(0,0,0,0.05);
-        --btn-bg-dark: rgba(255,255,255,0.15);
-        --btn-br: 16px;
-        --shadow: 0 8px 30px rgba(0,0,0,0.08);
-      }
-      * { box-sizing: border-box; }
-      html, body { height: 100%; margin: 0; }
-      body {
-        background: var(--bg-day);
-        color: var(--fg-day);
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        transition: background-color .3s ease, color .3s ease;
-      }
-      body.dark {
-        background: var(--bg-night);
-        color: var(--fg-night);
-      }
+        :root {
+            --nokia-green: #8da410; /* Klasik 3310 ekran rengi tonu */
+            --nokia-dark: #2b3303;
+        }
 
-      .page {
-        height: 100dvh;
-        display: grid;
-        grid-template-rows: auto 1fr;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 12px;
-        padding: 12px 16px;
-      }
+        /* Logo Alanı */
+        header {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
 
-      .toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border: 1px solid transparent;
-        border-radius: var(--btn-br);
-        background: var(--btn-bg);
-        box-shadow: var(--shadow);
-        cursor: pointer;
-        user-select: none;
-        transition: transform .08s ease, background .3s ease, border-color .3s ease, color .3s ease;
-        color: var(--fg-day);
-      }
-      body.dark .toggle {
-        background: var(--btn-bg-dark);
-        border-color: rgba(255,255,255,0.2);
-        color: var(--fg-night);
-      }
-      .toggle:active { transform: scale(0.98); }
-      .toggle .icon { font-size: 18px; line-height: 1; }
-      .toggle .label { font-weight: 600; font-size: 14px; }
+        .logo {
+            height: 60px;
+            width: auto;
+        }
 
-      .content {
-        display: grid;
-        place-items: center;
-        padding: 0;
-        overflow: hidden;
-      }
+        /* İçerik Alanı */
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-      .frame {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+        h1 { margin-bottom: 10px; color: #f1f1f1; }
+        p { color: #aaa; margin-bottom: 30px; }
 
-      .frame img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        display: block;
-      }
+        /* Oyun Alanı (3310 Tarzı) */
+        #game-board {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: var(--nokia-green);
+            border: 15px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .score {
+            font-size: 24px;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .controls {
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
     </style>
-  </head>
-  <body>
-    <div class="page">
-      <header class="topbar">
-        <button id="modeToggle" class="toggle" aria-pressed="false" aria-label="Gündüz/Gece modu değiştir">
-          <span id="modeIcon" class="icon">☀️</span>
-          <span id="modeLabel" class="label">Gündüz Modu</span>
-        </button>
-      </header>
+</head>
+<body>
 
-      <main class="content">
-        <figure class="frame">
-          <img
-            id="mainImage"
-            alt="Gündüz/Gece görseli"
-            src="https://pbs.twimg.com/media/FuQg1HRWIAw42Rj?format=jpg&name=medium"
-          />
-        </figure>
-      </main>
+    <header>
+        <img src="sitelogo.png" alt="Site Logosu" class="logo">
+    </header>
+
+    <div class="container">
+        <h1>Şimdilik burası ıssız.</h1>
+        
+        <div class="score">Skor: <span id="score-val">0</span></div>
+        <canvas id="game-board" width="300" height="300"></canvas>
+        
+        <div class="controls">
+            Yön tuşlarını veya <b>W-A-S-D</b> tuşlarını kullanabilirsin.
+        </div>
     </div>
 
     <script>
-      (function() {
-        const DAY_IMG = "https://pbs.twimg.com/media/FuQg1HRWIAw42Rj?format=jpg&name=medium";
-        const NIGHT_IMG = "https://i.pinimg.com/736x/14/91/67/149167758f571c1fbbf5bfef79aa70a1.jpg";
+        const canvas = document.getElementById("game-board");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score-val");
 
-        const body = document.body;
-        const btn = document.getElementById('modeToggle');
-        const label = document.getElementById('modeLabel');
-        const icon = document.getElementById('modeIcon');
-        const img = document.getElementById('mainImage');
+        let score = 0;
+        let gridSize = 15;
+        let snake = [{x: 150, y: 150}];
+        let dx = gridSize;
+        let dy = 0;
+        let foodX, foodY;
+        let gameSpeed = 100;
 
-        const saved = localStorage.getItem('site-mode');
-        if (saved === 'dark') {
-          setMode('dark');
-        } else {
-          setMode('light');
+        function main() {
+            if (didGameEnd()) {
+                alert("Oyun Bitti! Skorun: " + score);
+                document.location.reload();
+                return;
+            }
+
+            setTimeout(function onTick() {
+                clearCanvas();
+                drawFood();
+                advanceSnake();
+                drawSnake();
+                main();
+            }, gameSpeed);
         }
 
-        const preloadNight = new Image();
-        preloadNight.src = NIGHT_IMG;
-
-        btn.addEventListener('click', () => {
-          const next = body.classList.contains('dark') ? 'light' : 'dark';
-          setMode(next);
-        });
-
-        function setMode(mode) {
-          const isDark = mode === 'dark';
-          body.classList.toggle('dark', isDark);
-          btn.setAttribute('aria-pressed', String(isDark));
-          label.textContent = isDark ? 'Gece Modu' : 'Gündüz Modu';
-          icon.textContent = isDark ? '🌙' : '☀️';
-          img.src = isDark ? NIGHT_IMG : DAY_IMG;
-          localStorage.setItem('site-mode', isDark ? 'dark' : 'light');
+        function clearCanvas() {
+            ctx.fillStyle = "#8da410";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
-      })();
+
+        function drawSnake() {
+            snake.forEach(part => {
+                ctx.fillStyle = "#2b3303";
+                ctx.strokeStyle = "#8da410";
+                ctx.fillRect(part.x, part.y, gridSize, gridSize);
+                ctx.strokeRect(part.x, part.y, gridSize, gridSize);
+            });
+        }
+
+        function advanceSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            snake.unshift(head);
+
+            if (snake[0].x === foodX && snake[0].y === foodY) {
+                score += 10;
+                scoreElement.innerHTML = score;
+                createFood();
+                if(gameSpeed > 50) gameSpeed -= 2; // Gittikçe hızlandır
+            } else {
+                snake.pop();
+            }
+        }
+
+        function didGameEnd() {
+            for (let i = 4; i < snake.length; i++) {
+                if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
+            }
+            const hitLeftWall = snake[0].x < 0;
+            const hitRightWall = snake[0].x > canvas.width - gridSize;
+            const hitTopWall = snake[0].y < 0;
+            const hitBottomWall = snake[0].y > canvas.height - gridSize;
+            return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+        }
+
+        function createFood() {
+            foodX = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
+            foodY = Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize;
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(foodX, foodY, gridSize, gridSize);
+        }
+
+        function changeDirection(event) {
+            const keyPressed = event.keyCode;
+            const LEFT = 37, UP = 38, RIGHT = 39, DOWN = 40;
+            const W = 87, A = 65, S = 83, D = 68;
+
+            const goingUp = dy === -gridSize;
+            const goingDown = dy === gridSize;
+            const goingRight = dx === gridSize;
+            const goingLeft = dx === -gridSize;
+
+            if ((keyPressed === LEFT || keyPressed === A) && !goingRight) { dx = -gridSize; dy = 0; }
+            if ((keyPressed === UP || keyPressed === W) && !goingDown) { dx = 0; dy = -gridSize; }
+            if ((keyPressed === RIGHT || keyPressed === D) && !goingLeft) { dx = gridSize; dy = 0; }
+            if ((keyPressed === DOWN || keyPressed === S) && !goingUp) { dx = 0; dy = gridSize; }
+        }
+
+        document.addEventListener("keydown", changeDirection);
+        createFood();
+        main();
     </script>
-  </body>
+</body>
 </html>
-
