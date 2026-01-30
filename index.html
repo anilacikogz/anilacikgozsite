@@ -8,9 +8,9 @@
     
     <style>
         :root {
-            --primary-yellow: #ffcc00;
             --dark-bg: #0a0a0a;
             --text-main: #ffffff;
+            --header-bg: rgba(15, 15, 15, 0.9);
         }
 
         body {
@@ -25,30 +25,30 @@
             overflow: hidden;
         }
 
-        /* Üst Bant / Header */
+        /* Modern Üst Bar */
         header {
             width: 100%;
-            padding: 25px 50px; /* Kenarlardan daha geniş boşluk */
+            padding: 20px 40px;
             box-sizing: border-box;
+            background-color: var(--header-bg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Çok hafif bir ayrım çizgisi */
+            display: flex;
+            justify-content: flex-start; /* Logoyu sola yaslar */
+            align-items: center;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 100;
+            backdrop-filter: blur(10px); /* Arka planı hafif bulandırır, modern durur */
         }
 
         .logo {
-            height: 38px; /* Kibar ve profesyonel bir yükseklik */
+            height: 40px; /* İdeal logo boyutu */
             width: auto;
             display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Logoya derinlik katar */
-            transition: opacity 0.3s ease;
         }
 
-        .logo:hover {
-            opacity: 0.8;
-        }
-
-        /* Ana İçerik */
+        /* Ana İçerik Alanı */
         main {
             flex: 1;
             display: flex;
@@ -63,23 +63,21 @@
         }
 
         h1 {
-            font-size: clamp(2rem, 6vw, 4rem);
+            font-size: clamp(2rem, 7vw, 3.5rem);
             margin: 0;
             font-weight: 700;
             letter-spacing: -1px;
-            /* Hafif bir degrade ile daha derin bir beyaz görünümü */
-            background: linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%);
+            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            opacity: 0.9;
         }
 
-        /* Arkaplan Yumuşak Işık */
+        /* Arkaplan Efekti */
         .bg-glow {
             position: absolute;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.03) 0%, rgba(10, 10, 10, 0) 70%);
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(10, 10, 10, 0) 70%);
             border-radius: 50%;
             top: 50%;
             left: 50%;
@@ -87,15 +85,13 @@
             z-index: 1;
         }
 
-        /* Mobil Ayarı */
+        /* Mobil Cihazlar İçin Uyum */
         @media (max-width: 600px) {
             header {
-                padding: 20px;
-                display: flex;
-                justify-content: center; /* Mobilde logo ortalansın istersen burayı kullanabilirsin */
+                padding: 15px 20px;
             }
             .logo {
-                height: 32px;
+                height: 30px;
             }
         }
     </style>
