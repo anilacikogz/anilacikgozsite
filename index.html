@@ -25,30 +25,28 @@
             overflow: hidden;
         }
 
-        /* Modern Üst Bar */
         header {
             width: 100%;
             padding: 20px 40px;
             box-sizing: border-box;
             background-color: var(--header-bg);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Çok hafif bir ayrım çizgisi */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
-            justify-content: flex-start; /* Logoyu sola yaslar */
+            justify-content: flex-start;
             align-items: center;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 100;
-            backdrop-filter: blur(10px); /* Arka planı hafif bulandırır, modern durur */
+            backdrop-filter: blur(10px);
         }
 
         .logo {
-            height: 40px; /* İdeal logo boyutu */
+            height: 40px;
             width: auto;
             display: block;
         }
 
-        /* Ana İçerik Alanı */
         main {
             flex: 1;
             display: flex;
@@ -72,7 +70,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Arkaplan Efekti */
         .bg-glow {
             position: absolute;
             width: 60vw;
@@ -85,13 +82,12 @@
             z-index: 1;
         }
 
-        /* Mobil Cihazlar İçin Uyum */
         @media (max-width: 600px) {
             header {
                 padding: 15px 20px;
             }
             .logo {
-                height: 30px;
+                height: 32px;
             }
         }
     </style>
