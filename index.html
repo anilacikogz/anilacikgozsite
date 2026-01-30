@@ -9,10 +9,8 @@
     <style>
         :root {
             --primary-yellow: #ffcc00;
-            --dark-bg: #0f0f0f;
-            --card-bg: #1a1a1a;
+            --dark-bg: #0a0a0a;
             --text-main: #ffffff;
-            --text-dim: #888888;
         }
 
         body {
@@ -27,30 +25,30 @@
             overflow: hidden;
         }
 
+        /* Üst Bant / Header */
         header {
             width: 100%;
-            padding: 20px 40px;
+            padding: 25px 50px; /* Kenarlardan daha geniş boşluk */
             box-sizing: border-box;
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 204, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: fixed;
             top: 0;
+            left: 0;
             z-index: 100;
         }
 
         .logo {
-            height: 45px;
-            transition: transform 0.3s ease;
+            height: 38px; /* Kibar ve profesyonel bir yükseklik */
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Logoya derinlik katar */
+            transition: opacity 0.3s ease;
         }
 
         .logo:hover {
-            transform: scale(1.05);
+            opacity: 0.8;
         }
 
+        /* Ana İçerik */
         main {
             flex: 1;
             display: flex;
@@ -64,44 +62,24 @@
             z-index: 2;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 6px 15px;
-            background: rgba(255, 204, 0, 0.1);
-            color: var(--primary-yellow);
-            border: 1px solid var(--primary-yellow);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-out;
-        }
-
         h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2rem, 6vw, 4rem);
             margin: 0;
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            font-weight: 700;
+            letter-spacing: -1px;
+            /* Hafif bir degrade ile daha derin bir beyaz görünümü */
+            background: linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .issiz-text {
-            color: var(--primary-yellow);
-            font-size: 1.2rem;
-            margin-top: 10px;
             opacity: 0.9;
-            font-weight: 300;
         }
 
+        /* Arkaplan Yumuşak Işık */
         .bg-glow {
             position: absolute;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.05) 0%, rgba(15, 15, 15, 0) 70%);
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.03) 0%, rgba(10, 10, 10, 0) 70%);
             border-radius: 50%;
             top: 50%;
             left: 50%;
@@ -109,32 +87,16 @@
             z-index: 1;
         }
 
-        footer {
-            padding: 30px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .social-dots {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary-yellow);
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Mobil Ayarı */
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+                display: flex;
+                justify-content: center; /* Mobilde logo ortalansın istersen burayı kullanabilirsin */
+            }
+            .logo {
+                height: 32px;
+            }
         }
     </style>
 </head>
@@ -142,7 +104,6 @@
 
     <header>
         <img src="sitelogo.png" alt="Anıl Açıkgöz" class="logo">
-        <div style="font-size: 0.8rem; font-weight: bold; color: var(--primary-yellow);">BETA v1.0</div>
     </header>
 
     <main>
@@ -154,4 +115,3 @@
 
 </body>
 </html>
-
