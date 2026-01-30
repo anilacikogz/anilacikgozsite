@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>xD</title>
 
-    <!-- Arama çubuğundaki simge (favicon) -->
     <link
       rel="icon"
       type="image/png"
@@ -99,7 +98,6 @@
   <body>
     <div class="page">
       <header class="topbar">
-        <!-- Gündüz / Gece modu butonu -->
         <button id="modeToggle" class="toggle" aria-pressed="false" aria-label="Gündüz/Gece modu değiştir">
           <span id="modeIcon" class="icon">☀️</span>
           <span id="modeLabel" class="label">Gündüz Modu</span>
@@ -108,7 +106,6 @@
 
       <main class="content">
         <figure class="frame">
-          <!-- Varsayılan: Gündüz görüntüsü -->
           <img
             id="mainImage"
             alt="Gündüz/Gece görseli"
@@ -129,7 +126,6 @@
         const icon = document.getElementById('modeIcon');
         const img = document.getElementById('mainImage');
 
-        // Tercihi yerelde sakla
         const saved = localStorage.getItem('site-mode');
         if (saved === 'dark') {
           setMode('dark');
@@ -137,7 +133,6 @@
           setMode('light');
         }
 
-        // Gece görselini önceden yükle (daha hızlı geçiş için)
         const preloadNight = new Image();
         preloadNight.src = NIGHT_IMG;
 
@@ -159,3 +154,4 @@
     </script>
   </body>
 </html>
+
