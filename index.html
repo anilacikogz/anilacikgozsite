@@ -3,189 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anıl Açıkgöz</title>
+    <title>Anıl Açıkgöz | Yakında</title>
     <link rel="icon" type="image/png" href="sitelogo.png">
     
     <style>
         :root {
-            --nokia-green: #8da410; /* Klasik 3310 ekran rengi tonu */
-            --nokia-dark: #2b3303;
+            --primary-yellow: #ffcc00;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-main: #ffffff;
+            --text-dim: #888888;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Logo Alanı */
+        /* Üst Bant / Header */
         header {
             width: 100%;
-            padding: 20px;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 204, 0, 0.1);
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            height: 60px;
-            width: auto;
+            height: 45px;
+            transition: transform 0.3s ease;
         }
 
-        /* İçerik Alanı */
-        .container {
-            text-align: center;
-            margin-top: 20px;
+        .logo:hover {
+            transform: scale(1.05);
         }
 
-        h1 { margin-bottom: 10px; color: #f1f1f1; }
-        p { color: #aaa; margin-bottom: 30px; }
-
-        /* Oyun Alanı (3310 Tarzı) */
-        #game-board {
+        /* Ana İçerik */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            width: 300px;
-            height: 300px;
-            background-color: var(--nokia-green);
-            border: 15px solid #333;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            display: block;
-            margin: 0 auto;
         }
 
-        .score {
-            font-size: 24px;
-            margin: 10px 0;
-            font-family: 'Courier New', Courier, monospace;
+        .hero-container {
+            text-align: center;
+            z-index: 2;
         }
 
-        .controls {
-            margin-top: 20px;
-            color: #888;
-            font-size: 0.9rem;
+        .badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--primary-yellow);
+            border: 1px solid var(--primary-yellow);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .issiz-text {
+            color: var(--primary-yellow);
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Arkaplan Dekorasyonu */
+        .bg-glow {
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.05) 0%, rgba(15, 15, 15, 0) 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        /* Footer Alt Bant */
+        footer {
+            padding: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-yellow);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="sitelogo.png" alt="Site Logosu" class="logo">
+        <img src="sitelogo.png" alt="Anıl Açıkgöz" class="logo">
+        <div style="font-size: 0.8rem; font-weight: bold; color: var(--primary-yellow);">BETA v1.0</div>
     </header>
 
-    <div class="container">
-        <h1>Şimdilik burası ıssız.</h1>
-        
-        <div class="score">Skor: <span id="score-val">0</span></div>
-        <canvas id="game-board" width="300" height="300"></canvas>
-        
-        <div class="controls">
-            Yön tuşlarını veya <b>W-A-S-D</b> tuşlarını kullanabilirsin.
+    <main>
+        <div class="bg-glow"></div>
+        <div class="hero-container">
+            <div class="badge">Geliştirme Aşamasında</div>
+            <h1>Burası şimdilik ıssız.</h1>
+            <p class="issiz-text">Fikirler koda dönüşüyor, çok yakında burada buluşalım.</p>
         </div>
-    </div>
+    </main>
 
-    <script>
-        const canvas = document.getElementById("game-board");
-        const ctx = canvas.getContext("2d");
-        const scoreElement = document.getElementById("score-val");
+    <footer>
+        <div class="social-dots">
+            <div class="dot"></div>
+            <div class="dot" style="opacity: 0.6;"></div>
+            <div class="dot"></div>
+        </div>
+        &copy; 2024 Anıl Açıkgöz. Tüm hakları saklıdır.
+    </footer>
 
-        let score = 0;
-        let gridSize = 15;
-        let snake = [{x: 150, y: 150}];
-        let dx = gridSize;
-        let dy = 0;
-        let foodX, foodY;
-        let gameSpeed = 100;
-
-        function main() {
-            if (didGameEnd()) {
-                alert("Oyun Bitti! Skorun: " + score);
-                document.location.reload();
-                return;
-            }
-
-            setTimeout(function onTick() {
-                clearCanvas();
-                drawFood();
-                advanceSnake();
-                drawSnake();
-                main();
-            }, gameSpeed);
-        }
-
-        function clearCanvas() {
-            ctx.fillStyle = "#8da410";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function drawSnake() {
-            snake.forEach(part => {
-                ctx.fillStyle = "#2b3303";
-                ctx.strokeStyle = "#8da410";
-                ctx.fillRect(part.x, part.y, gridSize, gridSize);
-                ctx.strokeRect(part.x, part.y, gridSize, gridSize);
-            });
-        }
-
-        function advanceSnake() {
-            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-            snake.unshift(head);
-
-            if (snake[0].x === foodX && snake[0].y === foodY) {
-                score += 10;
-                scoreElement.innerHTML = score;
-                createFood();
-                if(gameSpeed > 50) gameSpeed -= 2; // Gittikçe hızlandır
-            } else {
-                snake.pop();
-            }
-        }
-
-        function didGameEnd() {
-            for (let i = 4; i < snake.length; i++) {
-                if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
-            }
-            const hitLeftWall = snake[0].x < 0;
-            const hitRightWall = snake[0].x > canvas.width - gridSize;
-            const hitTopWall = snake[0].y < 0;
-            const hitBottomWall = snake[0].y > canvas.height - gridSize;
-            return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
-        }
-
-        function createFood() {
-            foodX = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
-            foodY = Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize;
-        }
-
-        function drawFood() {
-            ctx.fillStyle = "black";
-            ctx.fillRect(foodX, foodY, gridSize, gridSize);
-        }
-
-        function changeDirection(event) {
-            const keyPressed = event.keyCode;
-            const LEFT = 37, UP = 38, RIGHT = 39, DOWN = 40;
-            const W = 87, A = 65, S = 83, D = 68;
-
-            const goingUp = dy === -gridSize;
-            const goingDown = dy === gridSize;
-            const goingRight = dx === gridSize;
-            const goingLeft = dx === -gridSize;
-
-            if ((keyPressed === LEFT || keyPressed === A) && !goingRight) { dx = -gridSize; dy = 0; }
-            if ((keyPressed === UP || keyPressed === W) && !goingDown) { dx = 0; dy = -gridSize; }
-            if ((keyPressed === RIGHT || keyPressed === D) && !goingLeft) { dx = gridSize; dy = 0; }
-            if ((keyPressed === DOWN || keyPressed === S) && !goingUp) { dx = 0; dy = gridSize; }
-        }
-
-        document.addEventListener("keydown", changeDirection);
-        createFood();
-        main();
-    </script>
 </body>
 </html>
