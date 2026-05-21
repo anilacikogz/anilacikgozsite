@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noktalama İşaretleri Ders Anlatımı</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .loading-status {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 22px;
+            color: #0f172a;
+            margin-top: 45px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #3b82f6;
+            display: inline-block;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-left: 5px solid #3b82f6;
+        }
+        .rule-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        .examples-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .example-box {
+            background-color: #f1f5f9;
+            border-left: 3px solid #64748b;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+        }
+        .example-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .example-text {
+            font-size: 16px;
+            color: #334155;
+            font-style: italic;
+        }
+        .error-box {
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 id="page-title">Türkçe Dersi Noktalama İşaretleri</h1>
+            <p>Ders Anlatım Materyali</p>
+        </header>
+
+        <div id="status" class="loading-status">
+            🔄 Ders verileri Google içerisinden canlı yükleniyor, lütfen bekleyin...
+        </div>
+
+        <div id="content-area">
+            </div>
+
+        <footer>
+            <p>&copy; anilacikgoz.com - Ders Anlatım Sistemi</p>
+        </footer>
+    </div>
+
+    <script>
+        // SİZİN GOOGLE SHEET EXPORT LINKINIZ
+        const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/1K7NQVUcdQD3fq3rJuJLGzgWsVnd3sR-_bEhgFKRhYRw/export?format=csv&gid=0";
+
+        // Basit ve Güvenli CSV Dönüştürücü
+        function parseCSV(text) {
+            let lines = text.split('\n');
+            let result = [];
+            let headers = [];
+            
+            if (lines.length > 0) {
+                headers = splitCSVLine(lines[0]);
+            }
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                let obj = {};
+                let currentline = splitCSVLine(lines[i]);
+                
+                for (let j = 0; j < headers.length; j++) {
+                    let headerName = headers[j].trim().replace(/^"|"$/g, '');
+                    let cellValue = currentline[j] ? currentline[j].trim().replace(/^"|"$/g, '') : "";
+                    obj[headerName] = cellValue;
+                }
+                result.push(obj);
+            }
+            return result;
+        }
+
+        function splitCSVLine(line) {
+            let arr = [];
+            let quote = false;
+            let cell = "";
+            for (let i = 0; i < line.length; i++) {
+                let char = line[i];
+                if (char === '"') { quote = !quote; }
+                else if (char === ',' && !quote) { arr.push(cell); cell = ""; }
+                else { cell += char; }
+            }
+            arr.push(cell);
+            return arr;
+        }
+
+        // Ana Veri Yükleme Fonksiyonu
+        async function loadSheetData() {
+            const statusDiv = document.getElementById('status');
+            const contentArea = document.getElementById('content-area');
+            
+            try {
+                const response = await fetch(sheetCsvUrl);
+                if (!response.ok) throw new Error("Google Sheet dosyasına erişilemedi.");
+                
+                const dataText = await response.text();
+                const rows = parseCSV(dataText);
+                
+                const groups = {};
+                rows.forEach(row => {
+                    const noktalamaKey = row['Noktalama'] || row['noktalama'];
+                    const metinKey = row['Metin'] || row['metin'];
+                    const ornek1Key = row['Örnek1'] || row['ornek1'];
+                    const ornek2Key = row['Örnek2'] || row['ornek2'];
+
+                    if (noktalamaKey && metinKey) {
+                        if (!groups[noktalamaKey]) { groups[noktalamaKey] = []; }
+                        groups[noktalamaKey].push({
+                            metin: metinKey,
+                            ornek1: ornek1Key,
+                            ornek2: ornek2Key
+                        });
+                    }
+                });
+
+                let htmlOutput = "";
+                for (const [title, items] of Object.entries(groups)) {
+                    htmlOutput += `<h2 class="section-title">📘 ${title} Kullanım Alanları</h2>`;
+                    
+                    items.forEach(item => {
+                        htmlOutput += `
+                            <div class="card">
+                                <div class="rule-text">📌 ${item.metin}</div>
+                                <div class="examples-container">
+                        `;
+                        
+                        if (item.ornek1 && item.ornek1.trim() !== "") {
+                            htmlOutput += `
+                                <div class="example-box">
+                                    <div class="example-label">Örnek 1</div>
+                                    <div class="example-text">${item.ornek1}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        if (item.ornek2 && item.ornek2.trim() !== "") {
+                            htmlOutput += `
+                                <div class="example-box">
+                                    <div class="example-label">Örnek 2</div>
+                                    <div class="example-text">${item.ornek2}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        htmlOutput += `</div></div>`;
+                    });
+                }
+
+                statusDiv.style.display = "none";
+                contentArea.innerHTML = htmlOutput;
+
+            } catch (error) {
+                statusDiv.className = "error-box";
+                statusDiv.innerHTML = `
+                    <h3>⚠️ Canlı Bağlantı Kurulamadı</h3>
+                    <p>Lütfen Google Sheet tablonuzun paylaşım ayarlarından "Bağlantıya sahip olan herkes görüntüleyebilir" olarak seçildiğinden emin olun.</p>
+                `;
+            }
+        }
+
+        window.onload = loadSheetData;
+    </script>
+</body>
+</html>
