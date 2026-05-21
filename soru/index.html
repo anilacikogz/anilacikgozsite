@@ -13,7 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f1f5f9; /* Slayt sayfasıyla uyumlu arka plan */
+            background-color: #f1f5f9;
             color: #0f172a;
             line-height: 1.6;
         }
@@ -46,7 +46,6 @@
             font-weight: 800;
         }
 
-        /* Soru Kart Yapısı */
         .question-card {
             background: white;
             border-radius: 16px;
@@ -56,7 +55,6 @@
             border-left: 8px solid #3b82f6;
         }
 
-        /* Soru Metni (Okunabilir olması için büyük punto) */
         .question-text {
             font-size: 22px;
             font-weight: 700;
@@ -72,7 +70,6 @@
             margin-bottom: 25px;
         }
 
-        /* Şık Seçim Alanları */
         .option-label {
             display: flex;
             align-items: flex-start;
@@ -98,7 +95,6 @@
             cursor: pointer;
         }
 
-        /* Buton ve Geri Bildirim Alanı */
         .action-container {
             display: flex;
             align-items: center;
@@ -121,7 +117,6 @@
             background-color: #1d4ed8;
         }
 
-        /* Doğru Cevap Renklendirmesi (Yeşil) */
         .option-label.correct {
             background-color: #dcfce7 !important;
             border-color: #22c55e !important;
@@ -129,7 +124,6 @@
             font-weight: 600;
         }
 
-        /* Yanlış Cevap Renklendirmesi (Kırmızı) */
         .option-label.incorrect {
             background-color: #fee2e2 !important;
             border-color: #ef4444 !important;
@@ -176,8 +170,11 @@
     </div>
 
     <script>
-        // Soru sekmenizin (Gid: 329007357) Google Excel Veri Linki
-        const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/1K7NQVUcdQD3fq3rJuJLGzgWsVnd3sR-_bEhgFKRhYRw/edit?gid=561113110#gid=561113110";
+        // Sizin tablonuzun gerçek gid kodu entegre edildi
+        const tablonuzunGidKodu = "561113110"; 
+        
+        // Linkiniz dinamik olarak oluşturuluyor
+        const sheetCsvUrl = `https://docs.google.com/spreadsheets/d/1K7NQVUcdQD3fq3rJuJLGzgWsVnd3sR-_bEhgFKRhYRw/export?format=csv&gid=${tablonuzunGidKodu}`;
 
         // CSV Parser
         function parseCSV(text) {
@@ -216,7 +213,7 @@
             return arr;
         }
 
-        // Soruları Google Sheet'ten Çeken Fonksiyon
+        // Soruları Çeken Ana Fonksiyon
         async function loadQuestions() {
             const statusDiv = document.getElementById('status');
             const questionsArea = document.getElementById('questions-area');
@@ -250,7 +247,7 @@
                                     <label class="option-label" data-ans="B">
                                         <input type="radio" name="question-${index}" value="B"> <strong>B)</strong> &nbsp;${bSikki}
                                     </label>
-                                    <label class="option-label" data-ans="B">
+                                    <label class="option-label" data-ans="C">
                                         <input type="radio" name="question-${index}" value="C"> <strong>C)</strong> &nbsp;${cSikki}
                                     </label>
                                     <label class="option-label" data-ans="D">
@@ -276,12 +273,11 @@
                 statusDiv.className = "error-box";
                 statusDiv.innerHTML = `
                     <h3>⚠️ Sorular Yüklenemedi</h3>
-                    <p>Google Sheet soru listesi alınamadı. Tablonun herkesin erişimine açık olduğundan emin olun.</p>
+                    <p>Google Sheet soru listesi alınamadı. Lütfen koddaki 'tablonuzunGidKodu' alanının doğruluğunu kontrol edin.</p>
                 `;
             }
         }
 
-        // Cevap Kontrol Fonksiyonu
         function checkAnswer(qIndex, correctAnswer) {
             const selectedRadio = document.querySelector(`input[name="question-${qIndex}"]:checked`);
             const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
