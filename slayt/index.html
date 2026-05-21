@@ -8,116 +8,121 @@
         *, *::before, *::after {
             box-sizing: border-box;
         }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
+            background-color: #f1f5f9; /* Temiz ve kontrastı artıran hafif gri arka plan */
+            color: #0f172a; /* Maksimum okunabilirlik için koyu ton */
+            line-height: 1.7; /* Satır arası rahat okunma boşluğu */
         }
+
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 24px;
         }
-        header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 40px 30px;
-            border-radius: 16px;
-            margin-bottom: 35px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 700;
-        }
-        header p {
-            margin: 10px 0 0 0;
-            font-size: 16px;
-            opacity: 0.9;
-        }
+
         .loading-status {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background-color: #dbeafe;
+            border: 2px solid #3b82f6;
             color: #1e40af;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-weight: 500;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 20px;
             text-align: center;
         }
+
+        /* Noktalama Başlıkları: Tahtadan çok rahat okunması için büyütüldü */
         .section-title {
-            font-size: 22px;
-            color: #0f172a;
-            margin-top: 45px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #3b82f6;
-            display: inline-block;
+            font-size: 32px; 
+            color: #1e3a8a; /* Net bir lacivert */
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 4px solid #2563eb;
+            display: block;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
+
+        /* Kural Kartları: İçeriğin net ayrışması sağlandı */
         .card {
             background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border-left: 5px solid #3b82f6;
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: 8px solid #2563eb; /* Sol renkli vurgu çizgisi kalınlaştırıldı */
         }
+
+        /* Açıklama Metni: Sınıf ortamı için büyütüldü ve kalınlaştırıldı */
         .rule-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 16px;
+            font-size: 24px; 
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
+
         .examples-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
+            margin-top: 20px;
         }
+
+        /* Örnek Kutuları */
         .example-box {
-            background-color: #f1f5f9;
-            border-left: 3px solid #64748b;
-            padding: 14px 18px;
-            border-radius: 0 8px 8px 0;
-        }
-        .example-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-        .example-text {
-            font-size: 16px;
-            color: #334155;
-            font-style: italic;
-        }
-        .error-box {
-            background-color: #fef2f2;
-            border: 1px solid #fca5a5;
-            color: #991b1b;
-            padding: 20px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #475569;
+            padding: 20px 24px;
             border-radius: 8px;
         }
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            color: #64748b;
+
+        /* Örnek Etiketi */
+        .example-label {
             font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 800;
+        }
+
+        /* Örnek Cümleleri */
+        .example-text {
+            font-size: 20px; 
+            color: #1e293b;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .error-box {
+            background-color: #fef2f2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            padding: 25px;
+            border-radius: 12px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 12px; }
+            .section-title { font-size: 26px; }
+            .card { padding: 20px; }
+            .rule-text { font-size: 19px; }
+            .example-text { font-size: 17px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <h1 id="page-title">Türkçe Dersi Noktalama İşaretleri</h1>
-            <p>Ders Anlatım Materyali</p>
-        </header>
 
         <div id="status" class="loading-status">
             🔄 Ders verileri Google içerisinden canlı yükleniyor, lütfen bekleyin...
@@ -126,24 +131,17 @@
         <div id="content-area">
             </div>
 
-        <footer>
-            <p>&copy; anilacikgoz.com - Ders Anlatım Sistemi</p>
-        </footer>
-    </div>
+        </div>
 
     <script>
-        // SİZİN GOOGLE SHEET EXPORT LINKINIZ
         const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/1K7NQVUcdQD3fq3rJuJLGzgWsVnd3sR-_bEhgFKRhYRw/export?format=csv&gid=0";
 
-        // Basit ve Güvenli CSV Dönüştürücü
         function parseCSV(text) {
             let lines = text.split('\n');
             let result = [];
             let headers = [];
             
-            if (lines.length > 0) {
-                headers = splitCSVLine(lines[0]);
-            }
+            if (lines.length > 0) { headers = splitCSVLine(lines[0]); }
             
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
@@ -160,6 +158,8 @@
             return result;
         }
 
+        if(window.location.search.includes('raw=1')) { document.body.style.backgroundColor = '#fff'; }
+
         function splitCSVLine(line) {
             let arr = [];
             let quote = false;
@@ -174,7 +174,6 @@
             return arr;
         }
 
-        // Ana Veri Yükleme Fonksiyonu
         async function loadSheetData() {
             const statusDiv = document.getElementById('status');
             const contentArea = document.getElementById('content-area');
@@ -242,8 +241,8 @@
             } catch (error) {
                 statusDiv.className = "error-box";
                 statusDiv.innerHTML = `
-                    <h3>⚠️ Canlı Bağlantı Kurulamadı</h3>
-                    <p>Lütfen Google Sheet tablonuzun paylaşım ayarlarından "Bağlantıya sahip olan herkes görüntüleyebilir" olarak seçildiğinden emin olun.</p>
+                    <h3>⚠️ Veri Çekme Hatası</h3>
+                    <p>Lütfen Google Sheet tablonuzun paylaşım ayarlarından "Bağlantıya sahip olan herkes görüntüleyebilir" seçeneğinin aktif olduğunu kontrol edin.</p>
                 `;
             }
         }
